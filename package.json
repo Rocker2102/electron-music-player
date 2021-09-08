@@ -2,7 +2,7 @@
   "name": "electron-player",
   "version": "0.1.0",
   "private": true,
-  "main": "public/App.js",
+  "main": "build/electron/App.js",
   "productName": "Music Player built with Electron",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
@@ -22,7 +22,6 @@
   "scripts": {
     "react-build": "react-scripts build",
     "electron-build": "./node_modules/.bin/tsc -p \"electron\"",
-    "postelectron-build": "npm run copy-electron-files",
     "copy-electron-files": "copyfiles build/electron/*.js public -f",
     "start": "react-scripts start",
     "prebuild": "npm run react-build",
