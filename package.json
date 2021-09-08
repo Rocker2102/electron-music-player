@@ -2,7 +2,7 @@
   "name": "electron-player",
   "version": "0.1.0",
   "private": true,
-  "main": "dist/app.js",
+  "main": "public/App.js",
   "productName": "Music Player built with Electron",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
@@ -20,11 +20,17 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
+    "react-build": "react-scripts build",
+    "electron-build": "./node_modules/.bin/tsc -p \"electron\"",
+    "postelectron-build": "npm run copy-electron-files",
+    "copy-electron-files": "copyfiles build/electron/*.js public -f",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "prebuild": "npm run react-build",
+    "build": "npm run electron-build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "homepage": "./",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -44,6 +50,7 @@
     ]
   },
   "devDependencies": {
-    "@types/electron": "^1.6.10"
+    "@types/electron": "^1.6.10",
+    "copyfiles": "^2.4.1"
   }
 }
