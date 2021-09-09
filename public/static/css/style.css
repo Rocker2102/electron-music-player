@@ -1,0 +1,58 @@
+@font-face {
+    font-family: "Material Icons";
+    font-style: normal;
+    font-weight: 400;
+    src: url(../fonts/Material-Icons.woff2) format("woff2");
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    src: url(../fonts/Roboto-Regular.ttf) format("truetype");
+}
+
+/* icons --start */
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: 'liga';
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+/* animation classes --start */
+.gradient-bg {
+    /* Credits: https://codepen.io/P1N2O/pen/pyBNzX */
+    --transparency: 0.07;
+
+    background: linear-gradient(-45deg,
+        rgba(204, 51, 255, var(--transparency)), rgba(255, 0, 102, var(--transparency)),
+        rgba(153, 255, 102, var(--transparency)), rgba(51, 153, 255, var(--transparency)));
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.rotate-infinite {
+    animation: spin 1s linear infinite;
+}
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+/* animation classes --end */
