@@ -33,17 +33,22 @@
     }
   },
   "scripts": {
-    "react-build": "react-scripts build",
-    "electron-build": "./node_modules/.bin/tsc -p \"electron\"",
-    "copy-electron-files": "copyfiles build/electron/*.js public -f",
+    "build-react": "react-scripts build",
+    "build-electron": "./node_modules/.bin/tsc -p \"electron\"",
+
     "start-react": "set BROWSER=none && react-scripts start",
-    "prestart-electron": "npm run electron-build",
+    "prestart-electron": "npm run build-electron",
     "start-electron": "electron .",
+
     "start": "npm run start-electron",
-    "prebuild": "npm run react-build",
-    "build": "npm run electron-build",
+
+    "prebuild": "npm run build-react",
+    "build": "npm run build-electron",
+
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+
+    "prepackage": "npm run build",
     "package": "electron-builder build --win -c.extraMetadata.main=build/electron/App.js --publish never"
   },
   "homepage": "./",
