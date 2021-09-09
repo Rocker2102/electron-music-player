@@ -1,5 +1,4 @@
-import { BrowserWindow } from 'electron';
-import path = require('path');
+import { app, BrowserWindow, screen } from 'electron';
 import config from './config';
 
 export default class Main {
@@ -7,10 +6,18 @@ export default class Main {
     static application: Electron.App;
     static BrowserWindow: any;
 
-    static preferences: Main.Preferences = {
-        width: 800,
-        height: 600,
-        nativeWindowOpen: true
+    static screenSize: Electron.Size = { width: 1920, height: 1080 };
+
+    static windowPreferences: Electron.BrowserWindowConstructorOptions = {
+        width: 992,
+        minWidth: 480,
+        maxWidth: Main.screenSize.width,
+
+        height: 768,
+        minHeight: 320,
+        maxHeight: Main.screenSize.height,
+
+        show: false
     };
 
     private static onWindowAllClosed() {
@@ -24,12 +31,18 @@ export default class Main {
     }
 
     private static onReady() {
-        Main.mainWindow = new Main.BrowserWindow(this.preferences);
+        /* set max-height/width now as screen module cannot be used before the ready event is fired */
+        Main.screenSize = screen.getPrimaryDisplay().size;
+        Main.windowPreferences.maxWidth = Main.screenSize.width;
+        Main.windowPreferences.maxHeight = Main.screenSize.height;
+
+        Main.mainWindow = new Main.BrowserWindow(Main.windowPreferences);
         if (config.APP_ENV !== 'production') {
             Main.mainWindow.loadURL(`http://localhost:${config.APP_PORT}`);
         } else {
             Main.mainWindow.loadFile('build/index.html');
         }
+        Main.mainWindow.once('ready-to-show', Main.mainWindow.show);
         Main.mainWindow.on('closed', Main.onClose);
     }
 
@@ -39,12 +52,4 @@ export default class Main {
         Main.application.on('window-all-closed', Main.onWindowAllClosed);
         Main.application.on('ready', Main.onReady);
     }
-}
-
-module Main {
-    export type Preferences = {
-        width: Number,
-        height: Number,
-        nativeWindowOpen: boolean
-    };
 }
