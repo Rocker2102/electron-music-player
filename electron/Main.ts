@@ -1,5 +1,6 @@
 import { app, BrowserWindow, screen } from 'electron';
 import config from './config';
+import path = require('path');
 
 export default class Main {
     static mainWindow: Electron.BrowserWindow;
@@ -7,6 +8,12 @@ export default class Main {
     static BrowserWindow: any;
 
     static screenSize: Electron.Size = { width: 1920, height: 1080 };
+
+    static webPreferences: Electron.WebPreferences = {
+        nativeWindowOpen: true,
+        nodeIntegration: false,
+        preload: path.join(__dirname, 'Preload.js')
+    }
 
     static windowPreferences: Electron.BrowserWindowConstructorOptions = {
         width: 992,
@@ -17,7 +24,8 @@ export default class Main {
         minHeight: 320,
         maxHeight: Main.screenSize.height,
 
-        show: false
+        show: false,
+        webPreferences: Main.webPreferences
     };
 
     private static onWindowAllClosed() {
@@ -46,7 +54,7 @@ export default class Main {
         Main.mainWindow.on('closed', Main.onClose);
     }
 
-    static main(app: Electron.App, browserWindow: typeof BrowserWindow) {
+    static main(app: typeof Main.application, browserWindow: typeof BrowserWindow) {
         Main.BrowserWindow = browserWindow;
         Main.application = app;
         Main.application.on('window-all-closed', Main.onWindowAllClosed);

@@ -1,14 +1,14 @@
 type Config = {
     'APP_ENV': 'local' | 'development' | 'production',
-    'APP_PORT': Number,
+    'APP_PORT': number,
     'CHANNELS': {
-        'MAIN': String,
-        'PRIMARY_SYNC': String,
-        'PRIMARY_ASYNC': String
+        'MAIN': string,
+        'PRIMARY_SYNC': string,
+        'PRIMARY_ASYNC': string
     }
 };
 
-const config: Config = {
+const config = {
     'APP_ENV': 'development',
     'APP_PORT': 3000,
     'CHANNELS': {
