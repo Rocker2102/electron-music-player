@@ -1,5 +1,6 @@
 import { BrowserWindow } from 'electron';
 import path = require('path');
+import config from './config';
 
 export default class Main {
     static mainWindow: Electron.BrowserWindow;
@@ -24,7 +25,11 @@ export default class Main {
 
     private static onReady() {
         Main.mainWindow = new Main.BrowserWindow(this.preferences);
-        Main.mainWindow.loadURL(`file://${path.join(__dirname, '../index.html')}`);
+        if (config.APP_ENV !== 'production') {
+            Main.mainWindow.loadURL(`http://localhost:${config.APP_PORT}`);
+        } else {
+            Main.mainWindow.loadFile('build/index.html');
+        }
         Main.mainWindow.on('closed', Main.onClose);
     }
 
