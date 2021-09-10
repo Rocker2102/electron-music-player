@@ -12,6 +12,38 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
-
+    "no-console": 1,
+    "semi": [2, "always", { "omitLastInOneLineBlock": true }],
+    "semi-spacing": [2, { "before": false, "after": false }],
+    "block-spacing": [1, "always"],
+    "comma-spacing": [2, { "before": false, "after": true }],
+    "array-bracket-spacing": [2, "always", {
+      "singleValue": false,
+      "objectsInArrays": true,
+      "arraysInArrays": false
+    }],
+    "space-in-parens": [2, "never"],
+    "object-curly-spacing": [2, "always"],
+    "computed-property-spacing": [2, "never"],
+    "keyword-spacing": [2, {
+      "before": false, "after": true,
+      "overrides": {
+        "as": { "before": true, "after": true },
+        "from": { "before": true, "after": true },
+        "else": { "before": true, "after": true },
+        "catch": { "before": true, "after": true },
+        "finally": { "before": true, "after": true },
+        "in": { "before": true, "after": true },
+        "of": { "before": true, "after": true },
+        "instanceof": { "before": true, "after": true }
+      }
+    }],
+    "max-len": ["warn", { "code": 100 }],
+    "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }
