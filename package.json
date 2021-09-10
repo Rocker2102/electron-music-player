@@ -35,19 +35,14 @@
   "scripts": {
     "build-react": "react-scripts build",
     "build-electron": "./node_modules/.bin/tsc -p \"electron\"",
-
     "start-react": "set BROWSER=none && react-scripts start",
     "prestart-electron": "npm run build-electron",
     "start-electron": "electron .",
-
     "start": "npm run start-electron",
-
     "prebuild": "npm run build-react",
     "build": "npm run build-electron",
-
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-
     "prepackage": "npm run build",
     "package": "electron-builder build --win -c.extraMetadata.main=build/electron/App.js --publish never"
   },
@@ -71,9 +66,10 @@
     ]
   },
   "devDependencies": {
-    "electron": "^14.0.0",
     "@types/electron": "^1.6.10",
     "copyfiles": "^2.4.1",
+    "devtron": "^1.4.0",
+    "electron": "^14.0.0",
     "electron-builder": "^22.11.7"
   }
 }
