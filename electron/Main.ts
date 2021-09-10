@@ -1,5 +1,5 @@
 import { app, BrowserWindow, screen } from 'electron';
-import config from './config';
+import config from './Config';
 import path = require('path');
 
 export default class Main {
