@@ -16,9 +16,9 @@ ipcMain.on(config.CHANNELS['MAIN'], (event) => {
 
 ipcMain.on(config.CHANNELS['PRIMARY_ASYNC'], (event) => {
     mm.parseFile(path.join(__dirname, 'audio.mp3')).then((data) => {
-        // console.log(data);
         event.sender.send(config.CHANNELS['PRIMARY_ASYNC'], data);
     }).catch(err => {
+        /* eslint-disable-next-line no-console */
         console.log(err);
     });
 });

@@ -1,10 +1,11 @@
-import { app, BrowserWindow, screen } from 'electron';
+import { BrowserWindow, screen } from 'electron';
 import config from './Config';
 import path = require('path');
 
 export default class Main {
     static mainWindow: Electron.BrowserWindow;
     static application: Electron.App;
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     static BrowserWindow: any;
 
     static screenSize: Electron.Size = { width: 1920, height: 1080 };
@@ -38,8 +39,12 @@ export default class Main {
         Main.mainWindow = null;
     }
 
-    private static onReady() {
-        /* set max-height/width now as screen module cannot be used before the ready event is fired */
+    private static onReady(): void {
+        /**
+         * set max-height/width now as screen module cannot
+         * be used before the ready event is fired
+         */
+
         Main.screenSize = screen.getPrimaryDisplay().size;
         Main.windowPreferences.maxWidth = Main.screenSize.width;
         Main.windowPreferences.maxHeight = Main.screenSize.height;
@@ -54,7 +59,7 @@ export default class Main {
         Main.mainWindow.on('closed', Main.onClose);
     }
 
-    static main(app: typeof Main.application, browserWindow: typeof BrowserWindow) {
+    static main(app: typeof Main.application, browserWindow: typeof BrowserWindow): void {
         Main.BrowserWindow = browserWindow;
         Main.application = app;
         Main.application.on('window-all-closed', Main.onWindowAllClosed);

@@ -16,7 +16,7 @@ const config = {
         'PRIMARY_SYNC': 'app_channel_primary_sync',
         'PRIMARY_ASYNC': 'app_channel_primary_async'
     }
-}
+};
 
 export type { Config };
 export default config;
