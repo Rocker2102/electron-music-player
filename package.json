@@ -42,7 +42,7 @@
     "prepackage": "npm run build",
     "package": "electron-builder build --win -c.extraMetadata.main=build/electron/App.js --publish never",
     "lint": "eslint . --ext .js,.ts,.tsx",
-    "lint-and-fix": "eslint --ext .js,.ts,.tsx --fix"
+    "lint-and-fix": "eslint . --ext .js,.ts,.tsx --fix"
   },
   "homepage": "./",
   "eslintConfig": {
