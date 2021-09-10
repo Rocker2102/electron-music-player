@@ -1,26 +1,21 @@
 import React from "react";
 import logo from './logo.svg';
 import './App.css';
-import type { CustomElectron } from '../types/electron';
 
-console.log(window.electronBridge);
-console.log(window.electronBridge.api);
+import type { CustomElectron } from '../types/electron';
 
 export default class App extends React.Component <{}, { appName: any, appVersion: any }> {
     constructor (props: any) {
         super(props);
 
-        this.state = {
-            appName: '-',
-            appVersion: '-',
-        };
+        this.state = { appName: '-', appVersion: 0 };
     }
 
-    componentDidMount() {
-        setTimeout(() => window.electronBridge.api.send('MAIN', {}), 2000);
-        window.electronBridge.api.receive('MAIN', (event, arg) => {
-            console.log(arg, event);
-            const { appName, appVersion } = arg;
+    componentDidMount = () => {
+        window.electronBridge.api.send('MAIN', {});
+
+        window.electronBridge.api.receive('MAIN', (event, args) => {
+            const { appName, appVersion } = args;
             this.setState({ appName, appVersion });
         });
     }
@@ -34,14 +29,6 @@ export default class App extends React.Component <{}, { appName: any, appVersion
                     <br />
                     { this.state.appName }, { this.state.appVersion }
                 </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                Learn React
-                </a>
             </header>
         </div>
     }
