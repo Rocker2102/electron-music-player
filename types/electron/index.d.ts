@@ -1,16 +1,6 @@
-import type { Config } from '../electron/Config'
+import type { Config } from '../../electron/Config'
 
-export {};
-
-declare global {
-    interface Window {
-        electronBridge: {
-            api: CustomElectron.api
-        }
-    }
-}
-
-export declare namespace CustomElectron {
+export declare namespace _Electron {
     type channel = keyof Config['CHANNELS'];
     type sendData = object;
     type receiverHandler = (...args: any) => any;
