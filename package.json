@@ -2,6 +2,7 @@
   "name": "electron-player",
   "version": "0.1.0",
   "private": true,
+  "type": "commonjs",
   "main": "build/electron/App.js",
   "productName": "Music Player built with Electron",
   "dependencies": {
@@ -42,7 +43,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepackage": "npm run build",
-    "package": "electron-builder build --win -c.extraMetadata.main=build/electron/App.js --publish never"
+    "package": "electron-builder build --win -c.extraMetadata.main=build/electron/App.js --publish never",
+    "lint": "eslint . --ext .js,.ts,.tsx",
+    "lint-and-fix": "eslint --ext .js,.ts,.tsx --fix"
   },
   "homepage": "./",
   "eslintConfig": {
