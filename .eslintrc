@@ -7,11 +7,11 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:node/recommended",
+    "plugin:react/jsx-runtime",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended"
   ],
-  "rules": [
-    "node/no-deprecated-api"
-  ]
+  "rules": {
+
+  }
 }
