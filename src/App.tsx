@@ -23,6 +23,8 @@ export default class App extends React.Component
     }
 
     componentDidMount = (): void => {
+        if (typeof window.electronBridge?.api === 'undefined') { return }
+
         window.electronBridge.api.send('MAIN', {});
         window.electronBridge.api.send('PRIMARY_ASYNC', {});
         window.electronBridge.api.send('PRIMARY_SYNC', {});
@@ -80,9 +82,6 @@ export default class App extends React.Component
                     <br />
                     { this.state.appName }, { this.state.appVersion }
                 </p>
-                {/* <audio controls>
-                    <source src="audio.mp3" />
-                </audio> */}
             </header>
         </div>;
     }
