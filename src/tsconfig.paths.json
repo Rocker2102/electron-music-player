@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "../",
+    "paths": {
+      "_Global": ["types/global"],
+      "_Electron": ["types/electron"],
+      "_Music-Metadata": ["types/music-metadata"]
+    }
+  }
+}

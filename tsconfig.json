@@ -1,4 +1,5 @@
 {
+  "extends": "./src/tsconfig.paths.json",
   "compilerOptions": {
     "target": "es5",
     "lib": [
@@ -18,13 +19,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "baseUrl": ".",
-    "paths": {
-      "_Global": ["types/global"],
-      "_Electron": ["types/electron"],
-      "_Music-Metadata": ["types/music-metadata"]
-    }
+    "jsx": "react-jsx"
   },
   "include": [
     "src"
