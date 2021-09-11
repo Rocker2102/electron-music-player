@@ -4,7 +4,7 @@ import path = require('path');
 
 import config from './Config';
 import Main from './Main';
-import * as Utils from './Utils';
+import { pictureAsBase64 } from './Utils';
 
 import type { _ICommonTagsResult } from '_Music-Metadata';
 
@@ -18,10 +18,10 @@ ipcMain.on(config.CHANNELS['MAIN'], (event) => {
 });
 
 ipcMain.on(config.CHANNELS['PRIMARY_ASYNC'], (event) => {
-    mm.parseFile(path.join(__dirname, 'audio.mp3')).then((data: mm.IAudioMetadata) => {
+    mm.parseFile(path.join(__dirname, '../', 'audio.mp3')).then((data: mm.IAudioMetadata) => {
         const common: _ICommonTagsResult = {
             ...data.common,
-            picture: Utils.pictureAsBase64(data.common.picture ?? null)
+            picture: pictureAsBase64(data.common.picture ?? null)
         };
 
         event.sender.send(config.CHANNELS['PRIMARY_ASYNC'], common);
@@ -29,4 +29,12 @@ ipcMain.on(config.CHANNELS['PRIMARY_ASYNC'], (event) => {
         /* eslint-disable-next-line no-console */
         console.log(err);
     });
+});
+
+ipcMain.on(config.CHANNELS['PRIMARY_SYNC'], async (event) => {
+    const file = config.APP_ENV !== 'production'
+        ? `http://localhost:${config.APP_PORT}/audio.mp3`
+        : path.join(__dirname, '../', 'audio.mp3');
+
+    event.sender.send(config.CHANNELS['PRIMARY_SYNC'], file);
 });
