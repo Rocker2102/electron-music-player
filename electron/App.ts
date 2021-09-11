@@ -1,9 +1,12 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-import config from './Config';
-import Main from './Main';
-
 import * as mm from 'music-metadata';
 import path = require('path');
+
+import config from './Config';
+import Main from './Main';
+import * as Utils from './Utils';
+
+import type { _ICommonTagsResult } from '_Music-Metadata';
 
 Main.main(app, BrowserWindow);
 
@@ -15,8 +18,13 @@ ipcMain.on(config.CHANNELS['MAIN'], (event) => {
 });
 
 ipcMain.on(config.CHANNELS['PRIMARY_ASYNC'], (event) => {
-    mm.parseFile(path.join(__dirname, 'audio.mp3')).then((data) => {
-        event.sender.send(config.CHANNELS['PRIMARY_ASYNC'], data);
+    mm.parseFile(path.join(__dirname, 'audio.mp3')).then((data: mm.IAudioMetadata) => {
+        const common: _ICommonTagsResult = {
+            ...data.common,
+            picture: Utils.pictureAsBase64(data.common.picture ?? null)
+        };
+
+        event.sender.send(config.CHANNELS['PRIMARY_ASYNC'], common);
     }).catch(err => {
         /* eslint-disable-next-line no-console */
         console.log(err);

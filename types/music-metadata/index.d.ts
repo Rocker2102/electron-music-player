@@ -1,5 +1,9 @@
-import type { IPicture } from 'music-metadata';
+import type { IPicture, ICommonTagsResult } from 'music-metadata';
 
 export type _IPicture = Omit<IPicture, 'data'> & {
-    data: Uint8Array
+    data: string
+}
+
+export type _ICommonTagsResult = Omit<ICommonTagsResult, 'picture'> & {
+    picture?: _IPicture
 }

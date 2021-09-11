@@ -3,15 +3,19 @@ import logo from './logo.svg';
 import './App.css';
 
 import type {} from '_Global';
-import type { _IPicture } from '_Music-Metadata';
+import type { _ICommonTagsResult, _IPicture } from '_Music-Metadata';
 
 export default class App extends React.Component
-    <unknown, { album: string | null, appName: string, appVersion: string }> {
+    <unknown, { album: string, appName: string, appVersion: string }> {
 
     constructor (props: unknown) {
         super(props);
 
-        this.state = { album: null, appName: '-', appVersion: '0.0.0' };
+        this.state = {
+            appName: '-',
+            appVersion: '0.0.0',
+            album: 'static/images/music-default.png'
+        };
     }
 
     componentDidMount = (): void => {
@@ -20,12 +24,15 @@ export default class App extends React.Component
         console.time('metadata');
         window.electronBridge.api.send('PRIMARY_ASYNC', {});
 
-        window.electronBridge.api.receive('PRIMARY_ASYNC', (event, args) => {
+        window.electronBridge.api.receive('PRIMARY_ASYNC', (event, args: _ICommonTagsResult) => {
             /* eslint-disable */
             console.timeEnd('metadata');
             console.log(args);
             /* eslint-enable */
-            this.updatePicture(args.common.picture);
+
+            if (args.picture) {
+                this.updatePicture(args.picture);
+            }
         });
         window.electronBridge.api.receive('MAIN', (event, args) => {
             const { appName, appVersion } = args;
@@ -33,15 +40,10 @@ export default class App extends React.Component
         });
     }
 
-    updatePicture = (picture: _IPicture[]): void => {
-        if (picture.length === 0) { return }
+    updatePicture = (picture: _IPicture): void => {
+        if (picture.data === '') { return }
 
-        const albumArt: _IPicture = picture[0];
-        const picStr = albumArt.data.reduce((data: string, byte: number) => {
-            return data + String.fromCharCode(byte);
-        }, '');
-        const album = `data:${albumArt.format};base64,${window.btoa(picStr)}`;
-        this.setState({ album: album });
+        this.setState({ album: picture.data });
     }
 
     render (): ReactNode {
