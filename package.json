@@ -35,7 +35,7 @@
     "prestart-electron": "npm run build-electron",
     "start-electron": "electron .",
     "start": "npm run start-electron",
-    "prebuild": "npm run build-react",
+    "prebuild": "npm run lint && npm run build-react",
     "build": "npm run build-electron",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
