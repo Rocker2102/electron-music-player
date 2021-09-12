@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 
-import Equalizer from '@mui/icons-material/EqualizerRounded';
 import Settings from '@mui/icons-material/SettingsOutlined';
+import Equalizer from '@mui/icons-material/EqualizerRounded';
 import VolumeOff from '@mui/icons-material/VolumeOffOutlined';
 
 import Grid from '@mui/material/Grid';

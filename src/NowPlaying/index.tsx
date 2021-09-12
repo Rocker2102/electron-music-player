@@ -5,8 +5,8 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 
 import SongInfo from './SongInfo';
-import PlaybackOptions from './PlaybackOptions';
 import VolumeOptions from './VolumeOptions';
+import PlaybackOptions from './PlaybackOptions';
 
 
 export default class NowPlaying extends React.PureComponent
@@ -48,19 +48,18 @@ export default class NowPlaying extends React.PureComponent
     render(): ReactNode {
         return <Container className="NowPlaying" id={this.rootElementId}
             sx={{ boxShadow: 5, position: 'fixed', bottom: 0, minWidth: '100%', zIndex: 50 }}
-            disableGutters={true} fixed={true} maxWidth={false} >
-
+            disableGutters={true} fixed={true} maxWidth={false}
+        >
             <Grid container
                 justifyContent={'space-between'} alignItems={'center'}
                 className="gradient-bg" sx={{ minHeight: `${this.height}px`,
-                height: this.state.height ? `${this.state.height}px` : 'auto' }} >
-
+                height: this.state.height ? `${this.state.height}px` : 'auto' }}
+            >
                 <SongInfo albumArt={this.state.albumArt} height={this.state.height} />
 
                 <PlaybackOptions />
 
                 <VolumeOptions />
-
             </Grid>
         </Container>;
     }

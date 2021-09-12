@@ -23,15 +23,19 @@ export default class PlaybackOptions extends React.PureComponent
                         display: { xs: 'none', md: 'inline-flex' } }} >
                         <Shuffle fontSize="medium" />
                     </IconButton>
+
                     <IconButton color="primary">
                         <SkipPrevious fontSize="medium" />
                     </IconButton>
+
                     <IconButton color="primary" size="large">
                         <PlayArrow fontSize="large" />
                     </IconButton>
+
                     <IconButton color="primary" size="large">
                         <SkipNext fontSize="medium" />
                     </IconButton>
+
                     <IconButton color="primary" sx={{
                         display: { xs: 'none', sm: 'inline-flex' } }}>
                         <RepeatOne fontSize="medium" />
@@ -44,7 +48,7 @@ export default class PlaybackOptions extends React.PureComponent
                     <Slider size='small' defaultValue={30} min={0} max={100} />
                 </Grid>
 
-                <Grid item xs={12} mx={4} mt={-1} sx={{ display: 'flex',
+                <Grid item xs={12} mx={4} mt={-1} mb={0.5} sx={{ display: 'flex',
                     alignItems: 'flex-start', justifyContent: 'space-between' }}
                 >
                     <Typography variant="subtitle2" color="text.secondary">0:00</Typography>

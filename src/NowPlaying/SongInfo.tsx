@@ -9,7 +9,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 type SongInfoProps = {
     albumArt: null | string,
     height: null | number
-}
+};
 
 export default class SongInfo extends React.PureComponent
     <SongInfoProps, unknown> {
@@ -28,8 +28,8 @@ export default class SongInfo extends React.PureComponent
                 <Box {...this.props.albumArt === null ? { pl:2, pr:1 } : 0 }
                     sx={{ height: `${this.props.albumArt === null
                             ? 'auto' : this.props.height + 'px'}` }}
-                    display={{ xs: 'none', md: 'block' }}>
-
+                    display={{ xs: 'none', md: 'block' }}
+                >
                     {
                         this.props.albumArt === null
                             ? <CircularProgress color="secondary" />
@@ -40,8 +40,8 @@ export default class SongInfo extends React.PureComponent
                 </Box>
 
                 <Box ml={1} sx={{ maxWidth: 'inherit',
-                    whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-
+                    whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
+                >
                     <Typography variant="h6" letterSpacing={-0.25}>Song Name (maybe large,
                         therefore truncated)</Typography>
                     <Typography variant="subtitle2" color="text.secondary">Other displayable
