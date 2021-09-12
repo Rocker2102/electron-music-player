@@ -22,20 +22,21 @@ export default class SongInfo extends React.PureComponent
         return <Grid item xs={4} zeroMinWidth>
             <Box sx={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
 
-                {/* don't know why height has to be added to this div specifically.
-                    Without it, the div keeps increasing by 4px everytime image is
-                    rendered */}
-                <Box {...this.props.albumArt === null ? { pl:2, pr:1 } : 0 }
-                    sx={{ height: `${this.props.albumArt === null
-                            ? 'auto' : this.props.height + 'px'}` }}
-                    display={{ xs: 'none', md: 'block' }}
+                <Box
+                    display={{ xs: 'none', md: 'flex' }}
+                    sx={{ height: `${this.props.height}px`, width: `${this.props.height}px`,
+                        overflow: 'hidden',
+                        justifyContent: 'center', alignItems: 'center',
+                        flex: '0 0 auto',
+                        backgroundImage:
+                            `url(${this.props.albumArt === null ? '' : this.props.albumArt})`,
+                        backgroundPosition: 'center top', backgroundRepeat: 'no-repeat',
+                        backgroundSize: 'cover' }}
                 >
                     {
                         this.props.albumArt === null
                             ? <CircularProgress color="secondary" />
-                            : <img src={this.props.albumArt}
-                                height={`${this.props.height}px`}
-                                width={`${this.props.height}px`} />
+                            : null
                     }
                 </Box>
 
