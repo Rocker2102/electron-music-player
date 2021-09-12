@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { Howl } from 'howler';
 
-import logo from './logo.svg';
+import logo from '../logo.svg';
 import './App.css';
 
 import type { } from '_Global';
