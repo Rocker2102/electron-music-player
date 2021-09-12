@@ -2,14 +2,14 @@ import React, { ReactNode } from 'react';
 import { Howl } from 'howler';
 
 import logo from '../logo.svg';
-import './App.css';
+import './Main.css';
 
 import type { } from '_Global';
 import type { _ICommonTagsResult, _IPicture } from '_Music-Metadata';
 
 const defaultMusicArt = 'static/images/music-default.png';
 
-export default class App extends React.Component
+export default class Main extends React.PureComponent
     <unknown, { album: string, appName: string, appVersion: string }> {
 
     constructor (props: unknown) {
