@@ -9,7 +9,7 @@ import PlaybackOptions from './PlaybackOptions';
 import VolumeOptions from './VolumeOptions';
 
 
-export default class NowPlaying extends React.Component
+export default class NowPlaying extends React.PureComponent
     <unknown, { albumArt: null | string, height: null | number }> {
 
     private height = 108;
@@ -47,7 +47,7 @@ export default class NowPlaying extends React.Component
 
     render(): ReactNode {
         return <Container className="NowPlaying" id={this.rootElementId}
-            sx={{ boxShadow: 3, position: 'fixed', bottom: 0, minWidth: '100%', zIndex: 50 }}
+            sx={{ boxShadow: 5, position: 'fixed', bottom: 0, minWidth: '100%', zIndex: 50 }}
             disableGutters={true} fixed={true} maxWidth={false} >
 
             <Grid container
