@@ -14,7 +14,7 @@ const defaultMusicArt = 'static/images/kali-square.jpg';
 export default class NowPlaying extends React.PureComponent
     <unknown, { albumArt: null | string, height: null | number }> {
 
-    private minHeight = 108;
+    private maxHeight = 120;
     protected baseContainerId = 'now-playing';
 
     constructor(props: unknown) {
@@ -29,6 +29,7 @@ export default class NowPlaying extends React.PureComponent
     componentDidMount(): void {
         const e = document.getElementById(this.baseContainerId);
 
+        /* eslint-disable-next-line no-console */
         console.log(e?.clientHeight);
         this.setState({
             height: e?.clientHeight ?? null
@@ -59,7 +60,7 @@ export default class NowPlaying extends React.PureComponent
         >
             <Grid container
                 justifyContent={'space-between'} alignItems={'center'}
-                className="gradient-bg" sx={{ minHeight: `${this.minHeight}px` }}
+                className="gradient-bg" sx={{ maxHeight: `${this.maxHeight}px` }}
             >
                 <SongInfo albumArt={this.state.albumArt} height={this.state.height} />
 
