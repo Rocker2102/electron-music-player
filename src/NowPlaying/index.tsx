@@ -10,19 +10,17 @@ import PlaybackOptions from './PlaybackOptions';
 import type { _NowPlaying } from '_App';
 
 
-const defaultMusicArt = 'static/images/kali-square.jpg';
-
 export default class NowPlaying extends React.PureComponent
-    <unknown, { albumArt: null | string, height?: number }> {
+    <_NowPlaying.props, _NowPlaying.state> {
 
     private maxHeight = 120;
     protected baseContainerId = 'now-playing';
 
-    constructor(props: unknown) {
+    constructor(props: _NowPlaying.props) {
         super(props);
 
         this.state = {
-            albumArt: null
+            height: undefined
         };
     }
 
@@ -32,22 +30,6 @@ export default class NowPlaying extends React.PureComponent
         this.setState({
             height: e?.clientHeight
         });
-
-        setTimeout(() => {
-            this.setState({
-                albumArt: defaultMusicArt
-            });
-        }, 2000);
-        setTimeout(() => {
-            this.setState({
-                albumArt: null
-            });
-        }, 4000);
-        setTimeout(() => {
-            this.setState({
-                albumArt: defaultMusicArt
-            });
-        }, 6000);
     }
 
     render(): ReactNode {
@@ -59,16 +41,18 @@ export default class NowPlaying extends React.PureComponent
                 justifyContent={'space-between'} alignItems={'center'}
                 className="gradient-bg" sx={{ maxHeight: `${this.maxHeight}px` }}
             >
-                <SongInfo name="Song Name (maybe large, therefore truncated)"
-                    picture={this.state.albumArt} height={this.state.height}
+                <SongInfo name={this.props.songInfo.name}
+                    picture={this.props.songInfo.picture} height={this.state.height}
                     other="Other Info"
                 />
 
-                <PlaybackOptions length={283} current={42} shuffle={false} isPlaying={false}
+                <PlaybackOptions length={this.props.playbackOptions.length}
+                    current={this.props.playbackOptions.current}
+                    shuffle={false} isPlaying={false}
                     repeatType="off"
                 />
 
-                <VolumeOptions isMute={false} volume={5} />
+                <VolumeOptions isMute={this.props.volumeOptions.isMute} volume={5} />
             </Grid>
         </Container>;
     }
