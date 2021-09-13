@@ -1,18 +1,19 @@
 import React, { ReactNode } from 'react';
 
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 
 import SongInfo from './SongInfo';
 import VolumeOptions from './VolumeOptions';
 import PlaybackOptions from './PlaybackOptions';
 
+import type { _NowPlaying } from '_App';
+
 
 const defaultMusicArt = 'static/images/kali-square.jpg';
 
 export default class NowPlaying extends React.PureComponent
-    <unknown, { albumArt: null | string, height: null | number }> {
+    <unknown, { albumArt: null | string, height?: number }> {
 
     private maxHeight = 120;
     protected baseContainerId = 'now-playing';
@@ -21,24 +22,20 @@ export default class NowPlaying extends React.PureComponent
         super(props);
 
         this.state = {
-            albumArt: null,
-            height: null
+            albumArt: null
         };
     }
 
     componentDidMount(): void {
         const e = document.getElementById(this.baseContainerId);
 
-        /* eslint-disable-next-line no-console */
-        console.log(e?.clientHeight);
         this.setState({
-            height: e?.clientHeight ?? null
+            height: e?.clientHeight
         });
 
         setTimeout(() => {
             this.setState({
-                albumArt: defaultMusicArt,
-                height: e?.clientHeight ?? null
+                albumArt: defaultMusicArt
             });
         }, 2000);
         setTimeout(() => {
@@ -62,11 +59,16 @@ export default class NowPlaying extends React.PureComponent
                 justifyContent={'space-between'} alignItems={'center'}
                 className="gradient-bg" sx={{ maxHeight: `${this.maxHeight}px` }}
             >
-                <SongInfo albumArt={this.state.albumArt} height={this.state.height} />
+                <SongInfo name="Song Name (maybe large, therefore truncated)"
+                    picture={this.state.albumArt} height={this.state.height}
+                    other="Other Info"
+                />
 
-                <PlaybackOptions />
+                <PlaybackOptions length={283} current={42} shuffle={false} isPlaying={false}
+                    repeatType="off"
+                />
 
-                <VolumeOptions />
+                <VolumeOptions isMute={false} volume={5} />
             </Grid>
         </Container>;
     }

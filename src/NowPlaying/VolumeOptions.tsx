@@ -2,19 +2,28 @@ import React, { ReactNode } from 'react';
 
 import Settings from '@mui/icons-material/SettingsOutlined';
 import Equalizer from '@mui/icons-material/EqualizerRounded';
-import VolumeOff from '@mui/icons-material/VolumeOffOutlined';
 
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Slider from '@mui/material/Slider';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
+import VolumeUp from '@mui/icons-material/VolumeUpOutlined';
+import VolumeOff from '@mui/icons-material/VolumeOffOutlined';
+
+import type { _NowPlaying } from '_App';
 
 
 export default class VolumeOptions extends React.PureComponent
-    <unknown, unknown> {
+    <_NowPlaying.VolumeOptions.props, unknown> {
+
+    constructor(props: _NowPlaying.VolumeOptions.props) {
+        super(props);
+    }
 
     render(): ReactNode {
+        const volumeBtn = this.props.isMute ? <VolumeUp /> : <VolumeOff />;
+
         return <Grid item xs={3} md={2} >
             <Grid container pr={2} >
                 <Grid item xs={12} sx={{ textAlign: 'center' }}>
@@ -23,7 +32,7 @@ export default class VolumeOptions extends React.PureComponent
                     >
                         <Tooltip title="Mute">
                             <IconButton color="primary">
-                                <VolumeOff />
+                                {volumeBtn}
                             </IconButton>
                         </Tooltip>
 

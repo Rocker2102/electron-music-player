@@ -1,6 +1,9 @@
 import React, { ReactNode } from 'react';
 
 import Shuffle from '@mui/icons-material/ShuffleRounded';
+import ShuffleOn from '@mui/icons-material/ShuffleOnRounded';
+import Repeat from '@mui/icons-material/RepeatRounded';
+import RepeatOn from '@mui/icons-material/RepeatOnRounded';
 import RepeatOne from '@mui/icons-material/RepeatOneRounded';
 import PlayArrow from '@mui/icons-material/PlayArrowRounded';
 import SkipNext from '@mui/icons-material/SkipNextRounded';
@@ -11,9 +14,15 @@ import Slider from '@mui/material/Slider';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
+import type { _NowPlaying } from '_App';
+
 
 export default class PlaybackOptions extends React.PureComponent
-    <unknown, unknown> {
+    <_NowPlaying.PlaybackOptions.props, unknown> {
+
+    constructor(props: _NowPlaying.PlaybackOptions.props) {
+        super(props);
+    }
 
     render(): ReactNode {
         return <Grid item xs={5} sm={4} >

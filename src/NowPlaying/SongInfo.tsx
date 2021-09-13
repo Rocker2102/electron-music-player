@@ -5,16 +5,15 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import { formatString } from '../Utils';
 
-type SongInfoProps = {
-    albumArt: null | string,
-    height: null | number
-};
+import type { _NowPlaying } from '_App';
+
 
 export default class SongInfo extends React.PureComponent
-    <SongInfoProps, unknown> {
+    <_NowPlaying.SongInfo.props, _NowPlaying.SongInfo.state> {
 
-    constructor(props: SongInfoProps) {
+    constructor(props: _NowPlaying.SongInfo.props) {
         super(props);
     }
 
@@ -29,12 +28,12 @@ export default class SongInfo extends React.PureComponent
                         justifyContent: 'center', alignItems: 'center',
                         flex: '0 0 auto',
                         backgroundImage:
-                            `url(${this.props.albumArt === null ? '' : this.props.albumArt})`,
+                            `url(${this.props.picture === null ? '' : this.props.picture})`,
                         backgroundPosition: 'center top', backgroundRepeat: 'no-repeat',
                         backgroundSize: 'cover' }}
                 >
                     {
-                        this.props.albumArt === null
+                        this.props.picture === null
                             ? <CircularProgress color="secondary" />
                             : null
                     }
@@ -43,12 +42,10 @@ export default class SongInfo extends React.PureComponent
                 <Box ml={1} sx={{ maxWidth: 'inherit',
                     whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
                 >
-                    <Typography variant="h6" letterSpacing={-0.25}>Song Name (maybe large,
-                        therefore truncated)</Typography>
-                    <Typography variant="subtitle2" color="text.secondary">Other displayable
-                        info (optional)</Typography>
-                    <Typography variant="subtitle1">Song Artist probably
-                        long</Typography>
+                    <Typography variant="h6" letterSpacing={-0.25}>{this.props.name}</Typography>
+                    <Typography variant="subtitle2" color="text.secondary">
+                        {formatString(this.props.other)}</Typography>
+                    <Typography variant="subtitle1">{formatString(this.props.artist)}</Typography>
                 </Box>
             </Box>
         </Grid>;
