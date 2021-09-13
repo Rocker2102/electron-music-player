@@ -6,8 +6,8 @@ export namespace _Main {
 export namespace _NowPlaying {
     export namespace PlaybackOptions {
         interface props {
-            next: string,  /* next song path */
-            prev: string,  /* previous song path */
+            next?: null | string,  /* next song path */
+            prev?: null | string,  /* previous song path */
             length: number,  /* song duration (in seconds) */
             current: number,  /* current song status (in seconds) */
             shuffle: boolean,
