@@ -38,36 +38,31 @@ export default class VolumeOptions extends React.PureComponent
     }
 
     render(): ReactNode {
+        return <Grid item xs={3} md={2} pr={2} >
+            <Stack direction="row" alignItems="center"
+                spacing={{ xs: 0 }} justifyContent='flex-end'
+            >
+                {this.renderVolumeBtn()}
 
-        return <Grid item xs={3} md={2} >
-            <Grid container pr={2} >
-                <Grid item xs={12} sx={{ textAlign: 'center' }}>
-                    <Stack direction="row" alignItems="center"
-                        spacing={{ xs: 0 }} justifyContent='flex-end'
+                <Slider size='small' defaultValue={4} min={0} max={15} step={1}
+                    valueLabelDisplay='auto'
+                    sx={{ display: { xs: 'none', lg: 'inline-flex' } }}
+                />
+
+                <Tooltip title="Open Settings">
+                    <IconButton color="error">
+                        <Settings />
+                    </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Equalizer">
+                    <IconButton color="error"
+                        sx={{ display: { xs: 'none', lg: 'inline-flex' } }}
                     >
-                        {this.renderVolumeBtn()}
-
-                        <Slider size='small' defaultValue={4} min={0} max={15} step={1}
-                            valueLabelDisplay='auto'
-                            sx={{ display: { xs: 'none', lg: 'inline-flex' } }}
-                        />
-
-                        <Tooltip title="Open Settings">
-                            <IconButton color="error">
-                                <Settings />
-                            </IconButton>
-                        </Tooltip>
-
-                        <Tooltip title="Equalizer">
-                            <IconButton color="error"
-                                sx={{ display: { xs: 'none', lg: 'inline-flex' } }}
-                            >
-                                <Equalizer />
-                            </IconButton>
-                        </Tooltip>
-                    </Stack>
-                </Grid>
-            </Grid>
+                        <Equalizer />
+                    </IconButton>
+                </Tooltip>
+            </Stack>
         </Grid>;
     }
 }
