@@ -27,38 +27,11 @@ export default class Main extends React.PureComponent
 
         window.electronBridge.api.send('MAIN', {});
         window.electronBridge.api.send('PRIMARY_ASYNC', {});
-        window.electronBridge.api.send('PRIMARY_SYNC', {});
 
         window.electronBridge.api.receive('PRIMARY_ASYNC', (event, args: _ICommonTagsResult) => {
             if (args.picture) {
                 this.updatePicture(args.picture);
             }
-        });
-
-        window.electronBridge.api.receive('PRIMARY_SYNC', (event, args) => {
-            const sound = new Howl({
-                src: [args],
-                html5: true,
-                loop: true,
-                volume: 1.0,
-
-                /* eslint-disable */
-                onloaderror: (id, err: unknown) => {
-                    console.log('Load error!', err);
-                },
-                onload: () => {
-                    return;
-                },
-                onplayerror: (id, err: unknown) => {
-                    console.log('Play error!', err);
-                },
-                onplay: () => {
-                    console.log('Playing...');
-                },
-                /* eslint-enable */
-            });
-
-            sound.play();
         });
 
         window.electronBridge.api.receive('MAIN', (event, args) => {
