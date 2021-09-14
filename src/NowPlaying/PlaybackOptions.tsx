@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 
 import Shuffle from '@mui/icons-material/ShuffleRounded';
 import ShuffleOn from '@mui/icons-material/ShuffleOnRounded';
@@ -12,9 +12,35 @@ import SkipPrevious from '@mui/icons-material/SkipPreviousRounded';
 
 import Grid from '@mui/material/Grid';
 import Slider from '@mui/material/Slider';
+import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
+
+function RepeatButton(props: _NowPlaying.PlaybackOptions.props['repeatType'])
+    : ReactElement<any, any> {
+
+    let icon: ReactElement, title = 'Repeat: ';
+
+    switch (props) {
+        case 'off':
+            icon = <Repeat fontSize="medium" />;
+            title += 'Off';
+            break;
+        case 'single':
+            icon = <RepeatOne fontSize="medium" />;
+            title += 'Single';
+            break;
+        case 'on':
+            icon = <RepeatOn fontSize="medium" />;
+            title += 'On';
+            break;
+    }
+
+    return <Tooltip title={title} placement="right">
+        {icon}
+    </Tooltip>;
+}
 
 export default class PlaybackOptions extends React.PureComponent
     <_NowPlaying.PlaybackOptions.props, unknown> {
@@ -28,8 +54,14 @@ export default class PlaybackOptions extends React.PureComponent
             <Grid container >
                 <Grid item xs={12} sx={{ textAlign: 'center' }}>
                     <IconButton color="primary" sx={{
-                        display: { xs: 'none', md: 'inline-flex' } }} >
-                        <Shuffle fontSize="medium" />
+                        display: { xs: 'none', md: 'inline-flex' } }}
+                        onClick={this.props.toggleShuffle}
+                    >
+                        {
+                            this.props.shuffle
+                                ? <ShuffleOn fontSize="medium" />
+                                : <Shuffle fontSize="medium" />
+                        }
                     </IconButton>
 
                     <IconButton color="primary">
@@ -51,8 +83,10 @@ export default class PlaybackOptions extends React.PureComponent
                     </IconButton>
 
                     <IconButton color="primary" sx={{
-                        display: { xs: 'none', sm: 'inline-flex' } }}>
-                        <RepeatOne fontSize="medium" />
+                        display: { xs: 'none', sm: 'inline-flex' } }}
+                        onClick={this.props.toggleRepeat}
+                    >
+                        {RepeatButton(this.props.repeatType)}
                     </IconButton>
                 </Grid>
 

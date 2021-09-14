@@ -1,15 +1,17 @@
 declare namespace _NowPlaying {
     namespace PlaybackOptions {
         interface props {
-            next?: null | string,  /* next song path */
-            prev?: null | string,  /* previous song path */
+            next?: undefined | string,  /* next song path */
+            prev?: undefined | string,  /* previous song path */
             length: number,  /* song duration (in seconds) */
             current: number,  /* current song status (in seconds) */
             shuffle: boolean,
             isPlaying: boolean,
             repeatType: 'off' | 'single' | 'on',
 
-            togglePlayback: () => void
+            toggleRepeat: () => void,
+            toggleShuffle: () => void,
+            togglePlayback: () => void,
         }
 
         type state = unknown;
@@ -34,7 +36,8 @@ declare namespace _NowPlaying {
             volume: number,
 
             toggleMute: () => void,
-            handleVolumeUpdate: (e: Event, volume: number | number[], activeThumb: number) => void
+            handleVolumeUpdate: (e: Event, volume: number | number[],
+                activeThumb: number) => void
         }
 
         type state = unknown;

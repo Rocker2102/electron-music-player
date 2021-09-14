@@ -51,6 +51,8 @@ export default class App extends React.Component
                 isPlaying: false,
                 repeatType: 'off',
 
+                toggleRepeat: this.toggleSongRepeat,
+                toggleShuffle: this.toggleSongShuffle,
                 togglePlayback: this.toggleSongPlayback
             },
         };
@@ -85,6 +87,37 @@ export default class App extends React.Component
             volumeOptions: {
                 ...this.state.volumeOptions,
                 volume: volume
+            }
+        });
+    }
+
+    toggleSongRepeat = (): void => {
+        const repeatTypes: _NowPlaying.PlaybackOptions.props['repeatType'][]
+            = [ 'off', 'single', 'on' ];
+
+        const current = this.state.playbackOptions.repeatType;
+        const newStatus = repeatTypes[
+            (repeatTypes.indexOf(current) + 1) % repeatTypes.length];
+
+        if (App?.player?.state() === 'loaded') {
+            App.player.setLoop(newStatus === 'single');
+        }
+
+        this.setState({
+            playbackOptions: {
+                ...this.state.playbackOptions,
+                repeatType: newStatus
+            }
+        });
+    }
+
+    toggleSongShuffle = (): void => {
+        const newStatus = ! this.state.playbackOptions.shuffle;
+
+        this.setState({
+            playbackOptions: {
+                ...this.state.playbackOptions,
+                shuffle: newStatus
             }
         });
     }
