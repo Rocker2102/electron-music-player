@@ -1,3 +1,3 @@
-export declare namespace _Main {
+declare namespace _Main {
 
 }

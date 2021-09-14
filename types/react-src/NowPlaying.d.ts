@@ -1,5 +1,5 @@
-export declare namespace _NowPlaying {
-    export namespace PlaybackOptions {
+declare namespace _NowPlaying {
+    namespace PlaybackOptions {
         interface props {
             next?: null | string,  /* next song path */
             prev?: null | string,  /* previous song path */
@@ -13,11 +13,11 @@ export declare namespace _NowPlaying {
         type state = unknown;
     }
 
-    export namespace SongInfo {
+    namespace SongInfo {
         interface props {
             name: string,
-            other?: string | string[],
-            artist?: string | string[],
+            other?: undefined | string | string[],
+            artist?: undefined | string | string[],
             picture: null | string,
 
             height?: _NowPlaying.state['height']
@@ -26,11 +26,12 @@ export declare namespace _NowPlaying {
         type state = unknown;
     }
 
-    export namespace VolumeOptions {
+    namespace VolumeOptions {
         interface props {
             isMute: boolean,
             volume: number,
-            handleMuteUpdate: () => void
+            handleMuteUpdate: () => void,
+            handleVolumeUpdate: (volume: number) => void
         }
 
         type state = unknown;
@@ -43,6 +44,6 @@ export declare namespace _NowPlaying {
     }
 
     type state = {
-        height?: number
+        height?: undefined | number
     };
 }
