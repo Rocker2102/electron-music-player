@@ -52,7 +52,8 @@ export default class NowPlaying extends React.PureComponent
                     repeatType="off"
                 />
 
-                <VolumeOptions isMute={this.props.volumeOptions.isMute} volume={5} />
+                <VolumeOptions isMute={this.props.volumeOptions.isMute} volume={5}
+                    handleMuteUpdate={this.props.volumeOptions.handleMuteUpdate} />
             </Grid>
         </Container>;
     }

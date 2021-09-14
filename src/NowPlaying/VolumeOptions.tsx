@@ -20,26 +20,14 @@ export default class VolumeOptions extends React.PureComponent
         super(props);
     }
 
-    renderVolumeBtn(): JSX.Element {
-        let volumeBtn = <VolumeUp />;
-        let tooltip = 'Click to mute';
-
-        if (this.props.isMute) {
-            volumeBtn = <VolumeOff />;
-            tooltip = 'Click to unmute';
-        }
-
-        return <IconButton color="primary">
-            {volumeBtn}
-        </IconButton>;
-    }
-
     render(): ReactNode {
-        return <Grid item xs={3} md={2} pr={2} >
+        return <Grid item xs={3} md={2} pr={2} ml="auto" >
             <Stack direction="row" alignItems="center"
                 spacing={{ xs: 0 }} justifyContent='flex-end'
             >
-                {this.renderVolumeBtn()}
+                <IconButton color="primary" onClick={this.props.handleMuteUpdate}>
+                    {this.props.isMute ? <VolumeOff /> : <VolumeUp />}
+                </IconButton>
 
                 <Slider size='small' defaultValue={4} min={0} max={15} step={1}
                     valueLabelDisplay='auto'

@@ -29,7 +29,8 @@ export declare namespace _NowPlaying {
     export namespace VolumeOptions {
         interface props {
             isMute: boolean,
-            volume: number
+            volume: number,
+            handleMuteUpdate: () => void
         }
 
         type state = unknown;
