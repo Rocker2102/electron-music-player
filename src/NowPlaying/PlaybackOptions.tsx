@@ -83,7 +83,7 @@ export default class PlaybackOptions extends React.PureComponent
                     </IconButton>
 
                     <IconButton color="primary" sx={{
-                        display: { xs: 'none', sm: 'inline-flex' } }}
+                        display: { xs: 'none', md: 'inline-flex' } }}
                         onClick={this.props.toggleRepeat}
                     >
                         {RepeatButton(this.props.repeatType)}

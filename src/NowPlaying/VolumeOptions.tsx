@@ -19,7 +19,7 @@ export default class VolumeOptions extends React.PureComponent
     }
 
     render(): ReactNode {
-        return <Grid item xs={3} md={2} pr={2} ml="auto" >
+        return <Grid item xs={3} lg={2} pr={2} ml="auto" >
             <Stack direction="row" alignItems="center"
                 spacing={{ xs: 0, lg: 0.5 }} justifyContent='flex-end'
             >
@@ -30,7 +30,7 @@ export default class VolumeOptions extends React.PureComponent
                 <Slider size='small' defaultValue={4} min={0} max={15} step={1}
                     valueLabelDisplay='auto'
                     onChange={this.props.handleVolumeUpdate}
-                    sx={{ display: { xs: 'none', lg: 'inline-flex' } }}
+                    sx={{ display: { xs: 'none', md: 'inline-flex' } }}
                 />
 
                 <IconButton color="error">
@@ -38,7 +38,7 @@ export default class VolumeOptions extends React.PureComponent
                 </IconButton>
 
                 <IconButton color="error"
-                    sx={{ display: { xs: 'none', md: 'inline-flex' } }}
+                    sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
                 >
                     <Equalizer />
                 </IconButton>
