@@ -38,7 +38,7 @@ export default class VolumeOptions extends React.PureComponent
                 </IconButton>
 
                 <IconButton color="error"
-                    sx={{ display: { xs: 'none', lg: 'inline-flex' } }}
+                    sx={{ display: { xs: 'none', md: 'inline-flex' } }}
                 >
                     <Equalizer />
                 </IconButton>

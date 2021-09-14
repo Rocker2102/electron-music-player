@@ -105,7 +105,10 @@ export default class App extends React.Component
     }
 
     componentDidMount(): void {
-        if (typeof window.electronBridge?.api === 'undefined') { return }
+        if (typeof window.electronBridge?.api === 'undefined') {
+            App.player = new Player('http://localhost:3000/audio.mp3', {});
+            return;
+        }
 
         window.electronBridge.api.send('PRIMARY_ASYNC', {});
         window.electronBridge.api.send('PRIMARY_SYNC', {});

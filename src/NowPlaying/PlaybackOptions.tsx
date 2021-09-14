@@ -36,10 +36,13 @@ export default class PlaybackOptions extends React.PureComponent
                         <SkipPrevious fontSize="medium" />
                     </IconButton>
 
-                    <IconButton color="primary" size="large" onClick={this.props.togglePlayback}>
+                    <IconButton color="primary" size="large"
+                        onClick={this.props.togglePlayback}
+                    >
                         {
                             this.props.isPlaying
-                                ? <Pause fontSize="large" /> : <PlayArrow fontSize="large" />
+                                ? <Pause fontSize="large" />
+                                : <PlayArrow fontSize="large" />
                         }
                     </IconButton>
 
