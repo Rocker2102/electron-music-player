@@ -21,9 +21,9 @@ export default class VolumeOptions extends React.PureComponent
     render(): ReactNode {
         return <Grid item xs={3} md={2} pr={2} ml="auto" >
             <Stack direction="row" alignItems="center"
-                spacing={{ xs: 0 }} justifyContent='flex-end'
+                spacing={{ xs: 0, lg: 0.5 }} justifyContent='flex-end'
             >
-                <IconButton color="primary" onClick={this.props.handleMuteUpdate}>
+                <IconButton color="primary" onClick={this.props.toggleMute}>
                     {this.props.isMute ? <VolumeOff /> : <VolumeUp />}
                 </IconButton>
 

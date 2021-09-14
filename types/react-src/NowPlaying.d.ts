@@ -7,7 +7,9 @@ declare namespace _NowPlaying {
             current: number,  /* current song status (in seconds) */
             shuffle: boolean,
             isPlaying: boolean,
-            repeatType: 'off' | 'single' | 'on'
+            repeatType: 'off' | 'single' | 'on',
+
+            togglePlayback: () => void
         }
 
         type state = unknown;
@@ -30,7 +32,8 @@ declare namespace _NowPlaying {
         interface props {
             isMute: boolean,
             volume: number,
-            handleMuteUpdate: () => void,
+
+            toggleMute: () => void,
             handleVolumeUpdate: (e: Event, volume: number | number[], activeThumb: number) => void
         }
 
