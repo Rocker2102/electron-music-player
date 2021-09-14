@@ -46,12 +46,13 @@ export default class NowPlaying extends React.PureComponent
 
                 <PlaybackOptions length={this.props.playbackOptions.length}
                     current={this.props.playbackOptions.current}
-                    shuffle={false} isPlaying={false}
+                    shuffle={false} isPlaying={this.props.playbackOptions.isPlaying}
                     repeatType="off"
+                    togglePlayback={this.props.playbackOptions.togglePlayback}
                 />
 
                 <VolumeOptions isMute={this.props.volumeOptions.isMute} volume={5}
-                    handleMuteUpdate={this.props.volumeOptions.handleMuteUpdate}
+                    toggleMute={this.props.volumeOptions.toggleMute}
                     handleVolumeUpdate={this.props.volumeOptions.handleVolumeUpdate} />
             </Grid>
         </Container>;

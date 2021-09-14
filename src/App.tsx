@@ -40,7 +40,8 @@ export default class App extends React.Component
             volumeOptions: {
                 isMute: false,
                 volume: 4,
-                handleMuteUpdate: this.handleMuteUpdate,
+
+                toggleMute: this.toggleMuteBtn,
                 handleVolumeUpdate: this.handleVolumeUpdate
             },
             playbackOptions: {
@@ -48,12 +49,14 @@ export default class App extends React.Component
                 current: 42,
                 shuffle: false,
                 isPlaying: false,
-                repeatType: 'off'
+                repeatType: 'off',
+
+                togglePlayback: this.toggleSongPlayback
             },
         };
     }
 
-    handleMuteUpdate = (): void => {
+    toggleMuteBtn = (): void => {
         const newStatus = ! this.state.volumeOptions.isMute;
 
         if (App?.player?.state() === 'loaded') {
@@ -86,6 +89,21 @@ export default class App extends React.Component
         });
     }
 
+    toggleSongPlayback = (): void => {
+        const newStatus = ! this.state.playbackOptions.isPlaying;
+
+        if (App?.player?.state() === 'loaded') {
+            newStatus ? App.player.play() : App.player.pause();
+        }
+
+        this.setState({
+            playbackOptions: {
+                ...this.state.playbackOptions,
+                isPlaying: newStatus
+            }
+        });
+    }
+
     componentDidMount(): void {
         if (typeof window.electronBridge?.api === 'undefined') { return }
 
@@ -103,19 +121,16 @@ export default class App extends React.Component
                     }
                 });
             }
-            console.log(this.state);
         });
 
         window.electronBridge.api.receive('PRIMARY_SYNC', (event, args) => {
             App.player = new Player(args, {});
             App.player.mute(this.state.volumeOptions.isMute);
-            App.player.play();
         });
     }
 
     componentDidUpdate(): void {
         window.localStorage.setItem(this.lsKey, JSON.stringify(this.state));
-        console.log(new Date, this.state);
         return;
     }
 

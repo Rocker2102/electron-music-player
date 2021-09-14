@@ -5,6 +5,7 @@ import ShuffleOn from '@mui/icons-material/ShuffleOnRounded';
 import Repeat from '@mui/icons-material/RepeatRounded';
 import RepeatOn from '@mui/icons-material/RepeatOnRounded';
 import RepeatOne from '@mui/icons-material/RepeatOneRounded';
+import Pause from '@mui/icons-material/PauseRounded';
 import PlayArrow from '@mui/icons-material/PlayArrowRounded';
 import SkipNext from '@mui/icons-material/SkipNextRounded';
 import SkipPrevious from '@mui/icons-material/SkipPreviousRounded';
@@ -35,8 +36,11 @@ export default class PlaybackOptions extends React.PureComponent
                         <SkipPrevious fontSize="medium" />
                     </IconButton>
 
-                    <IconButton color="primary" size="large">
-                        <PlayArrow fontSize="large" />
+                    <IconButton color="primary" size="large" onClick={this.props.togglePlayback}>
+                        {
+                            this.props.isPlaying
+                                ? <Pause fontSize="large" /> : <PlayArrow fontSize="large" />
+                        }
                     </IconButton>
 
                     <IconButton color="primary" size="large">
