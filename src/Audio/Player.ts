@@ -19,7 +19,7 @@ export default class Player {
     }
 
     /* only starts 'howl' if src is different from previous */
-    start = (src: string, play: boolean = true): Howl => {
+    start = (src: string, play = true): Howl => {
         if (src === this.src) { return this.howl }
 
         /* destroy previous 'howls' */
@@ -43,10 +43,13 @@ export default class Player {
 
     pause = (): Howl => this.howl.pause()
 
+    isPlaying = (): boolean => this.howl.playing()
+
     getVolume = (): number => this.howl.volume()
 
     setVolume = (volume: number): Howl | number => {
         volume < 0 ? volume = 0 : false;
+        /* eslint-disable-next-line keyword-spacing */
         volume > this.volumeSteps ? volume = this.volumeSteps : false;
         volume = (volume / this.volumeSteps);
 
@@ -54,7 +57,7 @@ export default class Player {
         return this.howl.fade(this.howl.volume(), volume, 200);
     }
 
-    mute = (): boolean => this.howl.mute()
+    mute = (status: boolean): Howl => this.howl.mute(status)
 
     getSeek = (): number => this.howl.seek()
 
@@ -63,4 +66,6 @@ export default class Player {
     setLoop = (loop: boolean): Howl => this.howl.loop(loop)
 
     getDuration = (): number => this.howl.duration()
+
+    state = (): 'unloaded' | 'loading' | 'loaded' => this.howl.state()
 }
