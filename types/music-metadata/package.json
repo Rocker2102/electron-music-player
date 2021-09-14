@@ -1,0 +1,5 @@
+{
+  "name": "music-metadata-custom-typings",
+  "version": "1.0.0",
+  "typings": "./index.d.ts"
+}

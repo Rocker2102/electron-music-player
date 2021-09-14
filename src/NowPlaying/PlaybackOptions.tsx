@@ -14,8 +14,6 @@ import Slider from '@mui/material/Slider';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
-import type { _NowPlaying } from '_App';
-
 
 export default class PlaybackOptions extends React.PureComponent
     <_NowPlaying.PlaybackOptions.props, unknown> {

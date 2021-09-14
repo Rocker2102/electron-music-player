@@ -1,8 +1,6 @@
 import { ipcRenderer, contextBridge } from 'electron';
 import config from './Config';
 
-import type { _Electron } from '_Electron';
-
 contextBridge.exposeInMainWorld('electronBridge', {
     config,
     api: {

@@ -1,8 +1,4 @@
-import type { _Electron } from './electron/index';
-
-export {};
-
-declare global {
+declare namespace globalThis {
     interface Window {
         electronBridge: {
             api: _Electron.api

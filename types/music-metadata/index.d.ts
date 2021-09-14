@@ -1,9 +1,12 @@
 import type { IPicture, ICommonTagsResult } from 'music-metadata';
+// <reference path=".music-metadata" />
 
-export type _IPicture = Omit<IPicture, 'data'> & {
-    data: string
-}
+declare namespace _Mm {
+    type _IPicture = Omit<IPicture, 'data'> & {
+        data: string
+    }
 
-export type _ICommonTagsResult = Omit<ICommonTagsResult, 'picture'> & {
-    picture?: _IPicture
+    type _ICommonTagsResult = Omit<ICommonTagsResult, 'picture'> & {
+        picture?: _IPicture
+    }
 }

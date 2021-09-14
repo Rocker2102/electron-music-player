@@ -7,8 +7,6 @@ import SongInfo from './SongInfo';
 import VolumeOptions from './VolumeOptions';
 import PlaybackOptions from './PlaybackOptions';
 
-import type { _NowPlaying } from '_App';
-
 
 export default class NowPlaying extends React.PureComponent
     <_NowPlaying.props, _NowPlaying.state> {
@@ -53,7 +51,8 @@ export default class NowPlaying extends React.PureComponent
                 />
 
                 <VolumeOptions isMute={this.props.volumeOptions.isMute} volume={5}
-                    handleMuteUpdate={this.props.volumeOptions.handleMuteUpdate} />
+                    handleMuteUpdate={this.props.volumeOptions.handleMuteUpdate}
+                    handleVolumeUpdate={this.props.volumeOptions.handleVolumeUpdate} />
             </Grid>
         </Container>;
     }

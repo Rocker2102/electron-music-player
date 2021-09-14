@@ -1,6 +1,4 @@
-import type { Config } from '../../electron/Config'
-
-export declare namespace _Electron {
+declare namespace _Electron {
     type channel = keyof Config['CHANNELS'];
     type sendData = object;
     type receiverHandler = (...args: any) => any;

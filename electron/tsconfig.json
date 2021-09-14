@@ -10,11 +10,18 @@
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "../build/electron",
-    "baseUrl": "../",
-    "paths": {
-      "_Global": ["types/global"],
-      "_Electron": ["types/electron"],
-      "_Music-Metadata": ["types/music-metadata"]
-    }
-  }
+    "typeRoots": [
+      "../types",
+      "../node_modules/@types"
+    ]
+  },
+  "include": [
+    "../electron",
+    "../types"
+  ],
+  "exclude": [
+    "../node_modules",
+    "../tmp",
+    "../dev"
+  ]
 }
