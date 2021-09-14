@@ -31,7 +31,7 @@ declare namespace _NowPlaying {
             isMute: boolean,
             volume: number,
             handleMuteUpdate: () => void,
-            handleVolumeUpdate: (volume: number) => void
+            handleVolumeUpdate: (e: Event, volume: number | number[], activeThumb: number) => void
         }
 
         type state = unknown;

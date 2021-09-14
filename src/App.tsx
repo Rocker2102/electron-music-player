@@ -68,9 +68,14 @@ export default class App extends React.Component
         });
     }
 
-    handleVolumeUpdate = (volume: number): void => {
+    handleVolumeUpdate = (e: Event, volume: number | number[], activeThumb: number): void => {
+        const defaultVolume = 2;
+
+        if (volume instanceof Array) {
+            volume = volume.length > 0 ? volume[0] : defaultVolume;
+        }
         if (App?.player?.state() === 'loaded') {
-            // App.player.mute(newStatus);
+            App.player.setVolume(volume);
         }
 
         this.setState({

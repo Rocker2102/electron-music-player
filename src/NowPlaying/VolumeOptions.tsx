@@ -29,6 +29,7 @@ export default class VolumeOptions extends React.PureComponent
 
                 <Slider size='small' defaultValue={4} min={0} max={15} step={1}
                     valueLabelDisplay='auto'
+                    onChange={this.props.handleVolumeUpdate}
                     sx={{ display: { xs: 'none', lg: 'inline-flex' } }}
                 />
 
