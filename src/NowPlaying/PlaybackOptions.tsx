@@ -18,7 +18,7 @@ import Typography from '@mui/material/Typography';
 
 
 function RepeatButton(props: _NowPlaying.PlaybackOptions.props['repeatType'])
-    : ReactElement<any, any> {
+    : ReactNode {
 
     let icon: ReactElement, title = 'Repeat: ';
 
