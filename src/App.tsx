@@ -3,13 +3,10 @@ import React, { ReactNode } from 'react';
 import Main from './Main/index';
 import NowPlaying from './NowPlaying/index';
 
-import './App.css';
-
 import Player from './Audio/Player';
 
-import type { } from '_Global';
-import type { _App } from '_App';
-import type { _ICommonTagsResult, _IPicture } from '_Music-Metadata';
+import './App.css';
+import { _Mm } from '../types/music-metadata';
 
 
 const defaultMusicArt = 'static/images/kali-square.jpg';
@@ -43,7 +40,8 @@ export default class App extends React.Component
             volumeOptions: {
                 isMute: false,
                 volume: 4,
-                handleMuteUpdate: this.handleMuteUpdate
+                handleMuteUpdate: this.handleMuteUpdate,
+                handleVolumeUpdate: this.handleVolumeUpdate
             },
             playbackOptions: {
                 length: 283,
@@ -70,13 +68,26 @@ export default class App extends React.Component
         });
     }
 
+    handleVolumeUpdate = (volume: number): void => {
+        if (App?.player?.state() === 'loaded') {
+            // App.player.mute(newStatus);
+        }
+
+        this.setState({
+            volumeOptions: {
+                ...this.state.volumeOptions,
+                volume: volume
+            }
+        });
+    }
+
     componentDidMount(): void {
         if (typeof window.electronBridge?.api === 'undefined') { return }
 
         window.electronBridge.api.send('PRIMARY_ASYNC', {});
         window.electronBridge.api.send('PRIMARY_SYNC', {});
 
-        window.electronBridge.api.receive('PRIMARY_ASYNC', (event, args: _ICommonTagsResult) => {
+        window.electronBridge.api.receive('PRIMARY_ASYNC', (event, args: _Mm._ICommonTagsResult) => {
             if (args.picture) {
                 this.setState({
                     songInfo: {

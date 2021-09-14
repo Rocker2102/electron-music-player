@@ -10,8 +10,6 @@ import IconButton from '@mui/material/IconButton';
 import VolumeUp from '@mui/icons-material/VolumeUpOutlined';
 import VolumeOff from '@mui/icons-material/VolumeOffOutlined';
 
-import type { _NowPlaying } from '_App';
-
 
 export default class VolumeOptions extends React.PureComponent
     <_NowPlaying.VolumeOptions.props, unknown> {

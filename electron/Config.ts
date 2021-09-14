@@ -1,14 +1,4 @@
-type Config = {
-    'APP_ENV': 'local' | 'development' | 'production',
-    'APP_PORT': number,
-    'CHANNELS': {
-        'MAIN': string,
-        'PRIMARY_SYNC': string,
-        'PRIMARY_ASYNC': string
-    }
-};
-
-const config = {
+const Config: _Electron.Config = {
     'APP_ENV': 'development',
     'APP_PORT': 3000,
     'CHANNELS': {
@@ -18,5 +8,4 @@ const config = {
     }
 };
 
-export type { Config };
-export default config;
+export default Config;

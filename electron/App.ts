@@ -6,7 +6,7 @@ import config from './Config';
 import Main from './Main';
 import { pictureAsBase64 } from './Utils';
 
-import type { _ICommonTagsResult } from '_Music-Metadata';
+import { _Mm } from '../types/music-metadata';
 
 Main.main(app, BrowserWindow);
 
@@ -19,7 +19,7 @@ ipcMain.on(config.CHANNELS['MAIN'], (event) => {
 
 ipcMain.on(config.CHANNELS['PRIMARY_ASYNC'], (event) => {
     mm.parseFile(path.join(__dirname, '../', 'audio.mp3')).then((data: mm.IAudioMetadata) => {
-        const common: _ICommonTagsResult = {
+        const common: _Mm._ICommonTagsResult = {
             ...data.common,
             picture: pictureAsBase64(data.common.picture ?? null)
         };

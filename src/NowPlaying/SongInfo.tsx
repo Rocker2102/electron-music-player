@@ -7,8 +7,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { formatString } from '../Utils';
 
-import type { _NowPlaying } from '_App';
-
 
 export default class SongInfo extends React.PureComponent
     <_NowPlaying.SongInfo.props, _NowPlaying.SongInfo.state> {

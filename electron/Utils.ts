@@ -1,7 +1,7 @@
+import { _Mm } from '../types/music-metadata';
 import type { IPicture } from 'music-metadata';
-import type { _IPicture } from '_Music-Metadata';
 
-export const pictureAsBase64 = (pictures: IPicture[] | null): _IPicture | undefined => {
+export const pictureAsBase64 = (pictures: IPicture[] | null): _Mm._IPicture | undefined => {
     if (pictures === null || pictures.length === 0) { return undefined }
 
     const picture: IPicture = pictures[0];
