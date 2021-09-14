@@ -38,7 +38,7 @@ export default class NowPlaying extends React.PureComponent
             disableGutters={true} fixed={true} maxWidth={false}
         >
             <Grid container
-                justifyContent={'space-between'} alignItems={'center'}
+                alignItems={'center'}
                 className="gradient-bg" sx={{ maxHeight: `${this.maxHeight}px` }}
             >
                 <SongInfo name={this.props.songInfo.name}
