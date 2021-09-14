@@ -87,7 +87,9 @@ export default class App extends React.Component
         window.electronBridge.api.send('PRIMARY_ASYNC', {});
         window.electronBridge.api.send('PRIMARY_SYNC', {});
 
-        window.electronBridge.api.receive('PRIMARY_ASYNC', (event, args: _Mm._ICommonTagsResult) => {
+        window.electronBridge.api.receive('PRIMARY_ASYNC',
+            (event, args: _Mm._ICommonTagsResult) => {
+
             if (args.picture) {
                 this.setState({
                     songInfo: {
@@ -97,7 +99,6 @@ export default class App extends React.Component
                 });
             }
             console.log(this.state);
-            console.log(args);
         });
 
         window.electronBridge.api.receive('PRIMARY_SYNC', (event, args) => {
