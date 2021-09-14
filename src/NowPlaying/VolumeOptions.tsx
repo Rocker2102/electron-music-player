@@ -6,7 +6,6 @@ import Equalizer from '@mui/icons-material/EqualizerRounded';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Slider from '@mui/material/Slider';
-import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import VolumeUp from '@mui/icons-material/VolumeUpOutlined';
 import VolumeOff from '@mui/icons-material/VolumeOffOutlined';
@@ -30,11 +29,9 @@ export default class VolumeOptions extends React.PureComponent
             tooltip = 'Click to unmute';
         }
 
-        return <Tooltip title={tooltip}>
-            <IconButton color="primary">
-                {volumeBtn}
-            </IconButton>
-        </Tooltip>;
+        return <IconButton color="primary">
+            {volumeBtn}
+        </IconButton>;
     }
 
     render(): ReactNode {
@@ -49,19 +46,15 @@ export default class VolumeOptions extends React.PureComponent
                     sx={{ display: { xs: 'none', lg: 'inline-flex' } }}
                 />
 
-                <Tooltip title="Open Settings">
-                    <IconButton color="error">
-                        <Settings />
-                    </IconButton>
-                </Tooltip>
+                <IconButton color="error">
+                    <Settings />
+                </IconButton>
 
-                <Tooltip title="Equalizer">
-                    <IconButton color="error"
-                        sx={{ display: { xs: 'none', lg: 'inline-flex' } }}
-                    >
-                        <Equalizer />
-                    </IconButton>
-                </Tooltip>
+                <IconButton color="error"
+                    sx={{ display: { xs: 'none', lg: 'inline-flex' } }}
+                >
+                    <Equalizer />
+                </IconButton>
             </Stack>
         </Grid>;
     }
