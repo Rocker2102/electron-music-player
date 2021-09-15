@@ -16,6 +16,7 @@ export default class App extends React.Component
 
     static player: Player;
     private lsKey = 'AppState';
+    private seekSliderInterval: undefined | number = undefined;
 
     constructor(props: unknown) {
         super(props);
@@ -34,16 +35,16 @@ export default class App extends React.Component
         App.player = new Player('any-incorrect-location-to-init-howler', {});
 
         App.player.setHandlers({
-            end: this.songEnded,
             load: this.songLoaded,
-            play: this.songPlayed,
             loadError: this.songLoadError,
-            playError: this.songPlayError
-        }, true);
 
-        setTimeout(() => {
-            App.player.start('http://localhost:3000/audio.mp3', false);
-        }, 5000);
+            play: this.songPlayed,
+            playError: this.songPlayError,
+
+            end: this.songEnded,
+            stop: this.songStopped,
+            pause: this.songPaused,
+        }, true);
 
         this.state = {
             isLoading: true,
@@ -59,8 +60,8 @@ export default class App extends React.Component
                 handleVolumeUpdate: this.handleVolumeUpdate
             },
             playbackOptions: {
-                length: 283,
-                current: 42,
+                length: 0,
+                current: 0,
                 shuffle: false,
                 isPlaying: false,
                 repeatType: 'off',
@@ -153,7 +154,12 @@ export default class App extends React.Component
 
     songLoaded = (): void => {
         this.setState({
-            isLoading: false
+            isLoading: false,
+            playbackOptions: {
+                ...this.state.playbackOptions,
+                length: App.player.getDuration(),
+                current: 0
+            }
         });
 
         console.log('Loaded song! Duration', App.player.getDuration());
@@ -164,7 +170,18 @@ export default class App extends React.Component
     }
 
     songPlayed = (): void => {
-        console.log('Playing song... Seek');
+        console.log('Playing song...');
+
+        const refreshRate = 2;
+
+        this.seekSliderInterval = window.setInterval(() => {
+            this.setState({
+                playbackOptions: {
+                    ...this.state.playbackOptions,
+                    current: App.player.getSeek()
+                }
+            });
+        }, 1000 / refreshRate);
     }
 
     songPlayError = (): void => {
@@ -173,6 +190,42 @@ export default class App extends React.Component
     }
 
     songEnded = (): void => {
+        console.log('Song ended');
+
+        setTimeout(() => {
+            App.player.start('http://localhost:3000/audio_.mp3', false);
+        }, 2000);
+
+        this.setState({
+            playbackOptions: {
+                ...this.state.playbackOptions,
+                isPlaying: false
+            }
+        });
+    }
+
+    songStopped = (): void => {
+        console.log('Stopped');
+
+        if (typeof this.seekSliderInterval !== 'undefined') {
+            clearInterval(this.seekSliderInterval);
+        }
+
+        this.setState({
+            playbackOptions: {
+                ...this.state.playbackOptions,
+                isPlaying: false
+            }
+        });
+    }
+
+    songPaused = (): void => {
+        console.log('Song paused');
+
+        if (typeof this.seekSliderInterval !== 'undefined') {
+            clearInterval(this.seekSliderInterval);
+        }
+
         this.setState({
             playbackOptions: {
                 ...this.state.playbackOptions,
@@ -183,7 +236,9 @@ export default class App extends React.Component
 
     componentDidMount(): void {
         if (typeof window.electronBridge?.api === 'undefined') {
-            // App.player = new Player('http://localhost:3000/audio.mp3', {});
+            setTimeout(() => {
+                App.player.start('http://localhost:3000/audio.mp3', false);
+            }, 2000);
             return;
         }
 
@@ -204,7 +259,9 @@ export default class App extends React.Component
         });
 
         window.electronBridge.api.receive('PRIMARY_SYNC', (event, args) => {
-            App.player.start(args, false);
+            setTimeout(() => {
+                App.player.start(args, false);
+            }, 2000);
         });
     }
 

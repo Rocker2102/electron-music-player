@@ -17,6 +17,8 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
+import { formatTime } from '../Utils';
+
 
 function RepeatButton(props: _NowPlaying.PlaybackOptions.props['repeatType'])
     : ReactNode {
@@ -95,15 +97,20 @@ export default class PlaybackOptions extends React.PureComponent
                 <Grid item xs={12} mx={4} sx={{ display: 'flex',
                     justifyContent: 'center', alignItems: 'center' }}
                 >
-                    <Slider size='small' defaultValue={30} min={0} max={100}
-                        disabled={this.props.isLoading !== false} />
+                    <Slider size='small'
+                        min={0} max={100}
+                        value={(this.props.current / this.props.length) * 100}
+                        disabled={this.props.isLoading !== false}
+                    />
                 </Grid>
 
                 <Grid item xs={12} mx={4} mt={-1} mb={0.5} sx={{ display: 'flex',
                     alignItems: 'flex-start', justifyContent: 'space-between' }}
                 >
-                    <Typography variant="subtitle2" color="text.secondary">0:00</Typography>
-                    <Typography variant="subtitle2" color="text.secondary">0:00</Typography>
+                    <Typography variant="subtitle2" color="text.secondary">
+                        {formatTime(this.props.current)}</Typography>
+                    <Typography variant="subtitle2" color="text.secondary">
+                        {formatTime(this.props.length)}</Typography>
                 </Grid>
             </Grid>
         </Grid>;
