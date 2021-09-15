@@ -7,6 +7,7 @@ declare namespace _NowPlaying {
             current: number,  /* current song status (in seconds) */
             shuffle: boolean,
             isPlaying: boolean,
+            isLoading?: _NowPlaying.props['isLoading']
             repeatType: 'off' | 'single' | 'on',
 
             toggleRepeat: () => void,
@@ -44,6 +45,7 @@ declare namespace _NowPlaying {
     }
 
     interface props {
+        isLoading: _App.state['isLoading'],
         songInfo: SongInfo.props,
         playbackOptions: PlaybackOptions.props,
         volumeOptions: VolumeOptions.props

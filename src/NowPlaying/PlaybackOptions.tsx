@@ -10,6 +10,7 @@ import PlayArrow from '@mui/icons-material/PlayArrowRounded';
 import SkipNext from '@mui/icons-material/SkipNextRounded';
 import SkipPrevious from '@mui/icons-material/SkipPreviousRounded';
 
+import Fab from '@mui/material/Fab';
 import Grid from '@mui/material/Grid';
 import Slider from '@mui/material/Slider';
 import Tooltip from '@mui/material/Tooltip';
@@ -50,7 +51,7 @@ export default class PlaybackOptions extends React.PureComponent
     }
 
     render(): ReactNode {
-        return <Grid item xs={5} sm={4} >
+        return <Grid item xs={5} sm={4} pt={1} pb={0.5} >
             <Grid container >
                 <Grid item xs={12} sx={{ textAlign: 'center' }}>
                     <IconButton color="primary" sx={{
@@ -68,15 +69,16 @@ export default class PlaybackOptions extends React.PureComponent
                         <SkipPrevious fontSize="medium" />
                     </IconButton>
 
-                    <IconButton color="primary" size="large"
+                    <Fab color="primary" size="large"
                         onClick={this.props.togglePlayback}
+                        disabled={this.props.isLoading !== false}
                     >
                         {
                             this.props.isPlaying
                                 ? <Pause fontSize="large" />
                                 : <PlayArrow fontSize="large" />
                         }
-                    </IconButton>
+                    </Fab>
 
                     <IconButton color="primary" size="large">
                         <SkipNext fontSize="medium" />
@@ -93,7 +95,8 @@ export default class PlaybackOptions extends React.PureComponent
                 <Grid item xs={12} mx={4} sx={{ display: 'flex',
                     justifyContent: 'center', alignItems: 'center' }}
                 >
-                    <Slider size='small' defaultValue={30} min={0} max={100} />
+                    <Slider size='small' defaultValue={30} min={0} max={100}
+                        disabled={this.props.isLoading !== false} />
                 </Grid>
 
                 <Grid item xs={12} mx={4} mt={-1} mb={0.5} sx={{ display: 'flex',
