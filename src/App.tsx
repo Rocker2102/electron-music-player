@@ -31,6 +31,20 @@ export default class App extends React.Component
             console.log(e);
         }
 
+        App.player = new Player('any-incorrect-location-to-init-howler', {});
+
+        App.player.setHandlers({
+            end: this.songEnded,
+            load: this.songLoaded,
+            play: this.songPlayed,
+            loadError: this.songLoadError,
+            playError: this.songPlayError
+        }, true);
+
+        setTimeout(() => {
+            App.player.start('http://localhost:3000/audio.mp3', false);
+        }, 5000);
+
         this.state = {
             isLoading: true,
             songInfo: {
@@ -137,9 +151,39 @@ export default class App extends React.Component
         });
     }
 
+    songLoaded = (): void => {
+        this.setState({
+            isLoading: false
+        });
+
+        console.log('Loaded song! Duration', App.player.getDuration());
+    }
+
+    songLoadError = (): void => {
+        console.log('Failed to load song!');
+    }
+
+    songPlayed = (): void => {
+        console.log('Playing song... Seek');
+    }
+
+    songPlayError = (): void => {
+        this.songEnded();
+        console.log('Failed to play song!');
+    }
+
+    songEnded = (): void => {
+        this.setState({
+            playbackOptions: {
+                ...this.state.playbackOptions,
+                isPlaying: false
+            }
+        });
+    }
+
     componentDidMount(): void {
         if (typeof window.electronBridge?.api === 'undefined') {
-            App.player = new Player('http://localhost:3000/audio.mp3', {});
+            // App.player = new Player('http://localhost:3000/audio.mp3', {});
             return;
         }
 
@@ -160,8 +204,7 @@ export default class App extends React.Component
         });
 
         window.electronBridge.api.receive('PRIMARY_SYNC', (event, args) => {
-            App.player = new Player(args, {});
-            App.player.mute(this.state.volumeOptions.isMute);
+            App.player.start(args, false);
         });
     }
 
@@ -173,8 +216,12 @@ export default class App extends React.Component
     render(): ReactNode {
         return <React.StrictMode>
             <Main />
-            <NowPlaying songInfo={this.state.songInfo} volumeOptions={this.state.volumeOptions}
-                playbackOptions={this.state.playbackOptions} />
+            <NowPlaying
+                isLoading={this.state.isLoading}
+                songInfo={this.state.songInfo}
+                volumeOptions={this.state.volumeOptions}
+                playbackOptions={this.state.playbackOptions}
+            />
         </React.StrictMode>;
     }
 }
