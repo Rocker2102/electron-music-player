@@ -1,13 +1,17 @@
 import { Howl, HowlOptions } from 'howler';
 
+type HandlerFn = () => void;
+
 type HandlerOptions = {
-    load?: undefined | (() => void),
-    loadError?: undefined | (() => void),
+    load?: undefined | HandlerFn,
+    loadError?: undefined | HandlerFn,
 
-    play?: undefined | (() => void),
-    playError?: undefined | (() => void),
+    play?: undefined | HandlerFn,
+    playError?: undefined | HandlerFn,
 
-    end?: undefined | (() => void)
+    end?: undefined | HandlerFn,
+    stop?: undefined | HandlerFn,
+    pause?: undefined | HandlerFn
 }
 
 /**
@@ -114,6 +118,8 @@ export default class Player {
             ? this.handlers.playError = handlers.playError : false;
 
         typeof handlers.end !== 'undefined' ? this.handlers.end = handlers.end : false;
+        typeof handlers.stop !== 'undefined' ? this.handlers.stop = handlers.stop : false;
+        typeof handlers.pause !== 'undefined' ? this.handlers.pause = handlers.pause : false;
 
         register ? this.registerHandlers() : false;
     }
@@ -131,5 +137,9 @@ export default class Player {
 
         typeof this.handlers.end !== 'undefined'
             ? this.howl.on('end', this.handlers.end) : false;
+        typeof this.handlers.stop !== 'undefined'
+            ? this.howl.on('stop', this.handlers.stop) : false;
+        typeof this.handlers.pause !== 'undefined'
+            ? this.howl.on('pause', this.handlers.pause) : false;
     }
 }
