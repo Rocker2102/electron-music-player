@@ -9,10 +9,10 @@ export const formatTime = (seconds: number): string => {
 
     let str = '';
     if (hours > 0) {
-        str += (hours < 10 ? '0' + hours.toString() : hours) + ':';
+        str += (hours < 10 ? '0' + hours : hours) + ':';
     }
-    str += (minutes < 10 ? '0' + minutes.toString() : minutes) + ':';
-    str += (_seconds < 10 ? '0' + _seconds.toString() : _seconds);
+    str += (minutes < 10 ? '0' + minutes : minutes) + ':';
+    str += (_seconds < 10 ? '0' + _seconds : _seconds);
 
     return str;
 }
