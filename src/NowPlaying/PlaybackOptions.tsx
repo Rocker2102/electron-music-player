@@ -99,7 +99,9 @@ export default class PlaybackOptions extends React.PureComponent
                 >
                     <Slider size='small'
                         min={0} max={100}
-                        value={(this.props.current / this.props.length) * 100}
+                        value={(typeof this.props.current === 'number'
+                        && ! (this.props.length === 0))
+                            ? (this.props.current / this.props.length) * 100 : 0}
                         disabled={this.props.isLoading !== false}
                     />
                 </Grid>
