@@ -152,6 +152,15 @@ export default class App extends React.Component
         });
     }
 
+    setSongSeekToCurrent = (): void => {
+        this.setState({
+            playbackOptions: {
+                ...this.state.playbackOptions,
+                current: App.player.getSeek()
+            }
+        });
+    }
+
     songLoaded = (): void => {
         this.setState({
             isLoading: false,
@@ -172,16 +181,19 @@ export default class App extends React.Component
     songPlayed = (): void => {
         console.log('Playing song...');
 
-        const refreshRate = 2;
+        /**
+         * setting a refresh rate such that (1000 / refreshRate) > animationDuration
+         * will cause sudden bounce of sliderThumb when pausing & playing.
+         * won't be noticed if value is below 10 - 15
+         * default animationDuration = 150ms
+         */
+        const refreshRate = 1000 / 150;
 
-        this.seekSliderInterval = window.setInterval(() => {
-            this.setState({
-                playbackOptions: {
-                    ...this.state.playbackOptions,
-                    current: App.player.getSeek()
-                }
-            });
-        }, 1000 / refreshRate);
+        /* immediatley change the seekvalue as well as setInterval to modify it */
+        this.setSongSeekToCurrent();
+
+        this.seekSliderInterval = window.setInterval(
+            this.setSongSeekToCurrent, 1000 / refreshRate);
     }
 
     songPlayError = (): void => {
