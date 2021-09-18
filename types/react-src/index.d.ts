@@ -10,4 +10,17 @@ declare namespace _App {
         volumeOptions: _NowPlaying.VolumeOptions.props,
         playbackOptions: _NowPlaying.PlaybackOptions.props
     }
+
+    namespace Library {
+        interface Song {
+            src: string,
+            name: string,
+            year?: number,
+            album?: string,
+            genre?: string,
+            other?: string | string[],
+            artist: string | string[],
+            length: number
+        }
+    }
 }
