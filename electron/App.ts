@@ -21,7 +21,7 @@ ipcMain.on(config.CHANNELS['PRIMARY_ASYNC'], (event) => {
     mm.parseFile(path.join(__dirname, '../', 'audio.mp3')).then((data: mm.IAudioMetadata) => {
         const common: _Mm._ICommonTagsResult = {
             ...data.common,
-            picture: pictureAsBase64(data.common.picture ?? null)
+            picture: pictureAsBase64(mm.selectCover(data.common.picture) ?? null)
         };
 
         event.sender.send(config.CHANNELS['PRIMARY_ASYNC'], common);
