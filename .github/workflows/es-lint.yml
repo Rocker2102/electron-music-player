@@ -1,7 +1,5 @@
 name: Lint Action
 
-uses: wearerequired/lint-action@v1.10.0
-
 on:
   # Trigger the workflow on push or pull request,
   # but only for the main branch
