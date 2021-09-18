@@ -15,7 +15,7 @@ type HandlerOptions = {
 }
 
 /**
- * Wrapper class aroud audio driver (Howler)
+ * Wrapper class around audio driver (Howler)
  */
 export default class Player {
     private src: string;
