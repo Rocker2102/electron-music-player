@@ -28,4 +28,4 @@ jobs:
         run: npm ci
 
       - name: Check lint
-        run: eslint . --ext .js,.ts,.tsx
+        run: ./node_modules/.bin/eslint . --ext .js,.ts,.tsx
