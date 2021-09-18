@@ -41,6 +41,8 @@ export default class Player {
     start = (src: string, play = true): Howl => {
         if (src === this.src) { return this.howl }
 
+        this.stop();
+
         /* remove all listeners */
         this.howl.off();
 
