@@ -26,7 +26,6 @@ ipcMain.on(config.CHANNELS['PRIMARY_ASYNC'], (event) => {
 
         event.sender.send(config.CHANNELS['PRIMARY_ASYNC'], common);
     }).catch(err => {
-        /* eslint-disable-next-line no-console */
         console.log(err);
     });
 });
