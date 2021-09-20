@@ -10,6 +10,8 @@ import './App.css';
 import { _Mm } from '../types/music-metadata';
 
 
+type Song = _App.Library.Song;
+
 const defaultMusicArt = 'static/images/kali-square.jpg';
 
 export default class App extends React.Component
@@ -297,7 +299,7 @@ export default class App extends React.Component
 
         this.setState({ isLoading: true });
 
-        const song = this.state.playbackOptions.shuffle
+        const song: Song = this.state.playbackOptions.shuffle
             ? this.library.getRandom() : this.library.previous();
         App.player.start(song.src, this.state.playbackOptions.isPlaying);
     }
@@ -305,7 +307,7 @@ export default class App extends React.Component
     playNextSong = (): void => {
         this.setState({ isLoading: true });
 
-        const song = this.state.playbackOptions.shuffle
+        const song: Song = this.state.playbackOptions.shuffle
             ? this.library.getRandom() : this.library.next();
         App.player.start(song.src, this.state.playbackOptions.isPlaying);
     }
