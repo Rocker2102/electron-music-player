@@ -39,7 +39,10 @@ export default class Player {
 
     /* only starts 'howl' if src is different from previous */
     start = (src: string, play = true): Howl => {
-        if (src === this.src) { return this.howl }
+        if (src === this.src) {
+            this.setSeek(0);
+            return this.howl;
+        }
 
         this.stop();
 
