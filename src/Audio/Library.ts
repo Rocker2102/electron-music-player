@@ -12,6 +12,15 @@ export default class Library {
         return this.list;
     }
 
+    getCurrent = (): Song => {
+        return this.list[this.currentSongIndex];
+    }
+
+    getRandom = (): Song => {
+        const random = Math.floor(Math.random() * 100) % this.list.length;
+        return this.setSong(random);
+    }
+
     next = (): Song => {
        return this.setSong(this.currentSongIndex + 1);
     }
@@ -26,10 +35,6 @@ export default class Library {
 
     hasPrevious = (): boolean => {
         return this.currentSongIndex > 0;
-    }
-
-    getCurrent = (): Song => {
-        return this.list[this.currentSongIndex];
     }
 
     setSong = (index: number): Song => {
