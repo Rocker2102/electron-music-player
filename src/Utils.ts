@@ -16,3 +16,8 @@ export const formatTime = (seconds: number): string => {
 
     return str;
 }
+
+export const getPercent = (value: number, total: number, precision: number = 2): number => {
+    if (total === 0) { return 0 }
+    return Number(((value / total) * 100).toFixed(precision));
+}
