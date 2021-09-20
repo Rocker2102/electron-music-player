@@ -50,6 +50,7 @@ export default class NowPlaying extends React.PureComponent
                     isPlaying={this.props.playbackOptions.isPlaying}
                     isLoading={this.props.isLoading}
                     repeatType={this.props.playbackOptions.repeatType}
+                    handleSeek={this.props.playbackOptions.handleSeek}
                     toggleRepeat={this.props.playbackOptions.toggleRepeat}
                     toggleShuffle={this.props.playbackOptions.toggleShuffle}
                     togglePlayback={this.props.playbackOptions.togglePlayback}

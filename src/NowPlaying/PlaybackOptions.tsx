@@ -17,7 +17,7 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
-import { formatTime } from '../Utils';
+import { formatTime, getPercent } from '../Utils';
 
 
 function RepeatButton(props: _NowPlaying.PlaybackOptions.props['repeatType'])
@@ -46,10 +46,40 @@ function RepeatButton(props: _NowPlaying.PlaybackOptions.props['repeatType'])
 }
 
 export default class PlaybackOptions extends React.PureComponent
-    <_NowPlaying.PlaybackOptions.props, unknown> {
+    <_NowPlaying.PlaybackOptions.props, _NowPlaying.PlaybackOptions.state> {
 
     constructor(props: _NowPlaying.PlaybackOptions.props) {
         super(props);
+
+        this.state = {
+            sliderVal: null
+        };
+    }
+
+    labelFormat = (time: number): string => {
+        return formatTime((time / 100) * this.props.length);
+    }
+
+    handleChange = (e: Event, value: number | number[]): void => {
+        if (value instanceof Array) {
+            value = value.length > 0 ? value[0] : 0;
+        }
+
+        this.setState({
+            sliderVal: value
+        });
+    }
+
+    handleCommittedChange = (e: any, value: number | number[]): void => {
+        if (value instanceof Array) {
+            value = value.length > 0 ? value[0] : 0;
+        }
+
+        this.setState({
+            sliderVal: null
+        });
+
+        this.props.handleSeek((value / 100) * this.props.length);
     }
 
     render(): ReactNode {
@@ -99,9 +129,12 @@ export default class PlaybackOptions extends React.PureComponent
                 >
                     <Slider size='small'
                         min={0} max={100}
-                        value={(typeof this.props.current === 'number'
-                        && ! (this.props.length === 0))
-                            ? (this.props.current / this.props.length) * 100 : 0}
+                        onChange={this.handleChange}
+                        onChangeCommitted={this.handleCommittedChange}
+                        valueLabelFormat={this.labelFormat}
+                        valueLabelDisplay="auto"
+                        value={this.state.sliderVal
+                            ?? getPercent(this.props.current, this.props.length)}
                         disabled={this.props.isLoading !== false}
                     />
                 </Grid>

@@ -10,12 +10,15 @@ declare namespace _NowPlaying {
             isLoading?: _NowPlaying.props['isLoading']
             repeatType: 'off' | 'single' | 'on',
 
+            handleSeek: (seconds: number) => void,
             toggleRepeat: () => void,
             toggleShuffle: () => void,
             togglePlayback: () => void,
         }
 
-        type state = unknown;
+        interface state {
+            sliderVal: null | number
+        }
     }
 
     namespace SongInfo {
@@ -37,8 +40,7 @@ declare namespace _NowPlaying {
             volume: number,
 
             toggleMute: () => void,
-            handleVolumeUpdate: (e: Event, volume: number | number[],
-                activeThumb: number) => void
+            handleVolumeUpdate: (e: Event, volume: number | number[]) => void
         }
 
         type state = unknown;

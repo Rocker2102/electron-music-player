@@ -66,6 +66,7 @@ export default class App extends React.Component
                 isPlaying: false,
                 repeatType: 'off',
 
+                handleSeek: this.handleSongSeek,
                 toggleRepeat: this.toggleSongRepeat,
                 toggleShuffle: this.toggleSongShuffle,
                 togglePlayback: this.toggleSongPlayback
@@ -88,7 +89,7 @@ export default class App extends React.Component
         });
     }
 
-    handleVolumeUpdate = (e: Event, volume: number | number[], activeThumb: number): void => {
+    handleVolumeUpdate = (e: Event, volume: number | number[]): void => {
         const defaultVolume = 2;
 
         if (volume instanceof Array) {
@@ -148,6 +149,19 @@ export default class App extends React.Component
             playbackOptions: {
                 ...this.state.playbackOptions,
                 isPlaying: newStatus
+            }
+        });
+    }
+
+    handleSongSeek = (seconds: number): void => {
+        if (App?.player?.state() === 'loaded') {
+            App.player.setSeek(seconds);
+        }
+
+        this.setState({
+            playbackOptions: {
+                ...this.state.playbackOptions,
+                current: seconds
             }
         });
     }
