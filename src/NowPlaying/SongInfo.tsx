@@ -11,10 +11,6 @@ import { formatString } from '../Utils';
 export default class SongInfo extends React.PureComponent
     <_NowPlaying.SongInfo.props, _NowPlaying.SongInfo.state> {
 
-    constructor(props: _NowPlaying.SongInfo.props) {
-        super(props);
-    }
-
     render(): ReactNode {
         return <Grid item xs={4} zeroMinWidth>
             <Box sx={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
