@@ -41,6 +41,7 @@ export default class Player {
     start = (src: string, play = true): Howl => {
         if (src === this.src) {
             this.setSeek(0);
+            this.play();
             return this.howl;
         }
 
