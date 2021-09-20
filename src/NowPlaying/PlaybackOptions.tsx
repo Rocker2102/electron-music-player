@@ -70,7 +70,7 @@ export default class PlaybackOptions extends React.PureComponent
         });
     }
 
-    handleCommittedChange = (e: any, value: number | number[]): void => {
+    handleCommittedChange = (e: unknown, value: number | number[]): void => {
         if (value instanceof Array) {
             value = value.length > 0 ? value[0] : 0;
         }
