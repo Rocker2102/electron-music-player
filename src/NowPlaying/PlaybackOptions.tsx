@@ -20,6 +20,11 @@ import Typography from '@mui/material/Typography';
 import { formatTime, getPercent } from '../Utils';
 
 
+/**
+ * Returns appropriate icon + tooltip according to currently set repeat type
+ * @param props
+ * @returns ReactNode
+ */
 function RepeatButton(props: _NowPlaying.PlaybackOptions.props['repeatType'])
     : ReactNode {
 

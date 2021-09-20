@@ -12,14 +12,26 @@ import { _Mm } from '../types/music-metadata';
 
 type Song = _App.Library.Song;
 
-const defaultMusicArt = 'static/images/kali-square.jpg';
+/* This default cover image is displayed if none is found in song metadata */
+const defaultMusicArt = 'static/images/now-playing-default.png';
 
+/**
+ * Base App class. All primary states are managed here
+ * Any custom themes which are to be shared globally used be applied here
+ */
 export default class App extends React.Component
     <unknown, _App.state> {
 
+    /* Howler player, manages sound output */
     static player: Player;
+
+    /* Core library, manages song list */
     private library: Library;
+
+    /* LocalStorage key, all local data is stored under this name (key) */
     private lsKey = 'AppState';
+
+    /* Song seek slider interval number is stored in this */
     private seekSliderInterval: undefined | number = undefined;
 
     constructor(props: unknown) {
@@ -59,6 +71,7 @@ export default class App extends React.Component
             console.log(e);
         }
 
+        /* Set & register howler player event handlers */
         App.player.setHandlers({
             load: this.songLoaded,
             loadError: this.songLoadError,
@@ -71,6 +84,7 @@ export default class App extends React.Component
             pause: this.songPaused,
         }, true);
 
+        /* App init/default state */
         this.state = {
             isLoading: true,
             songInfo: {
@@ -230,6 +244,9 @@ export default class App extends React.Component
     songPlayed = (): void => {
         console.log('Playing song...');
 
+        /* Just to prevent UI glitches when clicking buttons quickly (< 10ms) */
+        this.setState({ isLoading: false });
+
         /**
          * setting a refresh rate such that (1000 / refreshRate) > animationDuration
          * will cause sudden bounce of sliderThumb when pausing & playing.
@@ -290,7 +307,7 @@ export default class App extends React.Component
 
     playPrevSong = (): void => {
         /**
-         * Jump to previous song only if song seek < 10 seconds
+         * Jump to previous song only if song seek < 10 seconds, else replay current from 0
          */
         if (App.player?.state() === 'loaded' && App.player?.getSeek() > 10) {
             App.player.setSeek(0);
@@ -343,6 +360,10 @@ export default class App extends React.Component
         });
     }
 
+    /**
+     * Auto-store data locally whenever root component is updated
+     * @returns void
+     */
     componentDidUpdate(): void {
         window.localStorage.setItem(this.lsKey, JSON.stringify(this.state));
         return;

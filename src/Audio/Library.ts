@@ -1,5 +1,9 @@
 type Song = _App.Library.Song;
 
+/**
+ * Responsible for managing current playing playlist
+ * Contains important methods
+ */
 export default class Library {
     private list!: Song[];
     private currentSongIndex = 0;
