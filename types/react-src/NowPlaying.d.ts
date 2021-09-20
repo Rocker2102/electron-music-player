@@ -1,14 +1,15 @@
 declare namespace _NowPlaying {
     namespace PlaybackOptions {
         interface props {
-            next?: undefined | string,  /* next song path */
-            prev?: undefined | string,  /* previous song path */
             length: number,  /* song duration (in seconds) */
             current: number,  /* current song status (in seconds) */
             shuffle: boolean,
             isPlaying: boolean,
             isLoading?: _NowPlaying.props['isLoading']
             repeatType: 'off' | 'single' | 'on',
+
+            handlePrev: () => void,
+            handleNext: () => void,
 
             handleSeek: (seconds: number) => void,
             toggleRepeat: () => void,

@@ -97,7 +97,9 @@ export default class PlaybackOptions extends React.PureComponent
                         }
                     </IconButton>
 
-                    <IconButton color="primary">
+                    <IconButton color="primary"
+                        onClick={this.props.handlePrev}
+                    >
                         <SkipPrevious fontSize="medium" />
                     </IconButton>
 
@@ -112,7 +114,9 @@ export default class PlaybackOptions extends React.PureComponent
                         }
                     </Fab>
 
-                    <IconButton color="primary" size="large">
+                    <IconButton color="primary"
+                        onClick={this.props.handleNext}
+                    >
                         <SkipNext fontSize="medium" />
                     </IconButton>
 
