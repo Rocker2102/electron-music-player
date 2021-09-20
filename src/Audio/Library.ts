@@ -1,11 +1,15 @@
-interface Song extends _App.Library.Song { };
+type Song = _App.Library.Song;
 
-export default class Libary {
+export default class Library {
     private list!: Song[];
     private currentSongIndex = 0;
 
-    constructor() {
+    constructor(songs: Song[]) {
+        this.list = songs;
+    }
 
+    currentList = (): Song[] => {
+        return this.list;
     }
 
     next = (): Song => {
@@ -30,9 +34,10 @@ export default class Libary {
 
     setSong = (index: number): Song => {
         const listLength = this.list.length;
+
         if (index < 0) {
             this.currentSongIndex = (listLength - (-(index))) % listLength;
-        } else if (index > listLength) {
+        } else if (index >= listLength) {
             this.currentSongIndex = (listLength + index) % listLength;
         } else {
             this.currentSongIndex = index;
