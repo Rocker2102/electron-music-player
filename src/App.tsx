@@ -72,7 +72,7 @@ export default class App extends React.Component
         this.state = {
             isLoading: true,
             songInfo: {
-                name: 'Song Name (maybe large, therefore truncated)',
+                name: '',
                 picture: null
             },
             volumeOptions: {
@@ -201,8 +201,16 @@ export default class App extends React.Component
     }
 
     songLoaded = (): void => {
+        const currentSong = this.library.getCurrent();
+
         this.setState({
             isLoading: false,
+            songInfo: {
+                name: currentSong.name,
+                other: currentSong.other,
+                artist: currentSong.artist,
+                picture: null
+            },
             playbackOptions: {
                 ...this.state.playbackOptions,
                 length: App.player.getDuration(),
@@ -243,11 +251,14 @@ export default class App extends React.Component
     songEnded = (): void => {
         console.log('Song ended');
 
-        /* TODO: set isPlaying to false if next song is not present */
+        if (this.state.playbackOptions.repeatType !== 'off') {
+            this.playNextSong();
+        }
+
         this.setState({
             playbackOptions: {
                 ...this.state.playbackOptions,
-                isPlaying: this.state.playbackOptions.repeatType !== 'off'
+                isPlaying: [ 'on', 'single' ].includes(this.state.playbackOptions.repeatType)
             }
         });
     }
@@ -276,17 +287,27 @@ export default class App extends React.Component
     }
 
     playPrevSong = (): void => {
+        /**
+         * Jump to previous song only if song seek < 10 seconds
+         */
+        if (App.player?.state() === 'loaded' && App.player?.getSeek() > 10) {
+            App.player.setSeek(0);
+            return;
+        }
+
         this.setState({ isLoading: true });
 
-        const prev = this.library.previous();
-        App.player.start(prev.src, this.state.playbackOptions.isPlaying);
+        const song = this.state.playbackOptions.shuffle
+            ? this.library.getRandom() : this.library.previous();
+        App.player.start(song.src, this.state.playbackOptions.isPlaying);
     }
 
     playNextSong = (): void => {
         this.setState({ isLoading: true });
 
-        const next = this.library.next();
-        App.player.start(next.src, this.state.playbackOptions.isPlaying);
+        const song = this.state.playbackOptions.shuffle
+            ? this.library.getRandom() : this.library.next();
+        App.player.start(song.src, this.state.playbackOptions.isPlaying);
     }
 
     componentDidMount(): void {
