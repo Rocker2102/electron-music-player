@@ -9,7 +9,7 @@
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@mui/icons-material": "^5.0.0-rc.1",
-    "@mui/material": "^5.0.0-rc.1",
+    "@mui/material": "^5.0.0",
     "howler": "^2.2.3",
     "music-metadata": "^7.11.4",
     "nedb": "^1.8.0",
