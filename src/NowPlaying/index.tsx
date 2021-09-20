@@ -37,31 +37,16 @@ export default class NowPlaying extends React.PureComponent
         >
             <Grid container
                 alignItems={'center'}
-                className="gradient-bg" sx={{ maxHeight: `${this.maxHeight}px` }}
+                className="gradient-bg" sx={{ maxHeight: this.maxHeight }}
             >
-                <SongInfo name={this.props.songInfo.name}
-                    picture={this.props.songInfo.picture} height={this.state.height}
-                    other="Other Info"
-                />
+                <SongInfo {...this.props.songInfo} height={this.state.height} />
 
-                <PlaybackOptions length={this.props.playbackOptions.length}
-                    current={this.props.playbackOptions.current}
-                    shuffle={this.props.playbackOptions.shuffle}
-                    isPlaying={this.props.playbackOptions.isPlaying}
+                <PlaybackOptions
+                    {...this.props.playbackOptions}
                     isLoading={this.props.isLoading}
-                    repeatType={this.props.playbackOptions.repeatType}
-
-                    handlePrev={this.props.playbackOptions.handlePrev}
-                    handleNext={this.props.playbackOptions.handleNext}
-                    handleSeek={this.props.playbackOptions.handleSeek}
-                    toggleRepeat={this.props.playbackOptions.toggleRepeat}
-                    toggleShuffle={this.props.playbackOptions.toggleShuffle}
-                    togglePlayback={this.props.playbackOptions.togglePlayback}
                 />
 
-                <VolumeOptions isMute={this.props.volumeOptions.isMute} volume={5}
-                    toggleMute={this.props.volumeOptions.toggleMute}
-                    handleVolumeUpdate={this.props.volumeOptions.handleVolumeUpdate} />
+                <VolumeOptions {...this.props.volumeOptions} />
             </Grid>
         </Container>;
     }
