@@ -91,16 +91,18 @@ export default class PlaybackOptions extends React.PureComponent
         return <Grid item xs={5} sm={4} pt={1} pb={0.5} >
             <Grid container >
                 <Grid item xs={12} sx={{ textAlign: 'center' }}>
-                    <IconButton color="primary" sx={{
-                        display: { xs: 'none', md: 'inline-flex' } }}
-                        onClick={this.props.toggleShuffle}
-                    >
-                        {
-                            this.props.shuffle
-                                ? <ShuffleOn fontSize="medium" />
-                                : <Shuffle fontSize="medium" />
-                        }
-                    </IconButton>
+                    <Tooltip title="Toggle shuffle" placement="left">
+                        <IconButton color="primary" sx={{
+                            display: { xs: 'none', md: 'inline-flex' } }}
+                            onClick={this.props.toggleShuffle}
+                        >
+                            {
+                                this.props.shuffle
+                                    ? <ShuffleOn fontSize="medium" />
+                                    : <Shuffle fontSize="medium" />
+                            }
+                        </IconButton>
+                    </Tooltip>
 
                     <IconButton color="primary"
                         onClick={this.props.handlePrev}
