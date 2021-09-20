@@ -54,10 +54,13 @@ export default class Player {
         this.howl.unload();
         this.src = src;
 
+        console.log(this.options);
+
         /* start a fresh 'howl' */
         this.howl = new Howl({
+            ...this.options,
+
             src: src,
-            loop: this.options.loop ?? false,
             html5: true,
             autoplay: play
         });
@@ -94,7 +97,10 @@ export default class Player {
 
     setSeek = (seconds: number): Howl | number => this.howl.seek(seconds)
 
-    setLoop = (loop: boolean): Howl => this.howl.loop(loop)
+    setLoop = (loop: boolean): Howl => {
+        this.options['loop'] = loop;
+        return this.howl.loop(loop);
+    }
 
     getDuration = (): number => this.howl.duration()
 

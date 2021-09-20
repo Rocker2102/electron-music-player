@@ -270,7 +270,7 @@ export default class App extends React.Component
     songEnded = (): void => {
         console.log('Song ended');
 
-        if (this.state.playbackOptions.repeatType !== 'off') {
+        if (this.state.playbackOptions.repeatType === 'on') {
             this.playNextSong();
         }
 
