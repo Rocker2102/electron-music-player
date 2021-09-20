@@ -4,6 +4,7 @@ import Main from './Main/index';
 import NowPlaying from './NowPlaying/index';
 
 import Player from './Audio/Player';
+import Library from './Audio/Library';
 
 import './App.css';
 import { _Mm } from '../types/music-metadata';
@@ -15,6 +16,7 @@ export default class App extends React.Component
     <unknown, _App.state> {
 
     static player: Player;
+    private library: Library;
     private lsKey = 'AppState';
     private seekSliderInterval: undefined | number = undefined;
 
@@ -22,6 +24,29 @@ export default class App extends React.Component
         super(props);
 
         let localState: _App.state;
+
+        App.player = new Player('any-incorrect-location-to-init-howler', {});
+
+        this.library = new Library([
+            {
+                src: 'http://localhost:3000/audio.mp3',
+                name: 'Caller Tune',
+                artist: 'Unknown',
+                length: 29
+            },
+            {
+                src: 'http://localhost:3000/audio__.mp3',
+                name: 'Yeh Dooriyan',
+                artist: 'Mohit Chauhan',
+                length: 241
+            },
+            {
+                src: 'http://localhost:3000/audio_.mp3',
+                name: 'Qaafiraana',
+                artist: [ 'Arijit Singh', 'Nikita Gandhi' ],
+                length: 341
+            }
+        ]);
 
         try {
             const tmp = window.localStorage.getItem(this.lsKey);
@@ -31,8 +56,6 @@ export default class App extends React.Component
         } catch (e) {
             console.log(e);
         }
-
-        App.player = new Player('any-incorrect-location-to-init-howler', {});
 
         App.player.setHandlers({
             load: this.songLoaded,
@@ -66,6 +89,8 @@ export default class App extends React.Component
                 isPlaying: false,
                 repeatType: 'off',
 
+                handlePrev: this.playPrevSong,
+                handleNext: this.playNextSong,
                 handleSeek: this.handleSongSeek,
                 toggleRepeat: this.toggleSongRepeat,
                 toggleShuffle: this.toggleSongShuffle,
@@ -206,8 +231,8 @@ export default class App extends React.Component
         /* immediatley change the seekvalue as well as setInterval to modify it */
         this.setSongSeekToCurrent();
 
-        this.seekSliderInterval = window.setInterval(
-            this.setSongSeekToCurrent, 1000 / refreshRate);
+        this.seekSliderInterval = window.setInterval(this.setSongSeekToCurrent,
+            1000 / refreshRate);
     }
 
     songPlayError = (): void => {
@@ -218,14 +243,11 @@ export default class App extends React.Component
     songEnded = (): void => {
         console.log('Song ended');
 
-        setTimeout(() => {
-            App.player.start('http://localhost:3000/audio_.mp3', false);
-        }, 2000);
-
+        /* TODO: set isPlaying to false if next song is not present */
         this.setState({
             playbackOptions: {
                 ...this.state.playbackOptions,
-                isPlaying: false
+                isPlaying: this.state.playbackOptions.repeatType !== 'off'
             }
         });
     }
@@ -236,13 +258,6 @@ export default class App extends React.Component
         if (typeof this.seekSliderInterval !== 'undefined') {
             clearInterval(this.seekSliderInterval);
         }
-
-        this.setState({
-            playbackOptions: {
-                ...this.state.playbackOptions,
-                isPlaying: false
-            }
-        });
     }
 
     songPaused = (): void => {
@@ -258,6 +273,20 @@ export default class App extends React.Component
                 isPlaying: false
             }
         });
+    }
+
+    playPrevSong = (): void => {
+        this.setState({ isLoading: true });
+
+        const prev = this.library.previous();
+        App.player.start(prev.src, this.state.playbackOptions.isPlaying);
+    }
+
+    playNextSong = (): void => {
+        this.setState({ isLoading: true });
+
+        const next = this.library.next();
+        App.player.start(next.src, this.state.playbackOptions.isPlaying);
     }
 
     componentDidMount(): void {
