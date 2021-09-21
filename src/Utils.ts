@@ -1,4 +1,4 @@
-/* 'mmb' required for development purposes only (for reading files from server) */
+/* 'mmb' required for development purposes only (for reading files from react-server) */
 import * as mmb from 'music-metadata-browser';
 
 export const formatString = (str: undefined | string | string[]): string => {
