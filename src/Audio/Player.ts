@@ -54,8 +54,6 @@ export default class Player {
         this.howl.unload();
         this.src = src;
 
-        console.log(this.options);
-
         /* start a fresh 'howl' */
         this.howl = new Howl({
             ...this.options,
