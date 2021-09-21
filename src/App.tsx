@@ -9,11 +9,13 @@ import Library from './Audio/Library';
 import './App.css';
 import { _Mm } from '../types/music-metadata';
 
+import { getCoverImage } from './Utils';
+
 
 type Song = _App.Library.Song;
 
 /* This default cover image is displayed if none is found in song metadata */
-const defaultMusicArt = 'static/images/now-playing-default.png';
+const defaultMusicArt = 'static/images/now-playing-default.jpg';
 
 /**
  * Base App class. All primary states are managed here
@@ -235,6 +237,25 @@ export default class App extends React.Component
         });
 
         console.log('Loaded song! Duration', App.player.getDuration());
+
+        /* Load album art after song has been loaded */
+        getCoverImage(currentSong.src).then(picData => {
+            if (picData === null) { throw new Error('Empty picture!') }
+
+            this.setState({
+                songInfo: {
+                    ...this.state.songInfo,
+                    picture: picData
+                }
+            });
+        }).catch(err => {
+            this.setState({
+                songInfo: {
+                    ...this.state.songInfo,
+                    picture: defaultMusicArt
+                }
+            });
+        });
     }
 
     songLoadError = (): void => {
