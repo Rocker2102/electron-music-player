@@ -1,3 +1,6 @@
+/* 'mmb' required for development purposes only (for reading files from server) */
+import * as mmb from 'music-metadata-browser';
+
 export const formatString = (str: undefined | string | string[]): string => {
     return str instanceof Array ? str.join(', ') : str ?? '';
 }
@@ -20,4 +23,17 @@ export const formatTime = (seconds: number): string => {
 export const getPercent = (value: number, total: number, precision: number = 2): number => {
     if (total === 0) { return 0 }
     return Number(((value / total) * 100).toFixed(precision));
+}
+
+export const getCoverImage = async (fileLocation: string): Promise<string | null> => {
+    if (typeof window.electronBridge === 'undefined') {
+        const metadata = await mmb.fetchFromUrl(fileLocation);
+        const picture = mmb.selectCover(metadata?.common?.picture) ?? null;
+
+        if (picture === null) { return null }
+
+        return `data:${picture.format};base64,${picture.data.toString('base64')}`;
+    }
+
+    return window.electronBridge.getCoverImage(fileLocation);
 }
