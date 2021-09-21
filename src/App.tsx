@@ -248,7 +248,7 @@ export default class App extends React.Component
                     picture: picData
                 }
             });
-        }).catch(err => {
+        }).catch(() => {
             this.setState({
                 songInfo: {
                     ...this.state.songInfo,
