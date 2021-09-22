@@ -27,7 +27,8 @@ export default class VolumeOptions extends React.PureComponent
                     {this.props.isMute ? <VolumeOff /> : <VolumeUp />}
                 </IconButton>
 
-                <Slider size='small' defaultValue={4} min={0} max={15} step={1}
+                <Slider size='small'
+                    defaultValue={this.props.volume} min={0} max={15} step={1}
                     valueLabelDisplay='auto'
                     onChange={this.props.handleVolumeUpdate}
                     sx={{ display: { xs: 'none', md: 'inline-flex' } }}
