@@ -53,6 +53,11 @@ export const restoreStateFromLocal = (defaultState: _App.state, lsKey: string): 
         return defaultState;
     }
 
+    /**
+     * Following settings are overridden regardless of settings obtained from localStorage
+     * state.isLoading = true
+     * state.playbackOptions.isPlaying = false
+     */
     const tmp: _App.state = {
         isLoading: true,
         songInfo: {...defaultState.songInfo, ...localState?.songInfo},
