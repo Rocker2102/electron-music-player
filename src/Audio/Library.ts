@@ -2,15 +2,17 @@ type Song = _App.Library.Song;
 type onLoadHandler = () => void;
 
 /**
- * Responsible for managing current playing playlist
+ * Responsible for managing current playlist.
  * Contains important methods
  */
 export default class Library {
     private list!: Song[];
+    private lsKey: string;
     private currentSongIndex = 0;
     private onLoad: onLoadHandler;
 
-    constructor(onLoad: onLoadHandler) {
+    constructor(lsKey: string, onLoad: onLoadHandler) {
+        this.lsKey = lsKey;
         this.onLoad = onLoad;
     }
 
@@ -22,6 +24,7 @@ export default class Library {
         if (songs.length === 0) { return }
 
         this.list = songs;
+        this.saveToLs(this.lsKey);
         this.loaded();
     }
 
@@ -65,6 +68,43 @@ export default class Library {
             this.currentSongIndex = index;
         }
 
+        this.saveToLs(this.lsKey);
+
         return this.list[this.currentSongIndex];
+    }
+
+    saveToLs = (key: string): void => {
+        if (this.currentList().length === 0) { return }
+
+        window.localStorage.setItem(key, JSON.stringify({
+            song: this.currentSongIndex,
+            list: this.currentList()
+        }));
+    }
+
+    restoreFromLs = (key: string): boolean => {
+        let local: {
+            song: number,
+            list: Song[]
+        };
+
+        try {
+            const tmp = window.localStorage.getItem(key);
+
+            if (tmp === null || tmp === '') {
+                throw new Error('Failed to load library from localStorage');
+            }
+
+            local = JSON.parse(tmp);
+
+            this.list = local.list;
+            this.setSong(local.song);
+            this.loaded();
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
+
+        return true;
     }
 }
