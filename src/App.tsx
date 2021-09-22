@@ -7,7 +7,6 @@ import Player from './Audio/Player';
 import Library from './Audio/Library';
 
 import './App.css';
-import { _Mm } from '../types/music-metadata';
 
 import { getCoverImage } from './Utils';
 
@@ -30,8 +29,9 @@ export default class App extends React.Component
     /* Core library, manages song list */
     private library: Library;
 
-    /* LocalStorage key, all local data is stored under this name (key) */
+    /* LocalStorage keys, all local data is stored under one of the specified keys */
     private lsKey = 'AppState';
+    private lsLibrary = 'AppLibrary';
 
     /* Song seek slider interval number is stored in this */
     private seekSliderInterval: undefined | number = undefined;
@@ -43,7 +43,8 @@ export default class App extends React.Component
 
         App.player = new Player('any-incorrect-location-to-init-howler', {});
 
-        this.library = new Library([
+        this.library = new Library(this.libraryLoaded);
+        this.library.setList([
             {
                 src: 'http://localhost:3000/audio.mp3',
                 name: 'Caller Tune',
@@ -115,6 +116,13 @@ export default class App extends React.Component
                 togglePlayback: this.toggleSongPlayback
             },
         };
+    }
+
+    libraryLoaded = (): void => {
+        console.log('Loaded library');
+        window.localStorage.setItem(this.lsLibrary,
+            JSON.stringify(this.library.currentList()));
+        App.player.start(this.library.getCurrent().src, false);
     }
 
     toggleMuteBtn = (): void => {
@@ -291,7 +299,9 @@ export default class App extends React.Component
     songEnded = (): void => {
         console.log('Song ended');
 
-        if (this.state.playbackOptions.repeatType === 'on') {
+        if (this.state.playbackOptions.repeatType === 'on'
+            || this.state.playbackOptions.shuffle) {
+
             this.playNextSong();
         }
 
@@ -299,6 +309,7 @@ export default class App extends React.Component
             playbackOptions: {
                 ...this.state.playbackOptions,
                 isPlaying: [ 'on', 'single' ].includes(this.state.playbackOptions.repeatType)
+                    || this.state.playbackOptions.shuffle
             }
         });
     }
@@ -351,34 +362,7 @@ export default class App extends React.Component
     }
 
     componentDidMount(): void {
-        if (typeof window.electronBridge?.api === 'undefined') {
-            setTimeout(() => {
-                App.player.start('http://localhost:3000/audio.mp3', false);
-            }, 2000);
-            return;
-        }
-
-        window.electronBridge.api.send('PRIMARY_ASYNC', {});
-        window.electronBridge.api.send('PRIMARY_SYNC', {});
-
-        window.electronBridge.api.receive('PRIMARY_ASYNC',
-            (event, args: _Mm._ICommonTagsResult) => {
-
-            if (args.picture) {
-                this.setState({
-                    songInfo: {
-                        ...this.state.songInfo,
-                        picture: args.picture.data
-                    }
-                });
-            }
-        });
-
-        window.electronBridge.api.receive('PRIMARY_SYNC', (event, args) => {
-            setTimeout(() => {
-                App.player.start(args, false);
-            }, 2000);
-        });
+        console.log('App ready');
     }
 
     /**
