@@ -37,3 +37,29 @@ export const getCoverImage = async (fileLocation: string): Promise<string | null
 
     return window.electronBridge.getCoverImage(fileLocation);
 }
+
+export const restoreStateFromLocal = (defaultState: _App.state, lsKey: string): _App.state => {
+    let localState;
+
+    try {
+        const tmp = window.localStorage.getItem(lsKey);
+        if (tmp === null || tmp === '') {
+            throw new Error('Failed to load state via localStorage');
+        }
+
+        localState = JSON.parse(tmp);
+    } catch (e) {
+        console.log(e);
+        return defaultState;
+    }
+
+    const tmp: _App.state = {
+        isLoading: true,
+        songInfo: {...defaultState.songInfo, ...localState?.songInfo},
+        volumeOptions: {...defaultState.volumeOptions, ...localState?.volumeOptions},
+        playbackOptions: {...defaultState.playbackOptions, ...localState?.playbackOptions,
+            ...{isPlaying: false}}
+    }
+
+    return tmp;
+}
