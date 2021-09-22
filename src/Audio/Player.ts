@@ -21,7 +21,9 @@ export default class Player {
     private src: string;
     private howl: Howl;
     private options: HowlOptions;
+    private currVolume = 0.7;
     private volumeSteps = 15;
+
     private handlers: HandlerOptions = { };
 
     constructor(src: string, options: HowlOptions) {
@@ -60,7 +62,8 @@ export default class Player {
 
             src: src,
             html5: true,
-            autoplay: play
+            autoplay: play,
+            volume: this.currVolume
         });
 
         /* re-register the handlers on the new 'howl' instance */
@@ -79,14 +82,15 @@ export default class Player {
 
     getVolume = (): number => this.howl.volume()
 
-    setVolume = (volume: number): Howl | number => {
+    setVolume = (volume: number, fade = true): Howl | number => {
         volume < 0 ? volume = 0 : false;
         /* eslint-disable-next-line keyword-spacing */
         volume > this.volumeSteps ? volume = this.volumeSteps : false;
-        volume = (volume / this.volumeSteps);
+        this.currVolume = (volume / this.volumeSteps);
 
         /* increase/decrease volume smoothly */
-        return this.howl.fade(this.howl.volume(), volume, 200);
+        return fade ? this.howl.fade(this.howl.volume(), this.currVolume, 200)
+            : this.howl.volume(this.currVolume);
     }
 
     mute = (status: boolean): Howl => this.howl.mute(status)
