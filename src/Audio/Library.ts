@@ -1,4 +1,5 @@
 type Song = _App.Library.Song;
+type onLoadHandler = () => void;
 
 /**
  * Responsible for managing current playing playlist
@@ -7,9 +8,21 @@ type Song = _App.Library.Song;
 export default class Library {
     private list!: Song[];
     private currentSongIndex = 0;
+    private onLoad: onLoadHandler;
 
-    constructor(songs: Song[]) {
+    constructor(onLoad: onLoadHandler) {
+        this.onLoad = onLoad;
+    }
+
+    loaded = (): void => {
+        this.onLoad();
+    }
+
+    setList = (songs: Song[]): void => {
+        if (songs.length === 0) { return }
+
         this.list = songs;
+        this.loaded();
     }
 
     currentList = (): Song[] => {
