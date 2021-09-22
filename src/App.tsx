@@ -8,7 +8,7 @@ import Library from './Audio/Library';
 
 import './App.css';
 
-import { getCoverImage } from './Utils';
+import { getCoverImage, restoreStateFromLocal } from './Utils';
 
 
 type Song = _App.Library.Song;
@@ -29,6 +29,9 @@ export default class App extends React.Component
     /* Core library, manages song list */
     private library: Library;
 
+    /* Temp flag to check if data was loaded from localStorage */
+    private loadedFromLs = false;
+
     /* LocalStorage keys, all local data is stored under one of the specified keys */
     private lsKey = 'AppState';
     private lsLibrary = 'AppLibrary';
@@ -39,11 +42,10 @@ export default class App extends React.Component
     constructor(props: unknown) {
         super(props);
 
-        let localState: _App.state;
-
         App.player = new Player('any-incorrect-location-to-init-howler', {});
 
-        this.library = new Library(this.libraryLoaded);
+        this.library = new Library(this.lsLibrary, this.libraryLoaded);
+        /* --disable-debug
         this.library.setList([
             {
                 src: 'http://localhost:3000/audio.mp3',
@@ -64,15 +66,7 @@ export default class App extends React.Component
                 length: 341
             }
         ]);
-
-        try {
-            const tmp = window.localStorage.getItem(this.lsKey);
-            if (tmp === null) { throw new Error('Failed to load state via localstorage') }
-
-            localState = JSON.parse(tmp);
-        } catch (e) {
-            console.log(e);
-        }
+        */
 
         /* Set & register howler player event handlers */
         App.player.setHandlers({
@@ -88,15 +82,15 @@ export default class App extends React.Component
         }, true);
 
         /* App init/default state */
-        this.state = {
+        const defaultState: _App.state = {
             isLoading: true,
             songInfo: {
-                name: '',
-                picture: null
+                name: 'Loading ...',
+                picture: defaultMusicArt
             },
             volumeOptions: {
                 isMute: false,
-                volume: 4,
+                volume: 7,
 
                 toggleMute: this.toggleMuteBtn,
                 handleVolumeUpdate: this.handleVolumeUpdate
@@ -114,14 +108,17 @@ export default class App extends React.Component
                 toggleRepeat: this.toggleSongRepeat,
                 toggleShuffle: this.toggleSongShuffle,
                 togglePlayback: this.toggleSongPlayback
-            },
+            }
         };
+
+        this.state = restoreStateFromLocal(defaultState, this.lsKey);
+        this.loadedFromLs = this.library.restoreFromLs(this.lsLibrary);
     }
 
     libraryLoaded = (): void => {
         console.log('Loaded library');
-        window.localStorage.setItem(this.lsLibrary,
-            JSON.stringify(this.library.currentList()));
+
+        console.log(this.library.getCurrent());
         App.player.start(this.library.getCurrent().src, false);
     }
 
@@ -228,6 +225,7 @@ export default class App extends React.Component
 
     songLoaded = (): void => {
         const currentSong = this.library.getCurrent();
+        console.log(currentSong);
 
         this.setState({
             isLoading: false,
@@ -240,9 +238,11 @@ export default class App extends React.Component
             playbackOptions: {
                 ...this.state.playbackOptions,
                 length: App.player.getDuration(),
-                current: 0
+                current: this.loadedFromLs ? this.state.playbackOptions.current : 0
             }
         });
+
+        this.loadedFromLs = false;
 
         console.log('Loaded song! Duration', App.player.getDuration());
 
@@ -370,6 +370,7 @@ export default class App extends React.Component
      * @returns void
      */
     componentDidUpdate(): void {
+        return;
         window.localStorage.setItem(this.lsKey, JSON.stringify(this.state));
         return;
     }
