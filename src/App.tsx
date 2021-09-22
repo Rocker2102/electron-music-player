@@ -18,8 +18,8 @@ type Song = _App.Library.Song;
 const defaultMusicArt = 'static/images/now-playing-default.jpg';
 
 /**
- * Base App class. All primary states are managed here
- * Any custom themes which are to be shared globally used be applied here
+ * Base App class. All primary states are managed here.
+ * Any custom themes which are to be shared globally should be applied here
  */
 export default class App extends React.Component
     <unknown, _App.state> {
@@ -120,7 +120,7 @@ export default class App extends React.Component
     toggleMuteBtn = (): void => {
         const newStatus = ! this.state.volumeOptions.isMute;
 
-        if (App?.player?.state() === 'loaded') {
+        if (App.player?.state() === 'loaded') {
             App.player.mute(newStatus);
         }
 
@@ -138,7 +138,7 @@ export default class App extends React.Component
         if (volume instanceof Array) {
             volume = volume.length > 0 ? volume[0] : defaultVolume;
         }
-        if (App?.player?.state() === 'loaded') {
+        if (App.player?.state() === 'loaded') {
             App.player.setVolume(volume);
         }
 
@@ -158,7 +158,7 @@ export default class App extends React.Component
         const newStatus = repeatTypes[
             (repeatTypes.indexOf(current) + 1) % repeatTypes.length];
 
-        if (App?.player?.state() === 'loaded') {
+        if (App.player?.state() === 'loaded') {
             App.player.setLoop(newStatus === 'single');
         }
 
@@ -184,7 +184,7 @@ export default class App extends React.Component
     toggleSongPlayback = (): void => {
         const newStatus = ! this.state.playbackOptions.isPlaying;
 
-        if (App?.player?.state() === 'loaded') {
+        if (App.player?.state() === 'loaded') {
             newStatus ? App.player.play() : App.player.pause();
         }
 
@@ -197,7 +197,7 @@ export default class App extends React.Component
     }
 
     handleSongSeek = (seconds: number): void => {
-        if (App?.player?.state() === 'loaded') {
+        if (App.player?.state() === 'loaded') {
             App.player.setSeek(seconds);
         }
 
