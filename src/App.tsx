@@ -18,7 +18,8 @@ const defaultMusicArt = 'static/images/now-playing-default.jpg';
 
 /**
  * Base App class. All primary states are managed here.
- * Any custom themes which are to be shared globally should be applied here
+ * Any custom themes which are to be shared globally should be applied here.
+ * Sequential event based app init.: Load library -> Load song -> Normal Functions...
  */
 export default class App extends React.Component
     <unknown, _App.state> {
@@ -26,11 +27,11 @@ export default class App extends React.Component
     /* Howler player, manages sound output */
     static player: Player;
 
-    /* Core library, manages song list */
+    /* Core library, manages song list/playlist */
     private library: Library;
 
-    /* Temp flag to check if data was loaded from localStorage */
-    private loadedFromLs = false;
+    /* Flag to check first app load */
+    private appInit = true;
 
     /* LocalStorage keys, all local data is stored under one of the specified keys */
     private lsKey = 'AppState';
@@ -112,14 +113,17 @@ export default class App extends React.Component
         };
 
         this.state = restoreStateFromLocal(defaultState, this.lsKey);
-        this.loadedFromLs = this.library.restoreFromLs(this.lsLibrary);
+        this.library.restoreFromLs(this.lsLibrary);
     }
 
     libraryLoaded = (): void => {
         console.log('Loaded library');
 
-        console.log(this.library.getCurrent());
         App.player.start(this.library.getCurrent().src, false);
+
+        if (this.appInit) {
+            App.player.setSeek(this.state.playbackOptions.current);
+        }
     }
 
     toggleMuteBtn = (): void => {
@@ -225,7 +229,6 @@ export default class App extends React.Component
 
     songLoaded = (): void => {
         const currentSong = this.library.getCurrent();
-        console.log(currentSong);
 
         this.setState({
             isLoading: false,
@@ -238,11 +241,15 @@ export default class App extends React.Component
             playbackOptions: {
                 ...this.state.playbackOptions,
                 length: App.player.getDuration(),
-                current: this.loadedFromLs ? this.state.playbackOptions.current : 0
+                current: this.appInit ? this.state.playbackOptions.current : 0
             }
         });
 
-        this.loadedFromLs = false;
+        /* Set player specific values from state (which cannot be set dynamically) */
+        App.player.mute(this.state.volumeOptions.isMute);
+        App.player.setLoop(this.state.playbackOptions.repeatType === 'single');
+        App.player.setVolume(this.state.volumeOptions.volume);
+        this.appInit = false;
 
         console.log('Loaded song! Duration', App.player.getDuration());
 
@@ -370,7 +377,6 @@ export default class App extends React.Component
      * @returns void
      */
     componentDidUpdate(): void {
-        return;
         window.localStorage.setItem(this.lsKey, JSON.stringify(this.state));
         return;
     }
