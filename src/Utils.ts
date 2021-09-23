@@ -74,7 +74,7 @@ export const restoreStateFromLocal = (defaultState: _App.state, lsKey: string): 
      * state.playbackOptions.isPlaying = false
      */
     const tmp: _App.state = {
-        common: {...defaultState.common},
+        common: {...localState.common},
         isLoading: true,
         songInfo: {...defaultState.songInfo, ...localState?.songInfo},
         volumeOptions: {...defaultState.volumeOptions, ...localState?.volumeOptions},
