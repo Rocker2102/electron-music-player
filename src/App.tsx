@@ -9,15 +9,10 @@ import Library from './Audio/Library';
 
 import './App.css';
 
-import { getCoverImage, restoreStateFromLocal } from './Utils';
+import { appDefaults, getBackground, getCoverImage, restoreStateFromLocal } from './Utils';
 
 
 type Song = _App.Library.Song;
-
-/* Default nowplaying footer bg */
-const defaultBackground = '';
-/* This default cover image is displayed if none is found in song metadata */
-const defaultMusicArt = 'static/images/now-playing-default.jpg';
 
 /**
  * Base App class. All primary states are managed here.
@@ -88,13 +83,13 @@ export default class App extends React.Component
         /* App init/default state */
         const defaultState: _App.state = {
             common: {
-                background: defaultBackground
+                background: appDefaults.background
             },
 
             isLoading: true,
             songInfo: {
                 name: 'Loading ...',
-                picture: defaultMusicArt
+                picture: appDefaults.picture
             },
             volumeOptions: {
                 isMute: false,
@@ -121,6 +116,7 @@ export default class App extends React.Component
 
         this.state = restoreStateFromLocal(defaultState, this.lsKey);
         this.library.restoreFromLs(this.lsLibrary);
+        console.log(this.state);
     }
 
     libraryLoaded = (): void => {
@@ -270,14 +266,47 @@ export default class App extends React.Component
                     picture: picData
                 }
             });
+
+            this.updateBackground(picData);
         }).catch(() => {
             this.setState({
                 songInfo: {
                     ...this.state.songInfo,
-                    picture: defaultMusicArt
+                    picture: appDefaults.picture
                 }
             });
+
+            this.updateBackground(appDefaults.picture);
         });
+    }
+
+    /**
+     * Set background color to the most dominant color found in image provided
+     * @param imgSrc image source
+     */
+    updateBackground = (imgSrc: string): void => {
+        const img = new Image();
+        img.src = imgSrc;
+
+        const colorthief = new ColorTheif();
+
+        if (img.complete) {
+            this.setState({
+                common: {
+                    ...this.state.common,
+                    background: getBackground(colorthief.getColor(img))
+                }
+            });
+        } else {
+            img.addEventListener('load', () => {
+                this.setState({
+                    common: {
+                        ...this.state.common,
+                        background: getBackground(colorthief.getColor(img))
+                    }
+                });
+            });
+        }
     }
 
     songLoadError = (): void => {
@@ -393,6 +422,8 @@ export default class App extends React.Component
             <Main />
             <NowPlaying
                 isLoading={this.state.isLoading}
+                background={this.state.common.background}
+
                 songInfo={this.state.songInfo}
                 volumeOptions={this.state.volumeOptions}
                 playbackOptions={this.state.playbackOptions}

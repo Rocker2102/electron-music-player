@@ -49,6 +49,8 @@ declare namespace _NowPlaying {
 
     interface props {
         isLoading: _App.state['isLoading'],
+        background: _App.common['background'],
+
         songInfo: SongInfo.props,
         playbackOptions: PlaybackOptions.props,
         volumeOptions: VolumeOptions.props
