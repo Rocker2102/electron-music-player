@@ -1,6 +1,21 @@
 /* 'mmb' required for development purposes only (for reading files from react-server) */
 import * as mmb from 'music-metadata-browser';
 
+export const appDefaults = {
+    picture: 'static/images/now-playing-default.jpg',
+    background: 'rgba(0, 0, 0, 0.15)'
+}
+
+/**
+ * Forms CSS compatible string from rgb array
+ * @param rgb RGB value of color as array
+ * @returns rgba(r, g, b, alpha) string, can be used directly in CSS
+ */
+export const getBackground = (rgb: [ number, number, number ]): string => {
+    const opacity = 0.4;
+    return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${opacity})`;
+}
+
 export const formatString = (str: undefined | string | string[]): string => {
     return str instanceof Array ? str.join(', ') : str ?? '';
 }
