@@ -4,8 +4,14 @@
 declare namespace _App {
     type props = unknown;
 
+    type common = {
+        background: string
+    }
+
     type state = {
+        common: _App.common,
         isLoading: boolean,
+
         songInfo: _NowPlaying.SongInfo.props,
         volumeOptions: _NowPlaying.VolumeOptions.props,
         playbackOptions: _NowPlaying.PlaybackOptions.props

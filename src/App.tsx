@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import ColorTheif from 'colorthief';
 
 import Main from './Main/index';
 import NowPlaying from './NowPlaying/index';
@@ -13,6 +14,8 @@ import { getCoverImage, restoreStateFromLocal } from './Utils';
 
 type Song = _App.Library.Song;
 
+/* Default nowplaying footer bg */
+const defaultBackground = '';
 /* This default cover image is displayed if none is found in song metadata */
 const defaultMusicArt = 'static/images/now-playing-default.jpg';
 
@@ -84,6 +87,10 @@ export default class App extends React.Component
 
         /* App init/default state */
         const defaultState: _App.state = {
+            common: {
+                background: defaultBackground
+            },
+
             isLoading: true,
             songInfo: {
                 name: 'Loading ...',
