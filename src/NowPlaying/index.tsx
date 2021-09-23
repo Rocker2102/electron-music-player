@@ -37,7 +37,8 @@ export default class NowPlaying extends React.PureComponent
         >
             <Grid container
                 alignItems={'center'}
-                className="gradient-bg" sx={{ maxHeight: this.maxHeight }}
+                sx={{ maxHeight: this.maxHeight, backdropFilter: 'blur(4px)',
+                    background: this.props.background }}
             >
                 <SongInfo {...this.props.songInfo} height={this.state.height} />
 
