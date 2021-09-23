@@ -116,7 +116,6 @@ export default class App extends React.Component
 
         this.state = restoreStateFromLocal(defaultState, this.lsKey);
         this.library.restoreFromLs(this.lsLibrary);
-        console.log(this.state);
     }
 
     libraryLoaded = (): void => {
