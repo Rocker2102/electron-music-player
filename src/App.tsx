@@ -122,10 +122,6 @@ export default class App extends React.Component
         console.log('Loaded library');
 
         App.player.start(this.library.getCurrent().src, false);
-
-        if (this.appInit) {
-            App.player.setSeek(this.state.playbackOptions.current);
-        }
     }
 
     toggleMuteBtn = (): void => {
@@ -246,6 +242,10 @@ export default class App extends React.Component
                 current: this.appInit ? this.state.playbackOptions.current : 0
             }
         });
+
+        if (this.appInit) {
+            App.player.setSeek(this.state.playbackOptions.current);
+        }
 
         /* Set player specific values from state (which cannot be set dynamically) */
         App.player.mute(this.state.volumeOptions.isMute);
