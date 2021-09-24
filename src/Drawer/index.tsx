@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { ReactNode } from 'react';
 
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -105,10 +105,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-export default function MiniDrawer() {
-    const theme = useTheme();
-    const [ open, setOpen ] = React.useState(false);
-    const menuItems: MenuItems = [
+export default class MiniDrawer extends React.PureComponent
+    <_MiniDrawer.props, _MiniDrawer.state> {
+
+    private menuItems: MenuItems = [
         {
             name: 'My Music',
             icon: <MusicNoteIcon />,
@@ -126,20 +126,30 @@ export default function MiniDrawer() {
         }
     ];
 
-    const toggleDrawerOpen = (): void => {
-        setOpen(! open);
+    constructor(props: _MiniDrawer.props) {
+        super(props);
+
+        this.state = {
+            open: false
+        };
+    }
+
+    toggleDrawerOpen = (): void => {
+        this.setState({
+            open: !open
+        });
     };
 
-    return (
-        <Box sx={{ display: 'flex' }}>
+    render (): ReactNode {
+        return <Box sx={{ display: 'flex' }}>
             <CssBaseline />
 
-            <AppBar position="fixed" open={open}>
+            <AppBar position="fixed" open={this.state.open}>
                 <Toolbar>
                     <IconButton
-                        color="inherit"
-                        onClick={toggleDrawerOpen}
                         edge="start"
+                        color="inherit"
+                        onClick={this.toggleDrawerOpen}
                     >
                         <MenuIcon />
                     </IconButton>
@@ -149,7 +159,7 @@ export default function MiniDrawer() {
                 </Toolbar>
             </AppBar>
 
-            <Drawer variant="permanent" open={open}>
+            <Drawer variant="permanent" open={this.state.open}>
                 <DrawerHeader>
                     <List>
                         <ListItem button>
@@ -164,7 +174,9 @@ export default function MiniDrawer() {
 
                 <List>
                     <ListItem button disableRipple>
-                        <ListItemIcon sx={{ display: open ? 'none' : 'inline-flex' }}>
+                        <ListItemIcon
+                            sx={{ display: this.state.open ? 'none' : 'inline-flex' }}
+                        >
                             <SearchIcon />
                         </ListItemIcon>
                         <ListItemText disableTypography primary={
@@ -179,7 +191,7 @@ export default function MiniDrawer() {
                 <Divider />
 
                 <List>
-                    {menuItems.map(({ name, icon, link }) => (
+                    {this.menuItems.map(({ name, icon, link }) => (
                         <ListItem button key={name}>
                             <ListItemIcon>
                                 {icon}
@@ -194,7 +206,7 @@ export default function MiniDrawer() {
                 <List>
                     <ListItem button secondaryAction={
                         <IconButton edge="end" aria-label="delete"
-                            sx={{ display: open ? 'inline-flex' : 'none' }}
+                            sx={{ display: this.state.open ? 'inline-flex' : 'none' }}
                             disableRipple
                         >
                             <AddIcon />
@@ -206,7 +218,7 @@ export default function MiniDrawer() {
                         <ListItemText primary="Playlists" />
                     </ListItem>
 
-                    <ListItem button sx={{ display: open ? 'none' : 'flex' }}>
+                    <ListItem button sx={{ display: this.state.open ? 'none' : 'flex' }}>
                         <ListItemIcon>
                             <AddIcon />
                         </ListItemIcon>
@@ -217,10 +229,8 @@ export default function MiniDrawer() {
             </Drawer>
 
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-                {/* <DrawerHeader /> */}
-
 
             </Box>
-        </Box>
-    );
+        </Box>;
+    }
 }
