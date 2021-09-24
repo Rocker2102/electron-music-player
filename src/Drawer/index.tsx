@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
+import { styled, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Toolbar from '@mui/material/Toolbar';
