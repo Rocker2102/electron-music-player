@@ -41,7 +41,9 @@ export const getPercent = (value: number, total: number, precision: number = 2):
 }
 
 export const getCoverImage = async (fileLocation: string): Promise<string | null> => {
-    if (typeof window.electronBridge === 'undefined') {
+    if (typeof window.electronBridge === 'undefined'
+        || window.electronBridge.config.APP_ENV === 'development') {
+
         const metadata = await mmb.fetchFromUrl(fileLocation);
         const picture = mmb.selectCover(metadata?.common?.picture) ?? null;
 
