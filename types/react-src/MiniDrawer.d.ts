@@ -1,6 +1,6 @@
 declare namespace _MiniDrawer {
     interface props {
-        main: unknown
+        main: JSX.Element
     }
 
     interface state {

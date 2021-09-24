@@ -34,8 +34,6 @@ type MenuItem = {
     link: string
 };
 
-type MenuItems = MenuItem[];
-
 const drawerWidth = 280;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -108,7 +106,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default class MiniDrawer extends React.PureComponent
     <_MiniDrawer.props, _MiniDrawer.state> {
 
-    private menuItems: MenuItems = [
+    private menuItems: MenuItem[] = [
         {
             name: 'My Music',
             icon: <MusicNoteIcon />,
@@ -136,7 +134,7 @@ export default class MiniDrawer extends React.PureComponent
 
     toggleDrawerOpen = (): void => {
         this.setState({
-            open: !open
+            open: !this.state.open
         });
     };
 
@@ -228,8 +226,8 @@ export default class MiniDrawer extends React.PureComponent
 
             </Drawer>
 
-            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-
+            <Box component="main" sx={{ flexGrow: 1 }}>
+                {this.props.main}
             </Box>
         </Box>;
     }
