@@ -34,13 +34,13 @@ type MenuItem = {
     link: string
 };
 
-const drawerWidth = 280;
+const [ drawerWidth, transitionDuration ] = [ 280, 75 ];
 
 const openedMixin = (theme: Theme): CSSObject => ({
     width: drawerWidth,
     transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
+        duration: transitionDuration,
     }),
     overflowX: 'hidden',
 });
@@ -48,7 +48,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
 const closedMixin = (theme: Theme): CSSObject => ({
     transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
+        duration: transitionDuration,
     }),
     overflowX: 'hidden',
     width: `calc(${theme.spacing(7)})`
