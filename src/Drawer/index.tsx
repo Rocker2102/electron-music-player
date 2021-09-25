@@ -34,7 +34,7 @@ type MenuItem = {
     link: string
 };
 
-const [ drawerWidth, transitionDuration ] = [ 280, 75 ];
+const [ drawerWidth, transitionDuration ] = [ 280, 100 ];
 
 const openedMixin = (theme: Theme): CSSObject => ({
     width: drawerWidth,
@@ -74,14 +74,14 @@ const AppBar = styled(MuiAppBar, {
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create([ 'width', 'margin' ], {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
+        duration: transitionDuration,
     }),
     ...(open && {
         marginLeft: drawerWidth,
         width: `calc(100% - ${drawerWidth}px)`,
         transition: theme.transitions.create([ 'width', 'margin' ], {
             easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
+            duration: transitionDuration,
         }),
     }),
 }));
