@@ -22,6 +22,8 @@ import SearchIcon from '@mui/icons-material/SearchRounded';
 import ScheduleIcon from '@mui/icons-material/ScheduleRounded';
 import ArrowBackIcon from '@mui/icons-material/ArrowBackRounded';
 import MusicNoteIcon from '@mui/icons-material/MusicNoteRounded';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusicRounded';
 import PlaylistPlayIcon from '@mui/icons-material/PlaylistPlayRounded';
 
@@ -143,17 +145,30 @@ export default class MiniDrawer extends React.PureComponent
             <CssBaseline />
 
             <AppBar position="fixed" open={this.state.open}>
-                <Toolbar>
+                <Toolbar sx={{ justifyContent: 'space-between' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            onClick={this.toggleDrawerOpen}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography variant="h6" ml={2} noWrap component="div">
+                            App Name
+                        </Typography>
+                    </Box>
+
                     <IconButton
-                        edge="start"
                         color="inherit"
-                        onClick={this.toggleDrawerOpen}
+                        onClick={this.props.toggleTheme}
                     >
-                        <MenuIcon />
+                        {this.props.themeMode === 'dark'
+                            ? <Brightness7Icon />
+                            : <Brightness4Icon />
+                        }
+
                     </IconButton>
-                    <Typography variant="h6" ml={2} noWrap component="div">
-                        App Name
-                    </Typography>
                 </Toolbar>
             </AppBar>
 
