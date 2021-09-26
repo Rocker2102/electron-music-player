@@ -20,9 +20,9 @@ function MusicMain(): JSX.Element {
 }
 
 export default class Main extends React.PureComponent
-    <unknown, { appName: string, appVersion: string }> {
+    <_Main.props, { appName: string, appVersion: string }> {
 
-    constructor (props: unknown) {
+    constructor (props: _Main.props) {
         super(props);
 
         this.state = {
@@ -43,7 +43,11 @@ export default class Main extends React.PureComponent
 
     render (): ReactNode {
         return <div>
-            <MiniDrawer main={<MusicMain />} />
+            <MiniDrawer
+                main={<MusicMain />}
+                themeMode={this.props.themeMode}
+                toggleTheme={this.props.toggleTheme}
+            />
         </div>;
     }
 }

@@ -1,6 +1,9 @@
 import React, { ReactNode } from 'react';
 import ColorTheif from 'colorthief';
 
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
+
 import Main from './Main/index';
 import NowPlaying from './NowPlaying/index';
 
@@ -10,6 +13,7 @@ import Library from './Audio/Library';
 import './App.css';
 
 import { appDefaults, getBackground, getCoverImage, restoreStateFromLocal } from './Utils';
+import { getTheme } from './Utils';
 
 
 type Song = _App.Library.Song;
@@ -83,6 +87,7 @@ export default class App extends React.Component
         /* App init/default state */
         const defaultState: _App.state = {
             common: {
+                themeMode: 'dark',
                 background: appDefaults.background
             },
 
@@ -403,6 +408,17 @@ export default class App extends React.Component
         App.player.start(song.src, this.state.playbackOptions.isPlaying);
     }
 
+    toggleTheme = (): void => {
+        const theme = this.state.common.themeMode === 'dark' ? 'light' : 'dark';
+
+        this.setState({
+            common: {
+                ...this.state.common,
+                themeMode: theme
+            }
+        });
+    }
+
     componentDidMount(): void {
         console.log('App ready');
     }
@@ -418,15 +434,23 @@ export default class App extends React.Component
 
     render(): ReactNode {
         return <React.StrictMode>
-            <Main />
-            <NowPlaying
-                isLoading={this.state.isLoading}
-                background={this.state.common.background}
+            <ThemeProvider theme={getTheme(this.state.common.themeMode)}>
+                <CssBaseline />
 
-                songInfo={this.state.songInfo}
-                volumeOptions={this.state.volumeOptions}
-                playbackOptions={this.state.playbackOptions}
-            />
+                <Main
+                    themeMode={this.state.common.themeMode}
+                    toggleTheme={this.toggleTheme}
+                />
+
+                <NowPlaying
+                    isLoading={this.state.isLoading}
+                    background={this.state.common.background}
+
+                    songInfo={this.state.songInfo}
+                    volumeOptions={this.state.volumeOptions}
+                    playbackOptions={this.state.playbackOptions}
+                />
+            </ThemeProvider>
         </React.StrictMode>;
     }
 }
