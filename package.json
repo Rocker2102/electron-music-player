@@ -14,7 +14,7 @@
     "eslint": "^7.32.0",
     "eslint-plugin-no-loops": "^0.3.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-react": "^7.26.0",
+    "eslint-plugin-react": "^7.26.1",
     "howler": "^2.2.3",
     "music-metadata": "^7.11.4",
     "nedb": "^1.8.0",
