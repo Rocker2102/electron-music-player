@@ -84,7 +84,7 @@
     "@typescript-eslint/parser": "^4.33.0",
     "copyfiles": "^2.4.1",
     "electron": "^14.0.1",
-    "electron-builder": "^22.11.7",
+    "electron-builder": "^22.13.1",
     "music-metadata-browser": "^2.5.0",
     "web-vitals": "^2.1.1"
   }
