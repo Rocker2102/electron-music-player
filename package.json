@@ -72,7 +72,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.4.2",
+    "@testing-library/user-event": "^13.5.0",
     "@types/electron": "^1.6.10",
     "@types/howler": "^2.2.4",
     "@types/jest": "^27.0.2",
