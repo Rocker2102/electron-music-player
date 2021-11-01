@@ -2,7 +2,7 @@
 import * as mmb from 'music-metadata-browser';
 import { createTheme, Theme } from '@mui/material/styles';
 
-import { AppState, Common as AppStateCommon } from './types/AppType';
+import { AppState, Common as AppStateCommon } from '../types/AppType';
 
 export const appDefaults = {
     picture: 'static/images/now-playing-default.jpg',
