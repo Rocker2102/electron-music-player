@@ -4,8 +4,8 @@ import ColorTheif from 'colorthief';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 
-import Main from './Main/index';
-import NowPlaying from './NowPlaying/index';
+import Main from './components/Main/MainComponent';
+import NowPlaying from './components/NowPlaying/NowPlayingComponent';
 
 import Player from './Audio/Player';
 import Library from './Audio/Library';

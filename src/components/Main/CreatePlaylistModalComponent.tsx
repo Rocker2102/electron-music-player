@@ -11,7 +11,7 @@ import DialogContent from '@mui/material/DialogContent';
 import {
     CreatePlaylistModalProps,
     CreatePlaylistModalState
-} from '../types/CreatePlaylistModalType';
+} from '../../types/CreatePlaylistModalType';
 
 
 /* Code base from https://mui.com/components/modal */

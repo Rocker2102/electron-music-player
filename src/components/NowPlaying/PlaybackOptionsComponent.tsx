@@ -17,8 +17,8 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
-import { formatTime, getPercent } from '../Utils';
-import { PlaybackOptionsProps, PlaybackOptionsState } from '../types/PlaybackOptionsType';
+import { formatTime, getPercent } from '../../Utils';
+import { PlaybackOptionsProps, PlaybackOptionsState } from '../../types/PlaybackOptionsType';
 
 
 /**

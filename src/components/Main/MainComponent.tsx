@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react';
 
-import MiniDrawer from '../Drawer/index';
+import MiniDrawer from '../Drawer/MiniDrawerComponent';
 
-import logo from '../logo.svg';
-import './Main.css';
-import { MainProps, MainState } from '../types/MainType';
+import logo from '../../logo.svg';
+import './MainComponent.css';
+import { MainProps, MainState } from '../../types/MainType';
 
 
 function MusicMain(): JSX.Element {

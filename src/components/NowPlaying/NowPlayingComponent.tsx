@@ -3,11 +3,11 @@ import React, { ReactNode } from 'react';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 
-import SongInfo from './SongInfo';
-import VolumeOptions from './VolumeOptions';
-import PlaybackOptions from './PlaybackOptions';
+import SongInfo from './SongInfoComponent';
+import VolumeOptions from './VolumeOptionsComponent';
+import PlaybackOptions from './PlaybackOptionsComponent';
 
-import { NowPlayingProps, NowPlayingState } from '../types/NowPlayingType';
+import { NowPlayingProps, NowPlayingState } from '../../types/NowPlayingType';
 
 
 export default class NowPlaying extends React.PureComponent

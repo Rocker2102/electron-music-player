@@ -5,8 +5,8 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { formatString } from '../Utils';
-import { SongInfoProps, SongInfoState } from '../types/SongInfoType';
+import { formatString } from '../../Utils';
+import { SongInfoProps, SongInfoState } from '../../types/SongInfoType';
 
 
 export default class SongInfo extends React.PureComponent
