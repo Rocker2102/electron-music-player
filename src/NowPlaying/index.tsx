@@ -32,7 +32,8 @@ export default class NowPlaying extends React.PureComponent
 
     render(): ReactNode {
         return <Container className="NowPlaying" id={this.baseContainerId}
-            sx={{ boxShadow: 5, position: 'fixed', bottom: 0, minWidth: '100%', zIndex: 50 }}
+            sx={{ boxShadow: 5, position: 'fixed', bottom: 0, minWidth: '100%',
+                zIndex: 1250 }}
             disableGutters={true} fixed={true} maxWidth={false}
         >
             <Grid container

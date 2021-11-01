@@ -4,7 +4,8 @@
 declare namespace _App {
     type props = unknown;
 
-    type common = {
+    interface common {
+        themeMode: 'dark' | 'light',
         background: string
     }
 

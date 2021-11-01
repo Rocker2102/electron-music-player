@@ -1,5 +1,6 @@
 /* 'mmb' required for development purposes only (for reading files from react-server) */
 import * as mmb from 'music-metadata-browser';
+import { createTheme, Theme } from '@mui/material/styles';
 
 export const appDefaults = {
     picture: 'static/images/now-playing-default.jpg',
@@ -41,7 +42,9 @@ export const getPercent = (value: number, total: number, precision: number = 2):
 }
 
 export const getCoverImage = async (fileLocation: string): Promise<string | null> => {
-    if (typeof window.electronBridge === 'undefined') {
+    if (typeof window.electronBridge === 'undefined'
+        || window.electronBridge.config.APP_ENV === 'development') {
+
         const metadata = await mmb.fetchFromUrl(fileLocation);
         const picture = mmb.selectCover(metadata?.common?.picture) ?? null;
 
@@ -74,7 +77,10 @@ export const restoreStateFromLocal = (defaultState: _App.state, lsKey: string): 
      * state.playbackOptions.isPlaying = false
      */
     const tmp: _App.state = {
-        common: {...localState.common},
+        common: {
+            ...localState?.common,
+            theme: defaultState.common.themeMode
+        },
         isLoading: true,
         songInfo: {...defaultState.songInfo, ...localState?.songInfo},
         volumeOptions: {...defaultState.volumeOptions, ...localState?.volumeOptions},
@@ -83,4 +89,12 @@ export const restoreStateFromLocal = (defaultState: _App.state, lsKey: string): 
     }
 
     return tmp;
+}
+
+export const getTheme = (mode: _App.state['common']['themeMode']): Theme => {
+    return createTheme({
+        palette: {
+            mode: mode
+        }
+    });
 }

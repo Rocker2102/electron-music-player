@@ -1,6 +1,5 @@
 import { ipcRenderer, contextBridge } from 'electron';
 import * as mm from 'music-metadata';
-import path = require('path');
 
 import config from './Config';
 import { pictureAsBase64 } from './Utils';

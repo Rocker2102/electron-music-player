@@ -1,13 +1,28 @@
 import React, { ReactNode } from 'react';
 
+import MiniDrawer from '../Drawer/index';
+
 import logo from '../logo.svg';
 import './Main.css';
 
 
-export default class Main extends React.PureComponent
-    <unknown, { appName: string, appVersion: string }> {
+function MusicMain(): JSX.Element {
+    return <div className="App">
+        <header className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <p>
+                Edit <code>src/App.tsx</code> and save to reload.
+                <br />
+                {/* { this.state.appName }, { this.state.appVersion } */}
+            </p>
+        </header>
+    </div>;
+}
 
-    constructor (props: unknown) {
+export default class Main extends React.PureComponent
+    <_Main.props, { appName: string, appVersion: string }> {
+
+    constructor (props: _Main.props) {
         super(props);
 
         this.state = {
@@ -27,15 +42,13 @@ export default class Main extends React.PureComponent
     }
 
     render (): ReactNode {
-        return <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                    <br />
-                    { this.state.appName }, { this.state.appVersion }
-                </p>
-            </header>
+        return <div>
+            <MiniDrawer
+                themeMode={this.props.themeMode}
+                toggleTheme={this.props.toggleTheme}
+            >
+                <MusicMain />
+            </MiniDrawer>
         </div>;
     }
 }
