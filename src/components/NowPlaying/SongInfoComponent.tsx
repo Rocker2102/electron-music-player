@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { formatString } from '../../Utils';
+import { formatString } from '../../utils/Utils';
 import { SongInfoProps, SongInfoState } from '../../types/SongInfoType';
 
 

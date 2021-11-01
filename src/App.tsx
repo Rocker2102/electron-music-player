@@ -7,13 +7,13 @@ import { ThemeProvider } from '@mui/material/styles';
 import Main from './components/Main/MainComponent';
 import NowPlaying from './components/NowPlaying/NowPlayingComponent';
 
-import Player from './Audio/Player';
-import Library from './Audio/Library';
+import Player from './services/Player';
+import Library from './services/Library';
 
 import './App.css';
 
-import { appDefaults, getBackground, getCoverImage, restoreStateFromLocal } from './Utils';
-import { getTheme } from './Utils';
+import { appDefaults, getBackground, getCoverImage, restoreStateFromLocal } from './utils/Utils';
+import { getTheme } from './utils/Utils';
 import { Song } from './types/LibraryType';
 import { AppProps, AppState } from './types/AppType';
 import { PlaybackOptionsAttr } from './types/PlaybackOptionsType';
