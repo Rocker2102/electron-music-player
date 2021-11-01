@@ -1,9 +1,11 @@
 declare namespace _CreatePlaylistModal {
     interface props {
-        onSave: () => void
+        isOpen: boolean,
+        handleSave: (name: string) => void
+        handleClose: () => void
     }
 
     interface state {
-        open: boolean
+        playlistName: string
     }
 }

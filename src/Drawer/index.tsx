@@ -27,6 +27,8 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusicRounded';
 import PlaylistPlayIcon from '@mui/icons-material/PlaylistPlayRounded';
 
+import CreatePlaylistModal from '../Main/CreatePlaylistModal';
+
 
 /* Code base from https://mui.com/components/drawers/ */
 
@@ -130,7 +132,8 @@ export default class MiniDrawer extends React.PureComponent
         super(props);
 
         this.state = {
-            open: false
+            open: false,
+            isCreatePlaylistModalOpen: false
         };
     }
 
@@ -140,9 +143,33 @@ export default class MiniDrawer extends React.PureComponent
         });
     };
 
+    savePlaylist = (name: string): void => {
+        if (name === '') { return }
+
+        console.log('Playlist created', name);
+        this.closeCreatePlaylistModal();
+    }
+
+    openCreatePlaylistModal = (): void => {
+        this.setState({
+            isCreatePlaylistModalOpen: true
+        });
+    }
+
+    closeCreatePlaylistModal = (): void => {
+        this.setState({
+            isCreatePlaylistModalOpen: false
+        });
+    }
+
     render (): ReactNode {
         return <Box sx={{ display: 'flex' }}>
             <CssBaseline />
+
+            <CreatePlaylistModal isOpen={this.state.isCreatePlaylistModalOpen}
+                handleSave={this.savePlaylist}
+                handleClose={this.closeCreatePlaylistModal}
+            />
 
             <AppBar position="fixed" open={this.state.open}>
                 <Toolbar sx={{ justifyContent: 'space-between' }}>
@@ -220,6 +247,7 @@ export default class MiniDrawer extends React.PureComponent
                     <ListItem button secondaryAction={
                         <IconButton edge="end" aria-label="delete"
                             sx={{ display: this.state.open ? 'inline-flex' : 'none' }}
+                            onClick={this.openCreatePlaylistModal}
                             disableRipple
                         >
                             <AddIcon />
@@ -231,7 +259,9 @@ export default class MiniDrawer extends React.PureComponent
                         <ListItemText primary="Playlists" />
                     </ListItem>
 
-                    <ListItem button sx={{ display: this.state.open ? 'none' : 'flex' }}>
+                    <ListItem button sx={{ display: this.state.open ? 'none' : 'flex' }}
+                        onClick={this.openCreatePlaylistModal}
+                    >
                         <ListItemIcon>
                             <AddIcon />
                         </ListItemIcon>
@@ -242,7 +272,7 @@ export default class MiniDrawer extends React.PureComponent
             </Drawer>
 
             <Box component="main" sx={{ flexGrow: 1 }}>
-                {this.props.main}
+               {this.props.children}
             </Box>
         </Box>;
     }

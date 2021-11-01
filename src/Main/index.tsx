@@ -44,10 +44,11 @@ export default class Main extends React.PureComponent
     render (): ReactNode {
         return <div>
             <MiniDrawer
-                main={<MusicMain />}
                 themeMode={this.props.themeMode}
                 toggleTheme={this.props.toggleTheme}
-            />
+            >
+                <MusicMain />
+            </MiniDrawer>
         </div>;
     }
 }
