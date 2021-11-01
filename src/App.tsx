@@ -432,11 +432,9 @@ export default class App extends React.Component
 
     /**
      * Auto-store data locally whenever root component is updated
-     * @returns void
      */
     componentDidUpdate(): void {
         window.localStorage.setItem(this.lsKey, JSON.stringify(this.state));
-        return;
     }
 
     render(): ReactNode {

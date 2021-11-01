@@ -23,14 +23,10 @@ function MusicMain(): JSX.Element {
 export default class Main extends React.PureComponent
     <MainProps, MainState> {
 
-    constructor (props: MainProps) {
-        super(props);
-
-        this.state = {
-            appName: '-',
-            appVersion: '0.0.0'
-        };
-    }
+    state: MainState = {
+        appName: '-',
+        appVersion: '0.0.0'
+    };
 
     componentDidMount = (): void => {
         if (typeof window.electronBridge?.api === 'undefined') { return }

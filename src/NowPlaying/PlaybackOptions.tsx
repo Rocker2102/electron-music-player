@@ -54,13 +54,9 @@ function RepeatButton(props: PlaybackOptionsProps['repeatType'])
 export default class PlaybackOptions extends React.PureComponent
     <PlaybackOptionsProps, PlaybackOptionsState> {
 
-    constructor(props: PlaybackOptionsProps) {
-        super(props);
-
-        this.state = {
-            sliderVal: null
-        };
-    }
+    state: PlaybackOptionsState = {
+        sliderVal: null
+    };
 
     labelFormat = (time: number): string => {
         return formatTime((time / 100) * this.props.length);

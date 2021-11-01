@@ -28,7 +28,6 @@ import LibraryMusicIcon from '@mui/icons-material/LibraryMusicRounded';
 import PlaylistPlayIcon from '@mui/icons-material/PlaylistPlayRounded';
 
 import CreatePlaylistModal from '../Main/CreatePlaylistModal';
-
 import { MiniDrawerProps, MiniDrawerState } from '../types/MiniDrawerType';
 
 
@@ -130,15 +129,11 @@ export default class MiniDrawer extends React.PureComponent
         }
     ];
 
-    constructor(props: MiniDrawerProps) {
-        super(props);
-
-        this.state = {
-            open: true,
-            searchText: '',
-            isCreatePlaylistModalOpen: false
-        };
-    }
+    state: MiniDrawerState = {
+        open: true,
+        searchText: '',
+        isCreatePlaylistModalOpen: false
+    };
 
     toggleDrawerOpen = (): void => {
         this.setState({

@@ -16,13 +16,9 @@ export default class NowPlaying extends React.PureComponent
     private maxHeight = 120;
     protected baseContainerId = 'now-playing';
 
-    constructor(props: NowPlayingProps) {
-        super(props);
-
-        this.state = {
-            height: undefined
-        };
-    }
+    state: NowPlayingState = {
+        height: undefined
+    };
 
     componentDidMount(): void {
         const e = document.getElementById(this.baseContainerId);
