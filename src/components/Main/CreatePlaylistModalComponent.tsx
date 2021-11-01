@@ -8,13 +8,18 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 
+import {
+    CreatePlaylistModalProps,
+    CreatePlaylistModalState
+} from '../../types/CreatePlaylistModalType';
+
 
 /* Code base from https://mui.com/components/modal */
 
 export default class CreatePlaylistModal extends React.Component
-    <_CreatePlaylistModal.props, _CreatePlaylistModal.state> {
+    <CreatePlaylistModalProps, CreatePlaylistModalState> {
 
-    state: _CreatePlaylistModal.state = {
+    state: CreatePlaylistModalState = {
         playlistName: ''
     };
 

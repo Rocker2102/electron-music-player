@@ -27,7 +27,8 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusicRounded';
 import PlaylistPlayIcon from '@mui/icons-material/PlaylistPlayRounded';
 
-import CreatePlaylistModal from '../Main/CreatePlaylistModal';
+import CreatePlaylistModal from '../Main/CreatePlaylistModalComponent';
+import { MiniDrawerProps, MiniDrawerState } from '../../types/MiniDrawerType';
 
 
 /* Code base from https://mui.com/components/drawers/ */
@@ -108,7 +109,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default class MiniDrawer extends React.PureComponent
-    <_MiniDrawer.props, _MiniDrawer.state> {
+    <MiniDrawerProps, MiniDrawerState> {
 
     private menuItems: MenuItem[] = [
         {
@@ -128,15 +129,11 @@ export default class MiniDrawer extends React.PureComponent
         }
     ];
 
-    constructor(props: _MiniDrawer.props) {
-        super(props);
-
-        this.state = {
-            open: true,
-            searchText: '',
-            isCreatePlaylistModalOpen: false
-        };
-    }
+    state: MiniDrawerState = {
+        open: true,
+        searchText: '',
+        isCreatePlaylistModalOpen: false
+    };
 
     toggleDrawerOpen = (): void => {
         this.setState({

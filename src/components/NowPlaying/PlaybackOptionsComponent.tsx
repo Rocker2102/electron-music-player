@@ -17,7 +17,8 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
-import { formatTime, getPercent } from '../Utils';
+import { formatTime, getPercent } from '../../utils/Utils';
+import { PlaybackOptionsProps, PlaybackOptionsState } from '../../types/PlaybackOptionsType';
 
 
 /**
@@ -25,7 +26,7 @@ import { formatTime, getPercent } from '../Utils';
  * @param props
  * @returns ReactNode
  */
-function RepeatButton(props: _NowPlaying.PlaybackOptions.props['repeatType'])
+function RepeatButton(props: PlaybackOptionsProps['repeatType'])
     : ReactNode {
 
     let icon: ReactElement, title = 'Repeat: ';
@@ -51,15 +52,11 @@ function RepeatButton(props: _NowPlaying.PlaybackOptions.props['repeatType'])
 }
 
 export default class PlaybackOptions extends React.PureComponent
-    <_NowPlaying.PlaybackOptions.props, _NowPlaying.PlaybackOptions.state> {
+    <PlaybackOptionsProps, PlaybackOptionsState> {
 
-    constructor(props: _NowPlaying.PlaybackOptions.props) {
-        super(props);
-
-        this.state = {
-            sliderVal: null
-        };
-    }
+    state: PlaybackOptionsState = {
+        sliderVal: null
+    };
 
     labelFormat = (time: number): string => {
         return formatTime((time / 100) * this.props.length);

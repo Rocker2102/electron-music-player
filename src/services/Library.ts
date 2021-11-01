@@ -1,4 +1,5 @@
-type Song = _App.Library.Song;
+import { Song } from '../types/LibraryType';
+
 type onLoadHandler = () => void;
 
 /**

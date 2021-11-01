@@ -2,10 +2,12 @@
 import * as mmb from 'music-metadata-browser';
 import { createTheme, Theme } from '@mui/material/styles';
 
+import { AppState, Common as AppStateCommon } from '../types/AppType';
+
 export const appDefaults = {
     picture: 'static/images/now-playing-default.jpg',
     background: 'rgba(0, 0, 0, 0.15)'
-}
+};
 
 /**
  * Forms CSS compatible string from rgb array
@@ -15,11 +17,11 @@ export const appDefaults = {
 export const getBackground = (rgb: [ number, number, number ]): string => {
     const opacity = 0.4;
     return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${opacity})`;
-}
+};
 
 export const formatString = (str: undefined | string | string[]): string => {
     return str instanceof Array ? str.join(', ') : str ?? '';
-}
+};
 
 export const formatTime = (seconds: number): string => {
     const hours = Math.floor(seconds / 3600);
@@ -34,12 +36,12 @@ export const formatTime = (seconds: number): string => {
     str += (_seconds < 10 ? '0' + _seconds : _seconds);
 
     return str;
-}
+};
 
-export const getPercent = (value: number, total: number, precision: number = 2): number => {
+export const getPercent = (value: number, total: number, precision = 2): number => {
     if (total === 0) { return 0 }
     return Number(((value / total) * 100).toFixed(precision));
-}
+};
 
 export const getCoverImage = async (fileLocation: string): Promise<string | null> => {
     if (typeof window.electronBridge === 'undefined'
@@ -54,9 +56,9 @@ export const getCoverImage = async (fileLocation: string): Promise<string | null
     }
 
     return window.electronBridge.getCoverImage(fileLocation);
-}
+};
 
-export const restoreStateFromLocal = (defaultState: _App.state, lsKey: string): _App.state => {
+export const restoreStateFromLocal = (defaultState: AppState, lsKey: string): AppState => {
     let localState;
 
     try {
@@ -76,25 +78,25 @@ export const restoreStateFromLocal = (defaultState: _App.state, lsKey: string): 
      * state.isLoading = true
      * state.playbackOptions.isPlaying = false
      */
-    const tmp: _App.state = {
+    const tmp: AppState = {
         common: {
             ...localState?.common,
             theme: defaultState.common.themeMode
         },
         isLoading: true,
-        songInfo: {...defaultState.songInfo, ...localState?.songInfo},
-        volumeOptions: {...defaultState.volumeOptions, ...localState?.volumeOptions},
-        playbackOptions: {...defaultState.playbackOptions, ...localState?.playbackOptions,
-            ...{isPlaying: false}}
-    }
+        songInfo: { ...defaultState.songInfo, ...localState?.songInfo },
+        volumeOptions: { ...defaultState.volumeOptions, ...localState?.volumeOptions },
+        playbackOptions: { ...defaultState.playbackOptions, ...localState?.playbackOptions,
+            ...{ isPlaying: false } }
+    };
 
     return tmp;
-}
+};
 
-export const getTheme = (mode: _App.state['common']['themeMode']): Theme => {
+export const getTheme = (mode: AppStateCommon['themeMode']): Theme => {
     return createTheme({
         palette: {
             mode: mode
         }
     });
-}
+};

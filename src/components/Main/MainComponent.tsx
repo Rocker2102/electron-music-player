@@ -1,9 +1,10 @@
 import React, { ReactNode } from 'react';
 
-import MiniDrawer from '../Drawer/index';
+import MiniDrawer from '../Drawer/MiniDrawerComponent';
 
-import logo from '../logo.svg';
-import './Main.css';
+import logo from '../../logo.svg';
+import './MainComponent.css';
+import { MainProps, MainState } from '../../types/MainType';
 
 
 function MusicMain(): JSX.Element {
@@ -20,16 +21,12 @@ function MusicMain(): JSX.Element {
 }
 
 export default class Main extends React.PureComponent
-    <_Main.props, { appName: string, appVersion: string }> {
+    <MainProps, MainState> {
 
-    constructor (props: _Main.props) {
-        super(props);
-
-        this.state = {
-            appName: '-',
-            appVersion: '0.0.0'
-        };
-    }
+    state: MainState = {
+        appName: '-',
+        appVersion: '0.0.0'
+    };
 
     componentDidMount = (): void => {
         if (typeof window.electronBridge?.api === 'undefined') { return }
