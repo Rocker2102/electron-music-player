@@ -132,7 +132,7 @@ export default class MiniDrawer extends React.PureComponent
         super(props);
 
         this.state = {
-            open: false,
+            open: true,
             searchText: '',
             isCreatePlaylistModalOpen: false
         };
