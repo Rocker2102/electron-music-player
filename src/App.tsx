@@ -118,6 +118,7 @@ export default class App extends React.Component
          * prevent creation of new methods everytime which causes
          * unnecessary re-rendering of components
          */
+        this.toggleTheme = this.toggleTheme.bind(this);
         this.toggleMuteBtn = this.toggleMuteBtn.bind(this);
         this.handleVolumeUpdate = this.handleVolumeUpdate.bind(this);
 
