@@ -26,7 +26,7 @@ import { PlaybackOptionsProps, PlaybackOptionsState } from '../types/PlaybackOpt
  * @param props
  * @returns ReactNode
  */
-function RepeatButton(props: _NowPlaying.PlaybackOptions.props['repeatType'])
+function RepeatButton(props: PlaybackOptionsProps['repeatType'])
     : ReactNode {
 
     let icon: ReactElement, title = 'Repeat: ';

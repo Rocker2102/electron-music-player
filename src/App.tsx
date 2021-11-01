@@ -16,6 +16,7 @@ import { appDefaults, getBackground, getCoverImage, restoreStateFromLocal } from
 import { getTheme } from './Utils';
 import { Song } from './types/LibraryType';
 import { AppProps, AppState } from './types/AppType';
+import { PlaybackOptionsAttr } from './types/PlaybackOptionsType';
 
 
 /**
@@ -168,7 +169,7 @@ export default class App extends React.Component
     }
 
     toggleSongRepeat = (): void => {
-        const repeatTypes: _NowPlaying.PlaybackOptions.props['repeatType'][]
+        const repeatTypes: PlaybackOptionsAttr['repeatType'][]
             = [ 'off', 'single', 'on' ];
 
         const current = this.state.playbackOptions.repeatType;
