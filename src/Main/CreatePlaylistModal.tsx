@@ -15,18 +15,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 
 /* Code base from https://mui.com/components/modal */
 
-const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
-
 export default class CreatePlaylistModal extends React.Component
     <_CreatePlaylistModal.props, _CreatePlaylistModal.state> {
 
@@ -38,9 +26,9 @@ export default class CreatePlaylistModal extends React.Component
         };
     }
 
-    handleClose = () => this.setState({ open: false });
+    handleClose = (): void => this.setState({ open: false });
 
-    render() {
+    render(): React.ReactNode {
         return (
             <div>
                 <Fade in={this.state.open}>
