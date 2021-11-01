@@ -6,6 +6,7 @@ declare namespace _MiniDrawer {
 
     interface state {
         open: boolean,
+        searchText: string,
         isCreatePlaylistModalOpen: boolean
     }
 }

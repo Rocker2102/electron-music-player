@@ -133,6 +133,7 @@ export default class MiniDrawer extends React.PureComponent
 
         this.state = {
             open: false,
+            searchText: '',
             isCreatePlaylistModalOpen: false
         };
     }
@@ -159,6 +160,20 @@ export default class MiniDrawer extends React.PureComponent
     closeCreatePlaylistModal = (): void => {
         this.setState({
             isCreatePlaylistModalOpen: false
+        });
+    }
+
+    handleSearchSubmit = (e: React.FormEvent): void => {
+        e.preventDefault();
+
+        if (this.state.searchText === '') { return }
+
+        console.log('Searching...', this.state.searchText);
+    }
+
+    handleSearchTextChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        this.setState({
+            searchText: e.target.value
         });
     }
 
@@ -216,14 +231,20 @@ export default class MiniDrawer extends React.PureComponent
                     <ListItem button disableRipple>
                         <ListItemIcon
                             sx={{ display: this.state.open ? 'none' : 'inline-flex' }}
+                            onClick={this.toggleDrawerOpen}
                         >
-                            <SearchIcon />
+                            <SearchIcon/>
                         </ListItemIcon>
                         <ListItemText disableTypography primary={
-                            <TextField label="Search" variant="outlined"
-                                size="small" fullWidth
-                                color="secondary"
-                            />
+                            <form onSubmit={this.handleSearchSubmit}>
+                                <TextField
+                                    value={this.state.searchText}
+                                    label="Search" variant="outlined"
+                                    size="small" fullWidth
+                                    color="warning"
+                                    onChange={this.handleSearchTextChange}
+                                />
+                            </form>
                         } />
                     </ListItem>
                 </List>
