@@ -7,14 +7,16 @@ import SongInfo from './SongInfo';
 import VolumeOptions from './VolumeOptions';
 import PlaybackOptions from './PlaybackOptions';
 
+import { NowPlayingProps, NowPlayingState } from '../types/NowPlayingType';
+
 
 export default class NowPlaying extends React.PureComponent
-    <_NowPlaying.props, _NowPlaying.state> {
+    <NowPlayingProps, NowPlayingState> {
 
     private maxHeight = 120;
     protected baseContainerId = 'now-playing';
 
-    constructor(props: _NowPlaying.props) {
+    constructor(props: NowPlayingProps) {
         super(props);
 
         this.state = {

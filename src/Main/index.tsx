@@ -4,6 +4,7 @@ import MiniDrawer from '../Drawer/index';
 
 import logo from '../logo.svg';
 import './Main.css';
+import { MainProps, MainState } from '../types/MainType';
 
 
 function MusicMain(): JSX.Element {
@@ -20,9 +21,9 @@ function MusicMain(): JSX.Element {
 }
 
 export default class Main extends React.PureComponent
-    <_Main.props, { appName: string, appVersion: string }> {
+    <MainProps, MainState> {
 
-    constructor (props: _Main.props) {
+    constructor (props: MainProps) {
         super(props);
 
         this.state = {

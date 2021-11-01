@@ -18,6 +18,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
 import { formatTime, getPercent } from '../Utils';
+import { PlaybackOptionsProps, PlaybackOptionsState } from '../types/PlaybackOptionsType';
 
 
 /**
@@ -51,9 +52,9 @@ function RepeatButton(props: _NowPlaying.PlaybackOptions.props['repeatType'])
 }
 
 export default class PlaybackOptions extends React.PureComponent
-    <_NowPlaying.PlaybackOptions.props, _NowPlaying.PlaybackOptions.state> {
+    <PlaybackOptionsProps, PlaybackOptionsState> {
 
-    constructor(props: _NowPlaying.PlaybackOptions.props) {
+    constructor(props: PlaybackOptionsProps) {
         super(props);
 
         this.state = {

@@ -6,10 +6,11 @@ import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { formatString } from '../Utils';
+import { SongInfoProps, SongInfoState } from '../types/SongInfoType';
 
 
 export default class SongInfo extends React.PureComponent
-    <_NowPlaying.SongInfo.props, _NowPlaying.SongInfo.state> {
+    <SongInfoProps, SongInfoState> {
 
     render(): ReactNode {
         return <Grid item xs={4} zeroMinWidth>

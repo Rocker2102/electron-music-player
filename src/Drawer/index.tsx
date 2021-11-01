@@ -29,6 +29,8 @@ import PlaylistPlayIcon from '@mui/icons-material/PlaylistPlayRounded';
 
 import CreatePlaylistModal from '../Main/CreatePlaylistModal';
 
+import { MiniDrawerProps, MiniDrawerState } from '../types/MiniDrawerType';
+
 
 /* Code base from https://mui.com/components/drawers/ */
 
@@ -108,7 +110,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default class MiniDrawer extends React.PureComponent
-    <_MiniDrawer.props, _MiniDrawer.state> {
+    <MiniDrawerProps, MiniDrawerState> {
 
     private menuItems: MenuItem[] = [
         {
@@ -128,7 +130,7 @@ export default class MiniDrawer extends React.PureComponent
         }
     ];
 
-    constructor(props: _MiniDrawer.props) {
+    constructor(props: MiniDrawerProps) {
         super(props);
 
         this.state = {
