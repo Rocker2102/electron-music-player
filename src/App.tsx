@@ -14,9 +14,9 @@ import './App.css';
 
 import { appDefaults, getBackground, getCoverImage, restoreStateFromLocal } from './Utils';
 import { getTheme } from './Utils';
+import { Song } from './types/LibraryType';
+import { AppProps, AppState } from './types/AppType';
 
-
-type Song = _App.Library.Song;
 
 /**
  * Base App class. All primary states are managed here.
@@ -24,7 +24,7 @@ type Song = _App.Library.Song;
  * Sequential event based app init.: Load library -> Load song -> Normal Functions...
  */
 export default class App extends React.Component
-    <unknown, _App.state> {
+    <AppProps, AppState> {
 
     /* Howler player, manages sound output */
     static player: Player;
@@ -42,7 +42,7 @@ export default class App extends React.Component
     /* Song seek slider interval number is stored in this */
     private seekSliderInterval: undefined | number = undefined;
 
-    constructor(props: unknown) {
+    constructor(props: AppProps) {
         super(props);
 
         App.player = new Player('any-incorrect-location-to-init-howler', {});
@@ -85,7 +85,7 @@ export default class App extends React.Component
         }, true);
 
         /* App init/default state */
-        const defaultState: _App.state = {
+        const defaultState: AppState = {
             common: {
                 themeMode: 'dark',
                 background: appDefaults.background
@@ -98,29 +98,34 @@ export default class App extends React.Component
             },
             volumeOptions: {
                 isMute: false,
-                volume: 7,
-
-                toggleMute: this.toggleMuteBtn,
-                handleVolumeUpdate: this.handleVolumeUpdate
+                volume: 7
             },
             playbackOptions: {
                 length: 0,
                 current: 0,
                 shuffle: false,
                 isPlaying: false,
-                repeatType: 'off',
-
-                handlePrev: this.playPrevSong,
-                handleNext: this.playNextSong,
-                handleSeek: this.handleSongSeek,
-                toggleRepeat: this.toggleSongRepeat,
-                toggleShuffle: this.toggleSongShuffle,
-                togglePlayback: this.toggleSongPlayback
+                repeatType: 'off'
             }
         };
 
         this.state = restoreStateFromLocal(defaultState, this.lsKey);
         this.library.restoreFromLs(this.lsLibrary);
+
+        /**
+         * Bind methods to be passed as props to this instance to
+         * prevent creation of new methods everytime which causes
+         * unnecessary re-rendering of components
+         */
+        this.toggleMuteBtn = this.toggleMuteBtn.bind(this);
+        this.handleVolumeUpdate = this.handleVolumeUpdate.bind(this);
+
+        this.playPrevSong = this.playPrevSong.bind(this);
+        this.playNextSong = this.playNextSong.bind(this);
+        this.handleSongSeek = this.handleSongSeek.bind(this);
+        this.toggleSongRepeat = this.toggleSongRepeat.bind(this);
+        this.toggleSongShuffle = this.toggleSongShuffle.bind(this);
+        this.toggleSongPlayback = this.toggleSongPlayback.bind(this);
     }
 
     libraryLoaded = (): void => {
@@ -447,8 +452,22 @@ export default class App extends React.Component
                     background={this.state.common.background}
 
                     songInfo={this.state.songInfo}
-                    volumeOptions={this.state.volumeOptions}
-                    playbackOptions={this.state.playbackOptions}
+                    volumeOptions={{
+                        ...this.state.volumeOptions,
+
+                        toggleMute: this.toggleMuteBtn,
+                        handleVolumeUpdate: this.handleVolumeUpdate
+                    }}
+                    playbackOptions={{
+                        ...this.state.playbackOptions,
+
+                        handlePrev: this.playPrevSong,
+                        handleNext: this.playNextSong,
+                        handleSeek: this.handleSongSeek,
+                        toggleRepeat: this.toggleSongRepeat,
+                        toggleShuffle: this.toggleSongShuffle,
+                        togglePlayback: this.toggleSongPlayback
+                    }}
                 />
             </ThemeProvider>
         </React.StrictMode>;

@@ -2,6 +2,8 @@
 import * as mmb from 'music-metadata-browser';
 import { createTheme, Theme } from '@mui/material/styles';
 
+import { AppState, Common as AppStateCommon } from './types/AppType';
+
 export const appDefaults = {
     picture: 'static/images/now-playing-default.jpg',
     background: 'rgba(0, 0, 0, 0.15)'
@@ -56,7 +58,7 @@ export const getCoverImage = async (fileLocation: string): Promise<string | null
     return window.electronBridge.getCoverImage(fileLocation);
 }
 
-export const restoreStateFromLocal = (defaultState: _App.state, lsKey: string): _App.state => {
+export const restoreStateFromLocal = (defaultState: AppState, lsKey: string): AppState => {
     let localState;
 
     try {
@@ -76,7 +78,7 @@ export const restoreStateFromLocal = (defaultState: _App.state, lsKey: string): 
      * state.isLoading = true
      * state.playbackOptions.isPlaying = false
      */
-    const tmp: _App.state = {
+    const tmp: AppState = {
         common: {
             ...localState?.common,
             theme: defaultState.common.themeMode
@@ -91,7 +93,7 @@ export const restoreStateFromLocal = (defaultState: _App.state, lsKey: string): 
     return tmp;
 }
 
-export const getTheme = (mode: _App.state['common']['themeMode']): Theme => {
+export const getTheme = (mode: AppStateCommon['themeMode']): Theme => {
     return createTheme({
         palette: {
             mode: mode
