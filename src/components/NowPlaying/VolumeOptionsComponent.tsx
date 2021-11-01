@@ -16,6 +16,22 @@ import { VolumeOptionsProps, VolumeOptionsState } from '../../types/VolumeOption
 export default class VolumeOptions extends React.PureComponent
     <VolumeOptionsProps, VolumeOptionsState> {
 
+    state: VolumeOptionsState = {
+        volume: this.props.volume
+    };
+
+    handleChange = (e: Event, value: number | number[]): void => {
+        if (value instanceof Array) {
+            value = value.length > 0 ? value[0] : 0;
+        }
+
+        this.setState({
+            volume: value
+        });
+
+        this.props.handleVolumeUpdate(value);
+    }
+
     render(): ReactNode {
         return <Grid item xs={3} lg={2} mr={2} ml="auto" >
             <Stack direction="row" alignItems="center"
@@ -26,9 +42,9 @@ export default class VolumeOptions extends React.PureComponent
                 </IconButton>
 
                 <Slider size='small'
-                    defaultValue={this.props.volume} min={0} max={15} step={1}
+                    value={this.state.volume} min={0} max={15} step={1}
                     valueLabelDisplay='auto'
-                    onChange={this.props.handleVolumeUpdate}
+                    onChange={this.handleChange}
                     sx={{ display: { xs: 'none', md: 'inline-flex' } }}
                 />
 

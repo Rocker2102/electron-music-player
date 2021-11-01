@@ -151,12 +151,7 @@ export default class App extends React.Component
         });
     }
 
-    handleVolumeUpdate = (e: Event, volume: number | number[]): void => {
-        const defaultVolume = 2;
-
-        if (volume instanceof Array) {
-            volume = volume.length > 0 ? volume[0] : defaultVolume;
-        }
+    handleVolumeUpdate = (volume: number): void => {
         if (App.player?.state() === 'loaded') {
             App.player.setVolume(volume);
         }

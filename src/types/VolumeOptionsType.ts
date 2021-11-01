@@ -5,11 +5,13 @@ export interface VolumeOptionsAttr {
 
 interface VolumeOptionsHandlers {
     toggleMute: () => void,
-    handleVolumeUpdate: (e: Event, volume: number | number[]) => void
+    handleVolumeUpdate: (volume: number) => void
 }
 
 export interface VolumeOptionsProps extends VolumeOptionsAttr, VolumeOptionsHandlers {
 
 }
 
-export type VolumeOptionsState = unknown;
+export interface VolumeOptionsState {
+    volume: number
+}
