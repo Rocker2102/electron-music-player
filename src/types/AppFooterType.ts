@@ -3,7 +3,7 @@ import { SongInfoProps } from './SongInfoType';
 import { VolumeOptionsProps } from './VolumeOptionsType';
 import { PlaybackOptionsProps } from './PlaybackOptionsType';
 
-export interface NowPlayingProps {
+export interface AppFooterProps {
     isLoading: AppState['isLoading'],
     background: Common['background'],
 
@@ -12,6 +12,6 @@ export interface NowPlayingProps {
     volumeOptions: VolumeOptionsProps
 }
 
-export interface NowPlayingState {
+export interface AppFooterState {
     height?: number
 }

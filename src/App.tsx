@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 
 import Main from './components/Main/MainComponent';
-import NowPlaying from './components/NowPlaying/NowPlayingComponent';
+import AppFooter from './components/AppFooter/AppFooterComponent';
 
 import Player from './services/Player';
 import Library from './services/Library';
@@ -444,7 +444,7 @@ export default class App extends React.Component
                     toggleTheme={this.toggleTheme}
                 />
 
-                <NowPlaying
+                <AppFooter
                     isLoading={this.state.isLoading}
                     background={this.state.common.background}
 
