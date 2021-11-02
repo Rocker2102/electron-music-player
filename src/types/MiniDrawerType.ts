@@ -1,5 +1,5 @@
 import { Common } from './AppType';
-import { MainHandlers } from './MainType';
+import { ComponentTypes, MainHandlers } from './MainType';
 
 export interface MiniDrawerAttr {
     themeMode: Common['themeMode']
@@ -7,6 +7,8 @@ export interface MiniDrawerAttr {
 
 interface MiniDrawerHandlers {
     toggleTheme: MainHandlers['toggleTheme']
+    switchComponent: (component: ComponentTypes) => void
+    currentComponent: ComponentTypes
 }
 
 export interface MiniDrawerProps extends MiniDrawerAttr, MiniDrawerHandlers {

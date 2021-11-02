@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 
 import Main from './components/Main/MainComponent';
-import NowPlaying from './components/NowPlaying/NowPlayingComponent';
+import AppFooter from './components/AppFooter/AppFooterComponent';
 
 import Player from './services/Player';
 import Library from './services/Library';
@@ -114,22 +114,6 @@ export default class App extends React.Component
 
         this.state = restoreStateFromLocal(defaultState, this.lsKey);
         this.library.restoreFromLs(this.lsLibrary);
-
-        /**
-         * Bind methods to be passed as props to this instance to
-         * prevent creation of new methods everytime which causes
-         * unnecessary re-rendering of components
-         */
-        this.toggleTheme = this.toggleTheme.bind(this);
-        this.toggleMuteBtn = this.toggleMuteBtn.bind(this);
-        this.handleVolumeUpdate = this.handleVolumeUpdate.bind(this);
-
-        this.playPrevSong = this.playPrevSong.bind(this);
-        this.playNextSong = this.playNextSong.bind(this);
-        this.handleSongSeek = this.handleSongSeek.bind(this);
-        this.toggleSongRepeat = this.toggleSongRepeat.bind(this);
-        this.toggleSongShuffle = this.toggleSongShuffle.bind(this);
-        this.toggleSongPlayback = this.toggleSongPlayback.bind(this);
     }
 
     libraryLoaded = (): void => {
@@ -444,7 +428,7 @@ export default class App extends React.Component
                     toggleTheme={this.toggleTheme}
                 />
 
-                <NowPlaying
+                <AppFooter
                     isLoading={this.state.isLoading}
                     background={this.state.common.background}
 

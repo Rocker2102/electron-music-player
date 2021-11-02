@@ -1,4 +1,4 @@
-import { NowPlayingState } from './NowPlayingType';
+import { AppFooterState } from './AppFooterType';
 
 export interface SongInfoAttr {
     name: string,
@@ -6,7 +6,7 @@ export interface SongInfoAttr {
     artist?: string | string[],
     picture: null | string,
 
-    height?: NowPlayingState['height']
+    height?: AppFooterState['height']
 }
 
 interface SongInfoHandlers {

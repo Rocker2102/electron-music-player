@@ -7,16 +7,16 @@ import SongInfo from './SongInfoComponent';
 import VolumeOptions from './VolumeOptionsComponent';
 import PlaybackOptions from './PlaybackOptionsComponent';
 
-import type { NowPlayingProps, NowPlayingState } from '../../types/NowPlayingType';
+import type { AppFooterProps, AppFooterState } from '../../types/AppFooterType';
 
 
-export default class NowPlaying extends React.PureComponent
-    <NowPlayingProps, NowPlayingState> {
+export default class AppFooter extends React.PureComponent
+    <AppFooterProps, AppFooterState> {
 
     private maxHeight = 120;
     protected baseContainerId = 'now-playing';
 
-    state: NowPlayingState = {
+    state: AppFooterState = {
         height: undefined
     };
 
@@ -29,7 +29,7 @@ export default class NowPlaying extends React.PureComponent
     }
 
     render(): ReactNode {
-        return <Container className="NowPlaying" id={this.baseContainerId}
+        return <Container className="AppFooter" id={this.baseContainerId}
             sx={{ boxShadow: 5, position: 'fixed', bottom: 0, minWidth: '100%',
                 zIndex: 1250 }}
             disableGutters={true} fixed={true} maxWidth={false}
