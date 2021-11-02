@@ -3,12 +3,19 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
+import Tooltip from '@mui/material/Tooltip';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import AlertTitle from '@mui/material/AlertTitle';
+import InputLabel from '@mui/material/InputLabel';
+
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import FormControl from '@mui/material/FormControl';
 
 import CloseIcon from '@mui/icons-material/CloseRounded';
 import FolderIcon from '@mui/icons-material/FolderSpecialOutlined';
+import ShuffleIcon from '@mui/icons-material/ShuffleRounded';
 
 import type { MyMusicProps, MyMusicState } from '../../types/MyMusicType';
 
@@ -21,7 +28,7 @@ interface SelectFolderAlertProps {
 
 const SelectFolderAlert: React.FC<SelectFolderAlertProps> = (props) => {
     return (
-        <Stack sx={{ width: '100%' }} spacing={2}>
+        <Stack sx={{ width: '100%' }} spacing={2} mb={2}>
             <Collapse in={props.open}>
                 <Alert
                     severity="info"
@@ -53,10 +60,64 @@ const SelectFolderAlert: React.FC<SelectFolderAlertProps> = (props) => {
     );
 };
 
+interface ComponentHeaderProps {
+    genre: MyMusicState['selectedGenre'],
+    sortBy: MyMusicState['sortBy'],
+    onSortChange: (e: SelectChangeEvent) => void
+    onGenreChange: (e: SelectChangeEvent) => void
+}
+
+const ComponentHeader: React.FC<ComponentHeaderProps> = (props) => {
+    const formControlSx = { mr: 1 };
+
+    return (
+        <div>
+            <FormControl sx={formControlSx}>
+                <InputLabel id="sort-mymusic-label">Sort by</InputLabel>
+                <Select
+                    id="sort-mymusic-input"
+                    size="small"
+                    value={props.sortBy}
+                    label="Sort by"
+                    labelId="sort-mymusic-label"
+                    onChange={props.onSortChange}
+                >
+                    <MenuItem value="name">A - Z</MenuItem>
+                    <MenuItem value="date">Date Added</MenuItem>
+                    <MenuItem value="artist">Artist</MenuItem>
+                    <MenuItem value="album">Album</MenuItem>
+                </Select>
+            </FormControl>
+
+            <FormControl sx={formControlSx}>
+                <InputLabel id="genre-mymusic-label">Genre</InputLabel>
+                <Select
+                    id="genre-mymusic-input"
+                    size="small"
+                    value={props.genre}
+                    label="Genre"
+                    labelId="genre-mymusic-label"
+                    onChange={props.onSortChange}
+                >
+                    <MenuItem value="all" selected>All Genres</MenuItem>
+                </Select>
+            </FormControl>
+
+            <Tooltip title="Shuffle All" placement="right">
+                <IconButton sx={formControlSx}>
+                    <ShuffleIcon />
+                </IconButton>
+            </Tooltip>
+        </div>
+    );
+};
+
 export default class MusicMain extends React.Component
     <MyMusicProps, MyMusicState> {
 
-    state = {
+    state: MyMusicState = {
+        sortBy: 'name',
+        selectedGenre: 'all',
         selectFolderAlert: true
     };
 
@@ -70,6 +131,18 @@ export default class MusicMain extends React.Component
         });
     }
 
+    handleSortChange = (e: SelectChangeEvent): void => {
+        this.setState({
+            sortBy: e.target.value as MyMusicState['sortBy']
+        });
+    }
+
+    handleGenreChange = (e: SelectChangeEvent): void => {
+        this.setState({
+            selectedGenre: e.target.value as MyMusicState['selectedGenre']
+        });
+    }
+
     render (): React.ReactNode {
         return (
             <Box mt={1} mx={1}>
@@ -77,6 +150,13 @@ export default class MusicMain extends React.Component
                     open={this.state.selectFolderAlert}
                     handleClose={this.closeSelectFolderAlert}
                     handleSelect={this.handleSelectFolder}
+                />
+
+                <ComponentHeader
+                    genre={this.state.selectedGenre}
+                    sortBy={this.state.sortBy}
+                    onSortChange={this.handleSortChange}
+                    onGenreChange={this.handleGenreChange}
                 />
             </Box>
         );
