@@ -29,6 +29,7 @@ import PlaylistPlayIcon from '@mui/icons-material/PlaylistPlayRounded';
 
 import CreatePlaylistModal from '../Main/CreatePlaylistModalComponent';
 import type { MiniDrawerProps, MiniDrawerState } from '../../types/MiniDrawerType';
+import type { ComponentTypes } from '../../types/MainType';
 
 
 /* Code base from https://mui.com/components/drawers/ */
@@ -36,7 +37,7 @@ import type { MiniDrawerProps, MiniDrawerState } from '../../types/MiniDrawerTyp
 type MenuItem = {
     name: string,
     icon: JSX.Element,
-    link: string
+    component: ComponentTypes
 };
 
 const [ drawerWidth, transitionDuration ] = [ 280, 100 ];
@@ -115,17 +116,17 @@ export default class MiniDrawer extends React.PureComponent
         {
             name: 'My Music',
             icon: <MusicNoteIcon />,
-            link: ''
+            component: 'main'
         },
         {
             name: 'Recent Plays',
             icon: <ScheduleIcon />,
-            link: ''
+            component: 'recent'
         },
         {
             name: 'Now Playing',
             icon: <LibraryMusicIcon />,
-            link: ''
+            component: 'nowPlaying'
         }
     ];
 
@@ -249,8 +250,11 @@ export default class MiniDrawer extends React.PureComponent
                 <Divider />
 
                 <List>
-                    {this.menuItems.map(({ name, icon, link }) => (
-                        <ListItem button key={name}>
+                    {this.menuItems.map(({ name, icon, component }) => (
+                        <ListItem button key={component}
+                            onClick={() => this.props.switchComponent(component)}
+                            selected={this.props.currentComponent === component}
+                        >
                             <ListItemIcon>
                                 {icon}
                             </ListItemIcon>
@@ -270,7 +274,9 @@ export default class MiniDrawer extends React.PureComponent
                         >
                             <AddIcon />
                         </IconButton>
-                    }>
+                    }
+                        onClick={() => this.props.switchComponent('playlists')}
+                    >
                         <ListItemIcon>
                             <PlaylistPlayIcon />
                         </ListItemIcon>

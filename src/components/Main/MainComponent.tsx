@@ -2,31 +2,50 @@ import React, { ReactNode } from 'react';
 
 import MiniDrawer from '../Drawer/MiniDrawerComponent';
 
-import logo from '../../logo.svg';
 import './MainComponent.css';
+import MyMusic from './MyMusicComponent';
+import NowPlaying from './NowPlayingComponent';
+import RecentMusic from './RecentMusicComponent';
+import AllPlaylists from './AllPlaylistsComponent';
 import type { MainProps, MainState } from '../../types/MainType';
 
 
-function MusicMain(): JSX.Element {
-    return <div className="App">
-        <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <p>
-                Edit <code>src/App.tsx</code> and save to reload.
-                <br />
-                {/* { this.state.appName }, { this.state.appVersion } */}
-            </p>
-        </header>
-    </div>;
+interface RenderComponentProps {
+    component: MainState['renderComponent']
 }
+
+const RenderComponent: React.FC<RenderComponentProps> = ({ component }) => {
+    switch (component) {
+        case 'main': return <MyMusic />;
+        case 'recent': return <RecentMusic />;
+        case 'playlists': return <AllPlaylists />;
+        case 'nowPlaying': return <NowPlaying />;
+        default: return <MyMusic />;
+    }
+};
 
 export default class Main extends React.PureComponent
     <MainProps, MainState> {
 
     state: MainState = {
         appName: '-',
-        appVersion: '0.0.0'
+        appVersion: '0.0.0',
+        renderComponent: 'main'
     };
+
+    constructor (props: MainProps) {
+        super(props);
+
+        this.switchComponent = this.switchComponent.bind(this);
+    }
+
+    switchComponent = (component: MainState['renderComponent']): void => {
+        if (component === this.state.renderComponent) { return }
+
+        this.setState({
+            renderComponent: component
+        });
+    }
 
     componentDidMount = (): void => {
         if (typeof window.electronBridge?.api === 'undefined') { return }
@@ -43,8 +62,10 @@ export default class Main extends React.PureComponent
             <MiniDrawer
                 themeMode={this.props.themeMode}
                 toggleTheme={this.props.toggleTheme}
+                switchComponent={this.switchComponent}
+                currentComponent={this.state.renderComponent}
             >
-                <MusicMain />
+                <RenderComponent component={this.state.renderComponent} />
             </MiniDrawer>
         </div>;
     }
