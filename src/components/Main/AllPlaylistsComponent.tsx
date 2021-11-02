@@ -1,15 +1,15 @@
 import React from 'react';
 
-const AllPlaylists: React.FC = () => {
-    return (
-        <div className="App">
-            <header className="App-header">
-                <p>
-                    All Playlists Component
-                </p>
-            </header>
-        </div>
-    );
-};
-
-export default AllPlaylists;
+export default class AllPlaylists extends React.Component {
+    render() {
+        return (
+            <div className="App">
+                <header className="App-header">
+                    <p>
+                        All Playlists Component
+                    </p>
+                </header>
+            </div>
+        );
+    }
+}
