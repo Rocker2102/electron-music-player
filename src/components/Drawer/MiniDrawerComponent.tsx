@@ -269,7 +269,10 @@ export default class MiniDrawer extends React.PureComponent
                     <ListItem button secondaryAction={
                         <IconButton edge="end" aria-label="delete"
                             sx={{ display: this.state.open ? 'inline-flex' : 'none' }}
-                            onClick={this.openCreatePlaylistModal}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                this.openCreatePlaylistModal();
+                            }}
                             disableRipple
                         >
                             <AddIcon />
