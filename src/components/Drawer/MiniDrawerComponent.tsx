@@ -296,6 +296,7 @@ export default class MiniDrawer extends React.PureComponent
             </Drawer>
 
             <Box component="main" sx={{ flexGrow: 1 }}>
+                <Toolbar />
                {this.props.children}
             </Box>
         </Box>;
