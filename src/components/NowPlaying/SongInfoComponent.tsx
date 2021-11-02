@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { formatString } from '../../utils/Utils';
-import { SongInfoProps, SongInfoState } from '../../types/SongInfoType';
+import type { SongInfoProps, SongInfoState } from '../../types/SongInfoType';
 
 
 export default class SongInfo extends React.PureComponent

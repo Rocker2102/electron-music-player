@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 
-import {
+import type {
     CreatePlaylistModalProps,
     CreatePlaylistModalState
 } from '../../types/CreatePlaylistModalType';

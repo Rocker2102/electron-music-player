@@ -28,7 +28,7 @@ import LibraryMusicIcon from '@mui/icons-material/LibraryMusicRounded';
 import PlaylistPlayIcon from '@mui/icons-material/PlaylistPlayRounded';
 
 import CreatePlaylistModal from '../Main/CreatePlaylistModalComponent';
-import { MiniDrawerProps, MiniDrawerState } from '../../types/MiniDrawerType';
+import type { MiniDrawerProps, MiniDrawerState } from '../../types/MiniDrawerType';
 
 
 /* Code base from https://mui.com/components/drawers/ */

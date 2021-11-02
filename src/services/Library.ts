@@ -1,4 +1,4 @@
-import { Song } from '../types/LibraryType';
+import type { Song } from '../types/LibraryType';
 
 type onLoadHandler = () => void;
 

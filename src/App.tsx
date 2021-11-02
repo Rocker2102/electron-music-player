@@ -12,11 +12,13 @@ import Library from './services/Library';
 
 import './App.css';
 
-import { appDefaults, getBackground, getCoverImage, restoreStateFromLocal } from './utils/Utils';
-import { getTheme } from './utils/Utils';
-import { Song } from './types/LibraryType';
-import { AppProps, AppState } from './types/AppType';
-import { PlaybackOptionsAttr } from './types/PlaybackOptionsType';
+import {
+    appDefaults, getBackground,
+    getTheme, getCoverImage, restoreStateFromLocal
+} from './utils/Utils';
+import type { Song } from './types/LibraryType';
+import type { AppProps, AppState } from './types/AppType';
+import type { PlaybackOptionsAttr } from './types/PlaybackOptionsType';
 
 
 /**

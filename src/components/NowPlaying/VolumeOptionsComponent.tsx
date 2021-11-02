@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import VolumeUp from '@mui/icons-material/VolumeUpOutlined';
 import VolumeOff from '@mui/icons-material/VolumeOffOutlined';
 
-import { VolumeOptionsProps, VolumeOptionsState } from '../../types/VolumeOptionsType';
+import type { VolumeOptionsProps, VolumeOptionsState } from '../../types/VolumeOptionsType';
 
 
 export default class VolumeOptions extends React.PureComponent
