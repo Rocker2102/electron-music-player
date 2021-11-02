@@ -114,22 +114,6 @@ export default class App extends React.Component
 
         this.state = restoreStateFromLocal(defaultState, this.lsKey);
         this.library.restoreFromLs(this.lsLibrary);
-
-        /**
-         * Bind methods to be passed as props to this instance to
-         * prevent creation of new methods everytime which causes
-         * unnecessary re-rendering of components
-         */
-        this.toggleTheme = this.toggleTheme.bind(this);
-        this.toggleMuteBtn = this.toggleMuteBtn.bind(this);
-        this.handleVolumeUpdate = this.handleVolumeUpdate.bind(this);
-
-        this.playPrevSong = this.playPrevSong.bind(this);
-        this.playNextSong = this.playNextSong.bind(this);
-        this.handleSongSeek = this.handleSongSeek.bind(this);
-        this.toggleSongRepeat = this.toggleSongRepeat.bind(this);
-        this.toggleSongShuffle = this.toggleSongShuffle.bind(this);
-        this.toggleSongPlayback = this.toggleSongPlayback.bind(this);
     }
 
     libraryLoaded = (): void => {

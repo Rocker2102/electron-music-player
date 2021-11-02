@@ -33,12 +33,6 @@ export default class Main extends React.PureComponent
         renderComponent: 'main'
     };
 
-    constructor (props: MainProps) {
-        super(props);
-
-        this.switchComponent = this.switchComponent.bind(this);
-    }
-
     switchComponent = (component: MainState['renderComponent']): void => {
         if (component === this.state.renderComponent) { return }
 
