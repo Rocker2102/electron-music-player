@@ -407,18 +407,18 @@ export default class App extends React.Component
         });
     }
 
-    componentDidMount(): void {
+    componentDidMount (): void {
         console.log('App ready');
     }
 
     /**
      * Auto-store data locally whenever root component is updated
      */
-    componentDidUpdate(): void {
+    componentDidUpdate (): void {
         window.localStorage.setItem(this.lsKey, JSON.stringify(this.state));
     }
 
-    render(): ReactNode {
+    render (): ReactNode {
         return <React.StrictMode>
             <ThemeProvider theme={getTheme(this.state.common.themeMode)}>
                 <CssBaseline />

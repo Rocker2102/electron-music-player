@@ -36,7 +36,7 @@ export default class CreatePlaylistModal extends React.Component
         });
     }
 
-    render(): React.ReactNode {
+    render (): React.ReactNode {
         return (
             <Dialog
                 open={this.props.isOpen} onClose={this.props.handleClose}
