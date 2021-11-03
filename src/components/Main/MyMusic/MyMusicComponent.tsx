@@ -199,7 +199,7 @@ export default class MusicMain extends React.Component
                     <Tab label="Albums" value="albums" />
                 </Tabs>
 
-                <Box mt={2}>
+                <Box mt={2} mx={1}>
                     <RenderTab tab={this.state.tab} />
                 </Box>
             </Box>
