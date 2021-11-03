@@ -20,6 +20,10 @@ import CloseIcon from '@mui/icons-material/CloseRounded';
 import FolderIcon from '@mui/icons-material/FolderSpecialOutlined';
 import ShuffleIcon from '@mui/icons-material/ShuffleRounded';
 
+import Songs from './SongsComponent';
+import Albums from './AlbumsComponent';
+import Artists from './ArtistsComponent';
+
 import type { MyMusicProps, MyMusicState } from '../../../types/MyMusicType';
 
 
@@ -28,6 +32,19 @@ interface SelectFolderAlertProps {
     handleClose: () => void
     handleSelect: () => void,
 }
+
+interface RenderTabProps {
+    tab: MyMusicState['tab']
+}
+
+const RenderTab: React.FC<RenderTabProps> = ({ tab }) => {
+    switch (tab) {
+        case 'songs': return <Songs />;
+        case 'albums': return <Albums />;
+        case 'artists': return <Artists />;
+        default: return null;
+    }
+};
 
 const SelectFolderAlert: React.FC<SelectFolderAlertProps> = (props) => {
     return (
@@ -182,7 +199,9 @@ export default class MusicMain extends React.Component
                     <Tab label="Albums" value="albums" />
                 </Tabs>
 
-
+                <Box mt={2}>
+                    <RenderTab tab={this.state.tab} />
+                </Box>
             </Box>
         );
     }
