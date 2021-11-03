@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Grow from '@mui/material/Grow';
+import Fade from '@mui/material/Fade';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
@@ -16,7 +16,7 @@ const RowItem: React.FC = ({ children }) => {
 
 const GridRow: React.FC<Song> = (props) => {
     return (
-        <>
+        <React.Fragment>
             <Grid item xs={6} sm={5} md={4} lg={3}>
                 <RowItem>{props.name}</RowItem>
             </Grid>
@@ -40,7 +40,7 @@ const GridRow: React.FC<Song> = (props) => {
             <Grid item xs={2} lg={1}>
                 <RowItem>{formatTime(props.length)}</RowItem>
             </Grid>
-        </>
+        </React.Fragment>
     );
 };
 
@@ -98,15 +98,17 @@ export default class Songs extends React.Component<SongsProps, SongsState> {
 
     render (): React.ReactNode {
         return (
-            <Grow in={true} timeout={300}>
+            <Fade in={true} timeout={300}>
                 <Grid container columnSpacing={{ xs: 0.5, md: 1.5, lg: 3 }} rowSpacing={1}>
                     {this.tmpMusic.map(song => {
                         return (
-                            <GridRow {...song} key={song.src}></GridRow>
+                            <Grid container item spacing={0} key={song.src}>
+                                <GridRow {...song}></GridRow>
+                            </Grid>
                         );
                     })}
                 </Grid>
-           </Grow>
+           </Fade>
         );
     }
 }
