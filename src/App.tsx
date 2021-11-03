@@ -7,8 +7,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import Main from './components/Main/MainComponent';
 import AppFooter from './components/AppFooter/AppFooterComponent';
 
-import Player from './services/Player';
-import Library from './services/Library';
+import Player from './services/PlayerService';
+import Library from './services/LibraryService';
 
 import './App.css';
 

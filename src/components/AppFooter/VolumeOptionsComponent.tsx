@@ -6,9 +6,9 @@ import Equalizer from '@mui/icons-material/EqualizerRounded';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Slider from '@mui/material/Slider';
-import IconButton from '@mui/material/IconButton';
 import VolumeUp from '@mui/icons-material/VolumeUpOutlined';
 import VolumeOff from '@mui/icons-material/VolumeOffOutlined';
+import IconButton from '@mui/material/IconButton';
 
 import type { VolumeOptionsProps, VolumeOptionsState } from '../../types/VolumeOptionsType';
 
