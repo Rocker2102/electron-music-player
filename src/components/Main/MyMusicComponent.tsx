@@ -1,9 +1,12 @@
 import React from 'react';
 
 import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
+import Divider from '@mui/material/Divider';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import AlertTitle from '@mui/material/AlertTitle';
@@ -116,10 +119,17 @@ export default class MusicMain extends React.Component
     <MyMusicProps, MyMusicState> {
 
     state: MyMusicState = {
+        tab: 'songs',
         sortBy: 'name',
         selectedGenre: 'all',
         selectFolderAlert: true
     };
+
+    handleTabChange = (event: React.SyntheticEvent, value: string): void => {
+        this.setState({
+            tab: value as MyMusicState['tab']
+        });
+    }
 
     handleSelectFolder = (): void => {
         console.log('Selecting folders..');
@@ -158,6 +168,19 @@ export default class MusicMain extends React.Component
                     onSortChange={this.handleSortChange}
                     onGenreChange={this.handleGenreChange}
                 />
+
+                <Divider sx={{ mt: 2 }} />
+
+                <Tabs
+                    value={this.state.tab}
+                    onChange={this.handleTabChange}
+                    textColor="secondary"
+                    indicatorColor="secondary"
+                >
+                    <Tab label="Songs" value="songs" />
+                    <Tab label="Artists" value="artists" />
+                    <Tab label="Albums" value="albums" />
+                </Tabs>
             </Box>
         );
     }
