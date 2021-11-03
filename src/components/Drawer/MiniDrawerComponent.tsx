@@ -237,7 +237,8 @@ export default class MiniDrawer extends React.PureComponent
                             <form onSubmit={this.handleSearchSubmit}>
                                 <TextField
                                     value={this.state.searchText}
-                                    label="Search" variant="outlined"
+                                    label="Search for songs & playlists"
+                                    variant="outlined"
                                     size="small" fullWidth
                                     color="warning"
                                     onChange={this.handleSearchTextChange}
