@@ -20,7 +20,7 @@ import CloseIcon from '@mui/icons-material/CloseRounded';
 import FolderIcon from '@mui/icons-material/FolderSpecialOutlined';
 import ShuffleIcon from '@mui/icons-material/ShuffleRounded';
 
-import type { MyMusicProps, MyMusicState } from '../../types/MyMusicType';
+import type { MyMusicProps, MyMusicState } from '../../../types/MyMusicType';
 
 
 interface SelectFolderAlertProps {
@@ -181,6 +181,8 @@ export default class MusicMain extends React.Component
                     <Tab label="Artists" value="artists" />
                     <Tab label="Albums" value="albums" />
                 </Tabs>
+
+
             </Box>
         );
     }
