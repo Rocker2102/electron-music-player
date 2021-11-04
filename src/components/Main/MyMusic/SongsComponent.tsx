@@ -44,13 +44,9 @@ const GridRow: React.FC<Song> = (props) => {
     );
 };
 
-interface SongsProps {
-    prop?: null
-}
+type SongsProps = unknown;
 
-interface SongsState {
-    state?: null
-}
+type SongsState = unknown;
 
 export default class Songs extends React.Component<SongsProps, SongsState> {
     private tmpMusic: Song[] = [
