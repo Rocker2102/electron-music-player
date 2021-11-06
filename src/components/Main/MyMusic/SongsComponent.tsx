@@ -72,23 +72,6 @@ export default class Songs extends React.Component<SongsProps, SongsState> {
             album: 'Kedarnath',
             artist: [ 'Arijit Singh', 'Nikita Gandhi' ],
             length: 341
-        },
-        {
-            src: 'http://localhost:3000/audio__.mp3',
-            name: 'Yeh Dooriyan',
-            year: 2020,
-            genre: 'Romantic',
-            album: 'Love Aaj Kal',
-            artist: 'Mohit Chauhan',
-            length: 241
-        },
-        {
-            src: 'http://localhost:3000/audio_.mp3',
-            name: 'Qaafiraana',
-            year: 2019,
-            album: 'Kedarnath',
-            artist: [ 'Arijit Singh', 'Nikita Gandhi' ],
-            length: 341
         }
     ];
 
