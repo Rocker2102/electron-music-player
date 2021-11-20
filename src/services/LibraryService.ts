@@ -6,13 +6,24 @@ type onLoadHandler = () => void;
  * Responsible for managing current playlist.
  * Contains important methods
  */
-export default class Library {
+export default class Library extends EventTarget {
     private list!: Song[];
     private lsKey: string;
     private currentSongIndex = 0;
     private onLoad: onLoadHandler;
 
+    /**
+     * Contains event definitions
+     */
+    private events: { [name: string]: Event } = {
+        load: new Event('load'),
+        error: new Event('error'),
+        localSave: new Event('localSave'),
+        localRestore: new Event('localRestore')
+    }
+
     constructor(lsKey: string, onLoad: onLoadHandler) {
+        super();
         this.lsKey = lsKey;
         this.onLoad = onLoad;
     }
@@ -27,6 +38,7 @@ export default class Library {
         this.list = songs;
         this.saveToLs(this.lsKey);
         this.loaded();
+        this.dispatchEvent(this.events.load);
     }
 
     currentList = (): Song[] => {
@@ -81,6 +93,8 @@ export default class Library {
             song: this.currentSongIndex,
             list: this.currentList()
         }));
+
+        this.dispatchEvent(this.events.localSave);
     }
 
     restoreFromLs = (key: string): boolean => {
@@ -101,8 +115,10 @@ export default class Library {
             this.list = local.list;
             this.setSong(local.song);
             this.loaded();
+            this.dispatchEvent(this.events.localRestore);
         } catch (e) {
             console.log(e);
+            this.dispatchEvent(this.events.error);
             return false;
         }
 
