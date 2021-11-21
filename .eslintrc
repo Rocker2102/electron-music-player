@@ -9,23 +9,14 @@
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
   ],
   "rules": {
     "no-console": 0,
     "semi": [2, "always", { "omitLastInOneLineBlock": true }],
     "quotes": [2, "single"],
-    "semi-spacing": [2, { "before": false, "after": false }],
-    "block-spacing": [1, "always"],
-    "comma-spacing": [2, { "before": false, "after": true }],
-    "array-bracket-spacing": [2, "always", {
-      "singleValue": false,
-      "objectsInArrays": true,
-      "arraysInArrays": false
-    }],
-    "space-in-parens": [2, "never"],
-    "object-curly-spacing": [2, "always"],
-    "computed-property-spacing": [2, "never"],
+    "max-len": ["warn", { "code": 100 }],
     "keyword-spacing": [2, {
       "before": false, "after": true,
       "overrides": {
@@ -39,7 +30,6 @@
         "instanceof": { "before": true, "after": true }
       }
     }],
-    "max-len": ["warn", { "code": 100 }],
     "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }]
   },
   "settings": {
