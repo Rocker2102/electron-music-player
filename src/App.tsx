@@ -50,7 +50,9 @@ export default class App extends React.Component
 
         App.player = new Player('any-incorrect-location-to-init-howler', {});
 
-        this.library = new Library(this.lsLibrary, this.libraryLoaded);
+        this.library = new Library(this.lsLibrary);
+        this.library.on('load', this.libraryLoaded);
+
         /* --disable-debug
         this.library.setList([
             {
