@@ -76,21 +76,14 @@ export default class App extends React.Component<AppProps, AppState> {
         ]);
         */
 
-        /* Set & register howler player event handlers */
-        App.player.setHandlers(
-            {
-                load: this.songLoaded,
-                loadError: this.songLoadError,
-
-                play: this.songPlayed,
-                playError: this.songPlayError,
-
-                end: this.songEnded,
-                stop: this.songStopped,
-                pause: this.songPaused
-            },
-            true
-        );
+        /* Register howler player event handlers */
+        App.player.on('load', this.songLoaded);
+        App.player.on('loadError', this.songLoadError);
+        App.player.on('play', this.songPlayed);
+        App.player.on('playError', this.songPlayError);
+        App.player.on('end', this.songEnded);
+        App.player.on('stop', this.songStopped);
+        App.player.on('pause', this.songPaused);
 
         /* App init/default state */
         const defaultState: AppState = {
