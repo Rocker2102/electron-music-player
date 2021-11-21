@@ -3,16 +3,16 @@ import { Howl, HowlOptions } from 'howler';
 type HandlerFn = () => void;
 
 type HandlerOptions = {
-    load?: undefined | HandlerFn,
-    loadError?: undefined | HandlerFn,
+    load?: undefined | HandlerFn;
+    loadError?: undefined | HandlerFn;
 
-    play?: undefined | HandlerFn,
-    playError?: undefined | HandlerFn,
+    play?: undefined | HandlerFn;
+    playError?: undefined | HandlerFn;
 
-    end?: undefined | HandlerFn,
-    stop?: undefined | HandlerFn,
-    pause?: undefined | HandlerFn
-}
+    end?: undefined | HandlerFn;
+    stop?: undefined | HandlerFn;
+    pause?: undefined | HandlerFn;
+};
 
 /**
  * Wrapper class around audio driver (Howler)
@@ -23,7 +23,7 @@ export default class Player {
     private options: HowlOptions;
     private volumeSteps = 15;
 
-    private handlers: HandlerOptions = { };
+    private handlers: HandlerOptions = {};
 
     constructor(src: string, options: HowlOptions) {
         this.src = src;
@@ -68,90 +68,98 @@ export default class Player {
         this.registerHandlers();
 
         return this.howl;
-    }
+    };
 
-    stop = (): Howl => this.howl.stop()
+    stop = (): Howl => this.howl.stop();
 
-    play = (): number => this.howl.play()
+    play = (): number => this.howl.play();
 
-    pause = (): Howl => this.howl.pause()
+    pause = (): Howl => this.howl.pause();
 
-    isPlaying = (): boolean => this.howl.playing()
+    isPlaying = (): boolean => this.howl.playing();
 
-    getVolume = (): number => this.howl.volume()
+    getVolume = (): number => this.howl.volume();
 
     setVolume = (volume: number, fade = true): Howl | number => {
-        volume < 0 ? volume = 0 : false;
+        volume < 0 ? (volume = 0) : false;
         /* eslint-disable-next-line keyword-spacing */
-        volume > this.volumeSteps ? volume = this.volumeSteps : false;
-        this.options['volume'] = (volume / this.volumeSteps);
+        volume > this.volumeSteps ? (volume = this.volumeSteps) : false;
+        this.options['volume'] = volume / this.volumeSteps;
 
         /* increase/decrease volume smoothly */
-        return fade ? this.howl.fade(this.howl.volume(), this.options['volume'], 200)
+        return fade
+            ? this.howl.fade(this.howl.volume(), this.options['volume'], 200)
             : this.howl.volume(this.options['volume']);
-    }
+    };
 
-    mute = (status: boolean): Howl => this.howl.mute(status)
+    mute = (status: boolean): Howl => this.howl.mute(status);
 
-    getSeek = (): number => this.howl.seek()
+    getSeek = (): number => this.howl.seek();
 
-    setSeek = (seconds: number): Howl | number => this.howl.seek(seconds)
+    setSeek = (seconds: number): Howl | number => this.howl.seek(seconds);
 
     setLoop = (loop: boolean): Howl => {
         this.options['loop'] = loop;
         return this.howl.loop(loop);
-    }
+    };
 
-    getDuration = (): number => this.howl.duration()
+    getDuration = (): number => this.howl.duration();
 
-    state = (): 'unloaded' | 'loading' | 'loaded' => this.howl.state()
+    state = (): 'unloaded' | 'loading' | 'loaded' => this.howl.state();
 
     /**
      * Use for debug purpose only
      */
     getDriverInstance = (): Howl => {
         return this.howl;
-    }
+    };
 
     /**
      * Use for debug purpose only
      */
     getHandlers = (): HandlerOptions => {
         return this.handlers;
-    }
+    };
 
     setHandlers = (handlers: HandlerOptions, register = false): void => {
-        typeof handlers.load !== 'undefined' ? this.handlers.load = handlers.load : false;
+        typeof handlers.load !== 'undefined' ? (this.handlers.load = handlers.load) : false;
         typeof handlers.loadError !== 'undefined'
-            ? this.handlers.loadError = handlers.loadError : false;
+            ? (this.handlers.loadError = handlers.loadError)
+            : false;
 
-        typeof handlers.play !== 'undefined' ? this.handlers.play = handlers.play : false;
+        typeof handlers.play !== 'undefined' ? (this.handlers.play = handlers.play) : false;
         typeof handlers.playError !== 'undefined'
-            ? this.handlers.playError = handlers.playError : false;
+            ? (this.handlers.playError = handlers.playError)
+            : false;
 
-        typeof handlers.end !== 'undefined' ? this.handlers.end = handlers.end : false;
-        typeof handlers.stop !== 'undefined' ? this.handlers.stop = handlers.stop : false;
-        typeof handlers.pause !== 'undefined' ? this.handlers.pause = handlers.pause : false;
+        typeof handlers.end !== 'undefined' ? (this.handlers.end = handlers.end) : false;
+        typeof handlers.stop !== 'undefined' ? (this.handlers.stop = handlers.stop) : false;
+        typeof handlers.pause !== 'undefined' ? (this.handlers.pause = handlers.pause) : false;
 
         register ? this.registerHandlers() : false;
-    }
+    };
 
     registerHandlers = (): void => {
         typeof this.handlers.load !== 'undefined'
-            ? this.howl.on('load', this.handlers.load) : false;
+            ? this.howl.on('load', this.handlers.load)
+            : false;
         typeof this.handlers.loadError !== 'undefined'
-            ? this.howl.on('loaderror', this.handlers.loadError) : false;
+            ? this.howl.on('loaderror', this.handlers.loadError)
+            : false;
 
         typeof this.handlers.play !== 'undefined'
-            ? this.howl.on('play', this.handlers.play) : false;
+            ? this.howl.on('play', this.handlers.play)
+            : false;
         typeof this.handlers.playError !== 'undefined'
-            ? this.howl.on('playerror', this.handlers.playError) : false;
+            ? this.howl.on('playerror', this.handlers.playError)
+            : false;
 
-        typeof this.handlers.end !== 'undefined'
-            ? this.howl.on('end', this.handlers.end) : false;
+        typeof this.handlers.end !== 'undefined' ? this.howl.on('end', this.handlers.end) : false;
         typeof this.handlers.stop !== 'undefined'
-            ? this.howl.on('stop', this.handlers.stop) : false;
+            ? this.howl.on('stop', this.handlers.stop)
+            : false;
         typeof this.handlers.pause !== 'undefined'
-            ? this.howl.on('pause', this.handlers.pause) : false;
-    }
+            ? this.howl.on('pause', this.handlers.pause)
+            : false;
+    };
 }

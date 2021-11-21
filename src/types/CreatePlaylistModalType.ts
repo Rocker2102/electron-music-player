@@ -1,16 +1,16 @@
 export interface CreatePlaylistModalAttr {
-    isOpen: boolean
+    isOpen: boolean;
 }
 
 interface CreatePlaylistModalHandlers {
-    handleSave: (name: string) => void
-    handleClose: () => void
+    handleSave: (name: string) => void;
+    handleClose: () => void;
 }
 
-export interface CreatePlaylistModalProps extends CreatePlaylistModalAttr, CreatePlaylistModalHandlers {
-
-}
+export interface CreatePlaylistModalProps
+    extends CreatePlaylistModalAttr,
+        CreatePlaylistModalHandlers {}
 
 export interface CreatePlaylistModalState {
-    playlistName: string
+    playlistName: string;
 }

@@ -4,14 +4,14 @@ import { VolumeOptionsProps } from './VolumeOptionsType';
 import { PlaybackOptionsProps } from './PlaybackOptionsType';
 
 export interface AppFooterProps {
-    isLoading: AppState['isLoading'],
-    background: Common['background'],
+    isLoading: AppState['isLoading'];
+    background: Common['background'];
 
-    songInfo: SongInfoProps,
-    playbackOptions: PlaybackOptionsProps,
-    volumeOptions: VolumeOptionsProps
+    songInfo: SongInfoProps;
+    playbackOptions: PlaybackOptionsProps;
+    volumeOptions: VolumeOptionsProps;
 }
 
 export interface AppFooterState {
-    height?: number
+    height?: number;
 }

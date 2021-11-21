@@ -13,12 +13,12 @@ import type {
     CreatePlaylistModalState
 } from '../../types/CreatePlaylistModalType';
 
-
 /* Code base from https://mui.com/components/modal */
 
-export default class CreatePlaylistModal extends React.Component
-    <CreatePlaylistModalProps, CreatePlaylistModalState> {
-
+export default class CreatePlaylistModal extends React.Component<
+    CreatePlaylistModalProps,
+    CreatePlaylistModalState
+> {
     state: CreatePlaylistModalState = {
         playlistName: ''
     };
@@ -27,19 +27,20 @@ export default class CreatePlaylistModal extends React.Component
         this.setState({
             playlistName: e.target.value
         });
-    }
+    };
 
     savePlaylist = (): void => {
         this.props.handleSave(this.state.playlistName);
         this.setState({
             playlistName: ''
         });
-    }
+    };
 
-    render (): React.ReactNode {
+    render(): React.ReactNode {
         return (
             <Dialog
-                open={this.props.isOpen} onClose={this.props.handleClose}
+                open={this.props.isOpen}
+                onClose={this.props.handleClose}
                 BackdropComponent={Backdrop}
                 BackdropProps={{ timeout: 500 }}
             >
@@ -62,9 +63,7 @@ export default class CreatePlaylistModal extends React.Component
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.props.handleClose}>Cancel</Button>
-                    <Button onClick={this.savePlaylist}>
-                        Create
-                    </Button>
+                    <Button onClick={this.savePlaylist}>Create</Button>
                 </DialogActions>
             </Dialog>
         );

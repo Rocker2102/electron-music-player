@@ -19,7 +19,7 @@ export default class Library extends EventTarget {
         error: new Event('error'),
         localSave: new Event('localSave'),
         localRestore: new Event('localRestore')
-    }
+    };
 
     constructor(lsKey: string) {
         super();
@@ -28,54 +28,56 @@ export default class Library extends EventTarget {
 
     on = (eventType: EventTypes, eventHandler: () => void): void => {
         this.addEventListener(eventType, eventHandler);
-    }
+    };
 
     off = (eventType: EventTypes, eventHandler: () => void): void => {
         this.removeEventListener(eventType, eventHandler);
-    }
+    };
 
     setList = (songs: Song[]): void => {
-        if (songs.length === 0) { return }
+        if (songs.length === 0) {
+            return;
+        }
 
         this.list = songs;
         this.saveToLs(this.lsKey);
         this.dispatchEvent(this.events.load);
-    }
+    };
 
     currentList = (): Song[] => {
         return this.list;
-    }
+    };
 
     getCurrent = (): Song => {
         return this.list[this.currentSongIndex];
-    }
+    };
 
     getRandom = (): Song => {
         const random = Math.floor(Math.random() * 100) % this.list.length;
         return this.setSong(random);
-    }
+    };
 
     next = (): Song => {
-       return this.setSong(this.currentSongIndex + 1);
-    }
+        return this.setSong(this.currentSongIndex + 1);
+    };
 
     hasNext = (): boolean => {
         return this.currentSongIndex < this.list.length;
-    }
+    };
 
     previous = (): Song => {
         return this.setSong(this.currentSongIndex - 1);
-    }
+    };
 
     hasPrevious = (): boolean => {
         return this.currentSongIndex > 0;
-    }
+    };
 
     setSong = (index: number): Song => {
         const listLength = this.list.length;
 
         if (index < 0) {
-            this.currentSongIndex = (listLength - (-(index))) % listLength;
+            this.currentSongIndex = (listLength - -index) % listLength;
         } else if (index >= listLength) {
             this.currentSongIndex = (listLength + index) % listLength;
         } else {
@@ -85,23 +87,28 @@ export default class Library extends EventTarget {
         this.saveToLs(this.lsKey);
 
         return this.list[this.currentSongIndex];
-    }
+    };
 
     saveToLs = (key: string): void => {
-        if (this.currentList().length === 0) { return }
+        if (this.currentList().length === 0) {
+            return;
+        }
 
-        window.localStorage.setItem(key, JSON.stringify({
-            song: this.currentSongIndex,
-            list: this.currentList()
-        }));
+        window.localStorage.setItem(
+            key,
+            JSON.stringify({
+                song: this.currentSongIndex,
+                list: this.currentList()
+            })
+        );
 
         this.dispatchEvent(this.events.localSave);
-    }
+    };
 
     restoreFromLs = (key: string): boolean => {
         let local: {
-            song: number,
-            list: Song[]
+            song: number;
+            list: Song[];
         };
 
         try {
@@ -124,5 +131,5 @@ export default class Library extends EventTarget {
         }
 
         return true;
-    }
+    };
 }

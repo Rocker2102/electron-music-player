@@ -20,16 +20,14 @@ import Typography from '@mui/material/Typography';
 import { formatTime, getPercent } from '../../utils/Utils';
 import type { PlaybackOptionsProps, PlaybackOptionsState } from '../../types/PlaybackOptionsType';
 
-
 /**
  * Returns appropriate icon + tooltip according to currently set repeat type
  * @param props
  * @returns ReactNode
  */
-function RepeatButton(props: PlaybackOptionsProps['repeatType'])
-    : ReactNode {
-
-    let icon: ReactElement, title = 'Repeat: ';
+function RepeatButton(props: PlaybackOptionsProps['repeatType']): ReactNode {
+    let icon: ReactElement,
+        title = 'Repeat: ';
 
     switch (props) {
         case 'off':
@@ -46,21 +44,24 @@ function RepeatButton(props: PlaybackOptionsProps['repeatType'])
             break;
     }
 
-    return <Tooltip title={title} placement="right">
-        {icon}
-    </Tooltip>;
+    return (
+        <Tooltip title={title} placement="right">
+            {icon}
+        </Tooltip>
+    );
 }
 
-export default class PlaybackOptions extends React.PureComponent
-    <PlaybackOptionsProps, PlaybackOptionsState> {
-
+export default class PlaybackOptions extends React.PureComponent<
+    PlaybackOptionsProps,
+    PlaybackOptionsState
+> {
     state: PlaybackOptionsState = {
         sliderVal: null
     };
 
     labelFormat = (time: number): string => {
         return formatTime((time / 100) * this.props.length);
-    }
+    };
 
     handleChange = (e: Event, value: number | number[]): void => {
         if (value instanceof Array) {
@@ -70,7 +71,7 @@ export default class PlaybackOptions extends React.PureComponent
         this.setState({
             sliderVal: value
         });
-    }
+    };
 
     handleCommittedChange = (e: unknown, value: number | number[]): void => {
         if (value instanceof Array) {
@@ -82,80 +83,104 @@ export default class PlaybackOptions extends React.PureComponent
         });
 
         this.props.handleSeek((value / 100) * this.props.length);
-    }
+    };
 
-    render (): ReactNode {
-        return <Grid item xs={5} sm={4} pt={1} pb={0.5} >
-            <Grid container >
-                <Grid item xs={12} sx={{ textAlign: 'center' }}>
-                    <Tooltip title="Toggle shuffle" placement="left">
-                        <IconButton color="primary" sx={{
-                            display: { xs: 'none', md: 'inline-flex' } }}
-                            onClick={this.props.toggleShuffle}
-                        >
-                            {
-                                this.props.shuffle
-                                    ? <ShuffleOn fontSize="medium" />
-                                    : <Shuffle fontSize="medium" />
-                            }
+    render(): ReactNode {
+        return (
+            <Grid item xs={5} sm={4} pt={1} pb={0.5}>
+                <Grid container>
+                    <Grid item xs={12} sx={{ textAlign: 'center' }}>
+                        <Tooltip title="Toggle shuffle" placement="left">
+                            <IconButton
+                                color="primary"
+                                sx={{
+                                    display: { xs: 'none', md: 'inline-flex' }
+                                }}
+                                onClick={this.props.toggleShuffle}
+                            >
+                                {this.props.shuffle ? (
+                                    <ShuffleOn fontSize="medium" />
+                                ) : (
+                                    <Shuffle fontSize="medium" />
+                                )}
+                            </IconButton>
+                        </Tooltip>
+
+                        <IconButton color="primary" onClick={this.props.handlePrev}>
+                            <SkipPrevious fontSize="medium" />
                         </IconButton>
-                    </Tooltip>
 
-                    <IconButton color="primary"
-                        onClick={this.props.handlePrev}
+                        <Fab
+                            color="primary"
+                            size="large"
+                            onClick={this.props.togglePlayback}
+                            disabled={this.props.isLoading !== false}
+                        >
+                            {this.props.isPlaying ? (
+                                <Pause fontSize="large" />
+                            ) : (
+                                <PlayArrow fontSize="large" />
+                            )}
+                        </Fab>
+
+                        <IconButton color="primary" onClick={this.props.handleNext}>
+                            <SkipNext fontSize="medium" />
+                        </IconButton>
+
+                        <IconButton
+                            color="primary"
+                            sx={{
+                                display: { xs: 'none', md: 'inline-flex' }
+                            }}
+                            onClick={this.props.toggleRepeat}
+                        >
+                            {RepeatButton(this.props.repeatType)}
+                        </IconButton>
+                    </Grid>
+
+                    <Grid
+                        item
+                        xs={12}
+                        mx={4}
+                        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     >
-                        <SkipPrevious fontSize="medium" />
-                    </IconButton>
+                        <Slider
+                            size="small"
+                            min={0}
+                            max={100}
+                            onChange={this.handleChange}
+                            onChangeCommitted={this.handleCommittedChange}
+                            valueLabelFormat={this.labelFormat}
+                            valueLabelDisplay="auto"
+                            value={
+                                this.state.sliderVal ??
+                                getPercent(this.props.current, this.props.length)
+                            }
+                            disabled={this.props.isLoading !== false}
+                        />
+                    </Grid>
 
-                    <Fab color="primary" size="large"
-                        onClick={this.props.togglePlayback}
-                        disabled={this.props.isLoading !== false}
+                    <Grid
+                        item
+                        xs={12}
+                        mx={4}
+                        mt={-1}
+                        mb={0.5}
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'flex-start',
+                            justifyContent: 'space-between'
+                        }}
                     >
-                        {
-                            this.props.isPlaying
-                                ? <Pause fontSize="large" />
-                                : <PlayArrow fontSize="large" />
-                        }
-                    </Fab>
-
-                    <IconButton color="primary"
-                        onClick={this.props.handleNext}
-                    >
-                        <SkipNext fontSize="medium" />
-                    </IconButton>
-
-                    <IconButton color="primary" sx={{
-                        display: { xs: 'none', md: 'inline-flex' } }}
-                        onClick={this.props.toggleRepeat}
-                    >
-                        {RepeatButton(this.props.repeatType)}
-                    </IconButton>
-                </Grid>
-
-                <Grid item xs={12} mx={4} sx={{ display: 'flex',
-                    justifyContent: 'center', alignItems: 'center' }}
-                >
-                    <Slider size='small'
-                        min={0} max={100}
-                        onChange={this.handleChange}
-                        onChangeCommitted={this.handleCommittedChange}
-                        valueLabelFormat={this.labelFormat}
-                        valueLabelDisplay="auto"
-                        value={this.state.sliderVal
-                            ?? getPercent(this.props.current, this.props.length)}
-                        disabled={this.props.isLoading !== false}
-                    />
-                </Grid>
-
-                <Grid item xs={12} mx={4} mt={-1} mb={0.5} sx={{ display: 'flex',
-                    alignItems: 'flex-start', justifyContent: 'space-between' }}
-                >
-                    <Typography variant="subtitle2" color="text.secondary">
-                        {formatTime(this.props.current)}</Typography>
-                    <Typography variant="subtitle2" color="text.secondary">
-                        {formatTime(this.props.length)}</Typography>
+                        <Typography variant="subtitle2" color="text.secondary">
+                            {formatTime(this.props.current)}
+                        </Typography>
+                        <Typography variant="subtitle2" color="text.secondary">
+                            {formatTime(this.props.length)}
+                        </Typography>
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>;
+        );
     }
 }

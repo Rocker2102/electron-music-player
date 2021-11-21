@@ -3,18 +3,18 @@ import { VolumeOptionsAttr } from './VolumeOptionsType';
 import { PlaybackOptionsAttr } from './PlaybackOptionsType';
 
 export interface Common {
-    themeMode: 'dark' | 'light',
-    background: string
+    themeMode: 'dark' | 'light';
+    background: string;
 }
 
 export type AppProps = unknown;
 
 export interface AppState {
-    common: Common,
+    common: Common;
 
-    isLoading: boolean,
+    isLoading: boolean;
 
-    songInfo: SongInfoAttr,
-    volumeOptions: VolumeOptionsAttr,
-    playbackOptions: PlaybackOptionsAttr
+    songInfo: SongInfoAttr;
+    volumeOptions: VolumeOptionsAttr;
+    playbackOptions: PlaybackOptionsAttr;
 }

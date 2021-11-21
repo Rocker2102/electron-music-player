@@ -12,10 +12,10 @@ import IconButton from '@mui/material/IconButton';
 
 import type { VolumeOptionsProps, VolumeOptionsState } from '../../types/VolumeOptionsType';
 
-
-export default class VolumeOptions extends React.PureComponent
-    <VolumeOptionsProps, VolumeOptionsState> {
-
+export default class VolumeOptions extends React.PureComponent<
+    VolumeOptionsProps,
+    VolumeOptionsState
+> {
     state: VolumeOptionsState = {
         volume: this.props.volume
     };
@@ -30,34 +30,41 @@ export default class VolumeOptions extends React.PureComponent
         });
 
         this.props.handleVolumeUpdate(value);
-    }
+    };
 
-    render (): ReactNode {
-        return <Grid item xs={3} lg={2} mr={2} ml="auto" >
-            <Stack direction="row" alignItems="center"
-                spacing={{ xs: 0, lg: 0.5 }} justifyContent='flex-end'
-            >
-                <IconButton color="primary" onClick={this.props.toggleMute}>
-                    {this.props.isMute ? <VolumeOff /> : <VolumeUp />}
-                </IconButton>
-
-                <Slider size='small'
-                    value={this.state.volume} min={0} max={15} step={1}
-                    valueLabelDisplay='auto'
-                    onChange={this.handleChange}
-                    sx={{ display: { xs: 'none', md: 'inline-flex' } }}
-                />
-
-                <IconButton color="error">
-                    <Settings />
-                </IconButton>
-
-                <IconButton color="error"
-                    sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
+    render(): ReactNode {
+        return (
+            <Grid item xs={3} lg={2} mr={2} ml="auto">
+                <Stack
+                    direction="row"
+                    alignItems="center"
+                    spacing={{ xs: 0, lg: 0.5 }}
+                    justifyContent="flex-end"
                 >
-                    <Equalizer />
-                </IconButton>
-            </Stack>
-        </Grid>;
+                    <IconButton color="primary" onClick={this.props.toggleMute}>
+                        {this.props.isMute ? <VolumeOff /> : <VolumeUp />}
+                    </IconButton>
+
+                    <Slider
+                        size="small"
+                        value={this.state.volume}
+                        min={0}
+                        max={15}
+                        step={1}
+                        valueLabelDisplay="auto"
+                        onChange={this.handleChange}
+                        sx={{ display: { xs: 'none', md: 'inline-flex' } }}
+                    />
+
+                    <IconButton color="error">
+                        <Settings />
+                    </IconButton>
+
+                    <IconButton color="error" sx={{ display: { xs: 'none', sm: 'inline-flex' } }}>
+                        <Equalizer />
+                    </IconButton>
+                </Stack>
+            </Grid>
+        );
     }
 }
