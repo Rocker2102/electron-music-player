@@ -27,11 +27,11 @@ export default class Library extends EventTarget {
     }
 
     on = (eventType: EventTypes, eventHandler: () => void): void => {
-        this.addEventListener(eventType, eventHandler);
+        return this.addEventListener(eventType, eventHandler);
     };
 
     off = (eventType: EventTypes, eventHandler: () => void): void => {
-        this.removeEventListener(eventType, eventHandler);
+        return this.removeEventListener(eventType, eventHandler);
     };
 
     setList = (songs: Song[]): void => {
