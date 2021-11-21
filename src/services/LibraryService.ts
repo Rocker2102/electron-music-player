@@ -1,6 +1,6 @@
 import type { Song } from '../types/LibraryType';
 
-type onLoadHandler = () => void;
+type EventTypes = 'load' | 'error' | 'localSave' | 'localRestore';
 
 /**
  * Responsible for managing current playlist.
@@ -10,26 +10,28 @@ export default class Library extends EventTarget {
     private list!: Song[];
     private lsKey: string;
     private currentSongIndex = 0;
-    private onLoad: onLoadHandler;
 
     /**
      * Contains event definitions
      */
-    private events: { [name: string]: Event } = {
+    private events: { [eventType in EventTypes]: Event } = {
         load: new Event('load'),
         error: new Event('error'),
         localSave: new Event('localSave'),
         localRestore: new Event('localRestore')
     }
 
-    constructor(lsKey: string, onLoad: onLoadHandler) {
+    constructor(lsKey: string) {
         super();
         this.lsKey = lsKey;
-        this.onLoad = onLoad;
     }
 
-    loaded = (): void => {
-        this.onLoad();
+    on = (eventType: EventTypes, eventHandler: () => void): void => {
+        this.addEventListener(eventType, eventHandler);
+    }
+
+    off = (eventType: EventTypes, eventHandler: () => void): void => {
+        this.removeEventListener(eventType, eventHandler);
     }
 
     setList = (songs: Song[]): void => {
@@ -37,7 +39,6 @@ export default class Library extends EventTarget {
 
         this.list = songs;
         this.saveToLs(this.lsKey);
-        this.loaded();
         this.dispatchEvent(this.events.load);
     }
 
@@ -114,7 +115,7 @@ export default class Library extends EventTarget {
 
             this.list = local.list;
             this.setSong(local.song);
-            this.loaded();
+            this.dispatchEvent(this.events.load);
             this.dispatchEvent(this.events.localRestore);
         } catch (e) {
             console.log(e);
