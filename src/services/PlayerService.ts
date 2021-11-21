@@ -1,31 +1,32 @@
 import { Howl, HowlOptions } from 'howler';
 
-type HandlerFn = () => void;
-
-type HandlerOptions = {
-    load?: undefined | HandlerFn;
-    loadError?: undefined | HandlerFn;
-
-    play?: undefined | HandlerFn;
-    playError?: undefined | HandlerFn;
-
-    end?: undefined | HandlerFn;
-    stop?: undefined | HandlerFn;
-    pause?: undefined | HandlerFn;
-};
+type EventTypes = 'load' | 'loadError' | 'play' | 'playError' | 'end' | 'stop' | 'pause';
 
 /**
  * Wrapper class around audio driver (Howler)
  */
-export default class Player {
+export default class Player extends EventTarget {
     private src: string;
     private howl: Howl;
     private options: HowlOptions;
     private volumeSteps = 15;
 
-    private handlers: HandlerOptions = {};
+    /**
+     * Contains event definitions
+     */
+    private events: { [eventType in EventTypes]: Event } = {
+        load: new Event('load'),
+        loadError: new Event('loadError'),
+        play: new Event('play'),
+        playError: new Event('playError'),
+        end: new Event('end'),
+        stop: new Event('stop'),
+        pause: new Event('pause')
+    };
 
     constructor(src: string, options: HowlOptions) {
+        super();
+
         this.src = src;
         this.options = options;
 
@@ -37,6 +38,14 @@ export default class Player {
             autoplay: false
         });
     }
+
+    on = (eventType: EventTypes, eventHandler: () => void): void => {
+        return this.addEventListener(eventType, eventHandler);
+    };
+
+    off = (eventType: EventTypes, eventHandler: () => void): void => {
+        return this.removeEventListener(eventType, eventHandler);
+    };
 
     /* only starts 'howl' if src is different from previous */
     start = (src: string, play = true): Howl => {
@@ -64,17 +73,24 @@ export default class Player {
             autoplay: play
         });
 
-        /* re-register the handlers on the new 'howl' instance */
-        this.registerHandlers();
-
+        play ? this.dispatchEvent(this.events.play) : false;
         return this.howl;
     };
 
-    stop = (): Howl => this.howl.stop();
+    stop = (): Howl => {
+        this.dispatchEvent(this.events.stop);
+        return this.howl.stop();
+    };
 
-    play = (): number => this.howl.play();
+    play = (): number => {
+        this.dispatchEvent(this.events.play);
+        return this.howl.play();
+    };
 
-    pause = (): Howl => this.howl.pause();
+    pause = (): Howl => {
+        this.dispatchEvent(this.events.pause);
+        return this.howl.pause();
+    };
 
     isPlaying = (): boolean => this.howl.playing();
 
@@ -112,54 +128,5 @@ export default class Player {
      */
     getDriverInstance = (): Howl => {
         return this.howl;
-    };
-
-    /**
-     * Use for debug purpose only
-     */
-    getHandlers = (): HandlerOptions => {
-        return this.handlers;
-    };
-
-    setHandlers = (handlers: HandlerOptions, register = false): void => {
-        typeof handlers.load !== 'undefined' ? (this.handlers.load = handlers.load) : false;
-        typeof handlers.loadError !== 'undefined'
-            ? (this.handlers.loadError = handlers.loadError)
-            : false;
-
-        typeof handlers.play !== 'undefined' ? (this.handlers.play = handlers.play) : false;
-        typeof handlers.playError !== 'undefined'
-            ? (this.handlers.playError = handlers.playError)
-            : false;
-
-        typeof handlers.end !== 'undefined' ? (this.handlers.end = handlers.end) : false;
-        typeof handlers.stop !== 'undefined' ? (this.handlers.stop = handlers.stop) : false;
-        typeof handlers.pause !== 'undefined' ? (this.handlers.pause = handlers.pause) : false;
-
-        register ? this.registerHandlers() : false;
-    };
-
-    registerHandlers = (): void => {
-        typeof this.handlers.load !== 'undefined'
-            ? this.howl.on('load', this.handlers.load)
-            : false;
-        typeof this.handlers.loadError !== 'undefined'
-            ? this.howl.on('loaderror', this.handlers.loadError)
-            : false;
-
-        typeof this.handlers.play !== 'undefined'
-            ? this.howl.on('play', this.handlers.play)
-            : false;
-        typeof this.handlers.playError !== 'undefined'
-            ? this.howl.on('playerror', this.handlers.playError)
-            : false;
-
-        typeof this.handlers.end !== 'undefined' ? this.howl.on('end', this.handlers.end) : false;
-        typeof this.handlers.stop !== 'undefined'
-            ? this.howl.on('stop', this.handlers.stop)
-            : false;
-        typeof this.handlers.pause !== 'undefined'
-            ? this.howl.on('pause', this.handlers.pause)
-            : false;
     };
 }
