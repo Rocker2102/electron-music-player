@@ -14,7 +14,7 @@ export default class Main {
         nativeWindowOpen: true,
         nodeIntegration: false,
         preload: path.join(__dirname, 'Preload.js')
-    }
+    };
 
     static windowPreferences: Electron.BrowserWindowConstructorOptions = {
         width: 992,

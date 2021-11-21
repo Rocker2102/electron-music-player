@@ -19,8 +19,9 @@ contextBridge.exposeInMainWorld('electronBridge', {
     getCoverImage: async (fileLocation: string): Promise<string | null> => {
         try {
             const metadata: mm.IAudioMetadata = await mm.parseFile(fileLocation);
-            const picture: _Mm._IPicture | null
-                    = pictureAsBase64(mm.selectCover(metadata?.common?.picture) ?? null);
+            const picture: _Mm._IPicture | null = pictureAsBase64(
+                mm.selectCover(metadata?.common?.picture) ?? null
+            );
             return picture?.data ?? null;
         } catch (e) {
             console.log(e);
