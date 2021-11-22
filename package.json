@@ -71,10 +71,10 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/electron": "^1.6.10",
     "@types/howler": "^2.2.4",
-    "@types/jest": "^27.0.2",
+    "@types/jest": "^27.0.3",
     "@types/nedb": "^1.8.12",
     "@types/node": "^16.11.7",
-    "@types/react": "^17.0.34",
+    "@types/react": "^17.0.36",
     "@types/react-dom": "^17.0.11",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
@@ -84,7 +84,7 @@
     "eslint-plugin-react": "^7.27.0",
     "copyfiles": "^2.4.1",
     "electron": "^15.3.0",
-    "electron-builder": "^22.13.1",
+    "electron-builder": "^22.14.5",
     "music-metadata-browser": "^2.5.0",
     "web-vitals": "^2.1.2"
   }
