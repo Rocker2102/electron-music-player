@@ -24,6 +24,8 @@ export default class Player extends EventTarget {
         pause: new Event('pause')
     };
 
+    private handlers: { [eventType in EventTypes]?: () => void } = {};
+
     constructor(src: string, options: HowlOptions) {
         super();
 
@@ -39,11 +41,14 @@ export default class Player extends EventTarget {
         });
     }
 
-    on = (eventType: EventTypes, eventHandler: () => void): void => {
+    on = (eventType: EventTypes, eventHandler: () => void, register = true): void => {
+        this.handlers[eventType] = eventHandler;
+        register ? this.registerHandlers() : false;
         return this.addEventListener(eventType, eventHandler);
     };
 
     off = (eventType: EventTypes, eventHandler: () => void): void => {
+        delete this.handlers[eventType];
         return this.removeEventListener(eventType, eventHandler);
     };
 
@@ -55,7 +60,9 @@ export default class Player extends EventTarget {
             return this.howl;
         }
 
-        this.stop();
+        if (this.state() !== 'unloaded') {
+            this.stop();
+        }
 
         /* remove all listeners */
         this.howl.off();
@@ -73,7 +80,13 @@ export default class Player extends EventTarget {
             autoplay: play
         });
 
-        play ? this.dispatchEvent(this.events.play) : false;
+        /**
+         * Attach 'load' handler to run after howler loads & then overwrite
+         * with local instance event handlers (this.events)
+         */
+        this.howl.on('load', () => this.dispatchEvent(this.events.load));
+        this.registerHandlers();
+
         return this.howl;
     };
 
@@ -128,5 +141,18 @@ export default class Player extends EventTarget {
      */
     getDriverInstance = (): Howl => {
         return this.howl;
+    };
+
+    /**
+     * Register events on the howl instance to get access to more events & proper handling
+     */
+    registerHandlers = (): void => {
+        this.howl.off();
+
+        Object.keys(this.handlers).forEach(eventType => {
+            this.howl.on(eventType.toLowerCase(), () =>
+                this.dispatchEvent(this.events[eventType as EventTypes])
+            );
+        });
     };
 }
