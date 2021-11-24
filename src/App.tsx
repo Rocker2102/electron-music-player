@@ -48,6 +48,7 @@ export default class App extends React.Component<AppProps, AppState> {
     constructor(props: AppProps) {
         super(props);
 
+        /* Init player */
         App.player = new Player('any-incorrect-location-to-init-howler', {});
 
         this.library = new Library(this.lsLibrary);
@@ -76,19 +77,6 @@ export default class App extends React.Component<AppProps, AppState> {
         ]);
         */
 
-        /*
-         * Set event handlers on player instance.
-         * Binded with driver (howler) instance internally (through '.start()') or
-         * explicitly through '.registerHandlers()'
-         */
-        App.player.on('load', this.songLoaded);
-        App.player.on('loadError', this.songLoadError);
-        App.player.on('play', this.songPlayed);
-        App.player.on('playError', this.songPlayError);
-        App.player.on('end', this.songEnded);
-        App.player.on('stop', this.songStopped);
-        App.player.on('pause', this.songPaused);
-
         /* App init/default state */
         const defaultState: AppState = {
             common: {
@@ -115,7 +103,6 @@ export default class App extends React.Component<AppProps, AppState> {
         };
 
         this.state = restoreStateFromLocal(defaultState, this.lsKey);
-        this.library.restoreFromLs(this.lsLibrary);
     }
 
     libraryLoaded = (): void => {
@@ -413,6 +400,21 @@ export default class App extends React.Component<AppProps, AppState> {
 
     componentDidMount(): void {
         console.log('App ready');
+
+        /*
+         * Set event handlers on player instance.
+         * Binded with driver (howler) instance internally (through '.start()') or
+         * explicitly through '.registerHandlers()'
+         */
+        App.player.on('load', this.songLoaded);
+        App.player.on('loadError', this.songLoadError);
+        App.player.on('play', this.songPlayed);
+        App.player.on('playError', this.songPlayError);
+        App.player.on('end', this.songEnded);
+        App.player.on('stop', this.songStopped);
+        App.player.on('pause', this.songPaused);
+
+        this.library.restoreFromLs(this.lsLibrary);
     }
 
     /**
