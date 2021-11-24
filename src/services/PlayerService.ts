@@ -51,7 +51,7 @@ export default class Player extends EventTarget {
     start = (src: string, play = true): Howl => {
         if (src === this.src) {
             this.setSeek(0);
-            this.play();
+            play ? this.play() : false;
             return this.howl;
         }
 
