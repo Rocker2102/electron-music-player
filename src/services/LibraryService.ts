@@ -89,7 +89,7 @@ export default class Library extends EventTarget {
         return this.list[this.currentSongIndex];
     };
 
-    saveToLs = (key: string): void => {
+    saveToLs = (key = this.lsKey): void => {
         if (this.currentList().length === 0) {
             return;
         }
@@ -105,20 +105,18 @@ export default class Library extends EventTarget {
         this.dispatchEvent(this.events.localSave);
     };
 
-    restoreFromLs = (key: string): boolean => {
-        let local: {
-            song: number;
-            list: Song[];
-        };
-
+    restoreFromLs = (key = this.lsKey): boolean => {
         try {
             const tmp = window.localStorage.getItem(key);
 
             if (tmp === null || tmp === '') {
-                throw new Error('Failed to load library from localStorage');
+                throw Error('Failed to load library from localStorage');
             }
 
-            local = JSON.parse(tmp);
+            const local: {
+                song: number;
+                list: Song[];
+            } = JSON.parse(tmp);
 
             this.list = local.list;
             this.setSong(local.song);

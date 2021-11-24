@@ -414,7 +414,7 @@ export default class App extends React.Component<AppProps, AppState> {
         App.player.on('stop', this.songStopped);
         App.player.on('pause', this.songPaused);
 
-        this.library.restoreFromLs(this.lsLibrary);
+        this.library.restoreFromLs();
     }
 
     /**
