@@ -125,7 +125,7 @@ export default class App extends React.Component
     toggleMuteBtn = (): void => {
         const newStatus = ! this.state.volumeOptions.isMute;
 
-        if (App.player?.state() === 'loaded') {
+        if (App.player.state() === 'loaded') {
             App.player.mute(newStatus);
         }
 
@@ -138,7 +138,7 @@ export default class App extends React.Component
     }
 
     handleVolumeUpdate = (volume: number): void => {
-        if (App.player?.state() === 'loaded') {
+        if (App.player.state() === 'loaded') {
             App.player.setVolume(volume);
         }
 
@@ -158,7 +158,7 @@ export default class App extends React.Component
         const newStatus = repeatTypes[
             (repeatTypes.indexOf(current) + 1) % repeatTypes.length];
 
-        if (App.player?.state() === 'loaded') {
+        if (App.player.state() === 'loaded') {
             App.player.setLoop(newStatus === 'single');
         }
 
@@ -184,7 +184,7 @@ export default class App extends React.Component
     toggleSongPlayback = (): void => {
         const newStatus = ! this.state.playbackOptions.isPlaying;
 
-        if (App.player?.state() === 'loaded') {
+        if (App.player.state() === 'loaded') {
             newStatus ? App.player.play() : App.player.pause();
         }
 
@@ -197,7 +197,7 @@ export default class App extends React.Component
     }
 
     handleSongSeek = (seconds: number): void => {
-        if (App.player?.state() === 'loaded') {
+        if (App.player.state() === 'loaded') {
             App.player.setSeek(seconds);
         }
 
@@ -376,7 +376,7 @@ export default class App extends React.Component
         /**
          * Jump to previous song only if song seek < 10 seconds, else replay current from 0
          */
-        if (App.player?.state() === 'loaded' && App.player?.getSeek() > 10) {
+        if (App.player.state() === 'loaded' && App.player.getSeek() > 10) {
             App.player.setSeek(0);
             return;
         }
