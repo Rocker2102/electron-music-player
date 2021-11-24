@@ -24,8 +24,6 @@ export default class Player extends EventTarget {
         pause: new Event('pause')
     };
 
-    private handlers: { [eventType in EventTypes]?: () => void } = {};
-
     constructor(src: string, options: HowlOptions) {
         super();
 
@@ -41,14 +39,11 @@ export default class Player extends EventTarget {
         });
     }
 
-    on = (eventType: EventTypes, eventHandler: () => void, register = true): void => {
-        this.handlers[eventType] = eventHandler;
-        register ? this.registerHandlers() : false;
+    on = (eventType: EventTypes, eventHandler: () => void): void => {
         return this.addEventListener(eventType, eventHandler);
     };
 
     off = (eventType: EventTypes, eventHandler: () => void): void => {
-        delete this.handlers[eventType];
         return this.removeEventListener(eventType, eventHandler);
     };
 
@@ -144,12 +139,12 @@ export default class Player extends EventTarget {
     };
 
     /**
-     * Register events on the howl instance to get access to more events & proper handling
+     * Bind events to the howl instance, which is the base event dispatcher
      */
     registerHandlers = (): void => {
         this.howl.off();
 
-        Object.keys(this.handlers).forEach(eventType => {
+        Object.keys(this.events).forEach(eventType => {
             this.howl.on(eventType.toLowerCase(), () =>
                 this.dispatchEvent(this.events[eventType as EventTypes])
             );
