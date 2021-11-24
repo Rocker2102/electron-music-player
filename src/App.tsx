@@ -239,7 +239,7 @@ export default class App extends React.Component<AppProps, AppState> {
         getCoverImage(currentSong.src)
             .then(picData => {
                 if (picData === null) {
-                    throw new Error('Empty picture!');
+                    throw Error('Empty picture!');
                 }
 
                 this.setState({

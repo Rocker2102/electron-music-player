@@ -69,7 +69,7 @@ export const restoreStateFromLocal = (defaultState: AppState, lsKey: string): Ap
     try {
         const tmp = window.localStorage.getItem(lsKey);
         if (tmp === null || tmp === '') {
-            throw new Error('Failed to load state via localStorage');
+            throw Error('Failed to load state via localStorage');
         }
 
         localState = JSON.parse(tmp);
