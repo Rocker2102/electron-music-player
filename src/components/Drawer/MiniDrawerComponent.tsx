@@ -212,7 +212,9 @@ export default class MiniDrawer extends React.PureComponent
                 </Toolbar>
             </AppBar>
 
-            <Drawer variant="permanent" open={this.state.open}>
+            <Drawer
+                variant="permanent"
+                open={this.state.open} ModalProps={{ keepMounted: true }}>
                 <DrawerHeader>
                     <List>
                         <ListItem button>
