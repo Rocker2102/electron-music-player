@@ -6,7 +6,7 @@
   "main": "build/electron/App.js",
   "productName": "Music Player built with Electron",
   "dependencies": {
-    "@emotion/react": "^11.7.0",
+    "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.0.0-rc.1",
     "@mui/material": "^5.0.0-rc.1",
@@ -17,7 +17,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.4"
   },
   "build": {
     "files": [
@@ -81,9 +81,9 @@
     "eslint": "^7.32.0",
     "eslint-plugin-no-loops": "^0.3.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react": "^7.28.0",
     "copyfiles": "^2.4.1",
-    "electron": "^16.0.4",
+    "electron": "^16.0.5",
     "electron-builder": "^22.14.5",
     "music-metadata-browser": "^2.5.0",
     "web-vitals": "^2.1.2"
