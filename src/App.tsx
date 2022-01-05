@@ -225,13 +225,13 @@ export default class App extends React.Component<AppProps, AppState> {
 
         if (this.appInit) {
             App.player.setSeek(this.state.playbackOptions.current);
+            this.appInit = false;
         }
 
         /* Set player specific values from state (which cannot be set dynamically) */
         App.player.mute(this.state.volumeOptions.isMute);
         App.player.setLoop(this.state.playbackOptions.repeatType === 'single');
         App.player.setVolume(this.state.volumeOptions.volume);
-        this.appInit = false;
 
         console.log('Loaded song! Duration', App.player.getDuration());
 
