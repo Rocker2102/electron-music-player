@@ -85,7 +85,7 @@
     "copyfiles": "^2.4.1",
     "electron": "^16.0.6",
     "electron-builder": "^22.14.5",
-    "music-metadata-browser": "^2.5.0",
+    "music-metadata-browser": "^2.5.4",
     "web-vitals": "^2.1.2"
   }
 }
