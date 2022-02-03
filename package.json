@@ -12,7 +12,7 @@
     "@mui/material": "^5.0.0-rc.1",
     "colorthief": "^2.3.2",
     "howler": "^2.2.3",
-    "music-metadata": "^7.11.4",
+    "music-metadata": "^7.11.8",
     "nedb": "^1.8.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -66,7 +66,7 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/electron": "^1.6.10",
@@ -85,7 +85,7 @@
     "copyfiles": "^2.4.1",
     "electron": "^16.0.6",
     "electron-builder": "^22.14.5",
-    "music-metadata-browser": "^2.5.0",
+    "music-metadata-browser": "^2.5.4",
     "web-vitals": "^2.1.2"
   }
 }
