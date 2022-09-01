@@ -81,7 +81,7 @@
     "eslint": "^7.32.0",
     "eslint-plugin-no-loops": "^0.3.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-react": "^7.30.0",
+    "eslint-plugin-react": "^7.31.1",
     "copyfiles": "^2.4.1",
     "electron": "^19.0.1",
     "electron-builder": "^23.0.3",
