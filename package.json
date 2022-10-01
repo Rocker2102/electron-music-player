@@ -71,7 +71,7 @@
     "@testing-library/user-event": "^14.2.0",
     "@types/electron": "^1.6.10",
     "@types/howler": "^2.2.7",
-    "@types/jest": "^27.5.0",
+    "@types/jest": "^29.1.1",
     "@types/nedb": "^1.8.12",
     "@types/node": "^17.0.38",
     "@types/react": "^17.0.39",
