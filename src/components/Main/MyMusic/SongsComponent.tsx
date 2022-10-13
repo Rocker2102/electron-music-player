@@ -7,14 +7,15 @@ import Typography from '@mui/material/Typography';
 import { formatString, formatTime } from '../../../utils/Utils';
 import type { Song } from '../../../types/LibraryType';
 
-
 const RowItem: React.FC = ({ children }) => {
     return (
-        <Typography variant="subtitle1" noWrap={true}>{children}</Typography>
+        <Typography variant="subtitle1" noWrap={true}>
+            {children}
+        </Typography>
     );
 };
 
-const GridRow: React.FC<Song> = (props) => {
+const GridRow: React.FC<Song> = props => {
     return (
         <React.Fragment>
             <Grid item xs={6} sm={5} md={4} lg={3}>
@@ -70,12 +71,12 @@ export default class Songs extends React.Component<SongsProps, SongsState> {
             name: 'Qaafiraana',
             year: 2019,
             album: 'Kedarnath',
-            artist: [ 'Arijit Singh', 'Nikita Gandhi' ],
+            artist: ['Arijit Singh', 'Nikita Gandhi'],
             length: 341
         }
     ];
 
-    render (): React.ReactNode {
+    render(): React.ReactNode {
         return (
             <Fade in={true} timeout={300}>
                 <Grid container columnSpacing={{ xs: 0.5, md: 1.5, lg: 3 }} rowSpacing={1}>
@@ -87,7 +88,7 @@ export default class Songs extends React.Component<SongsProps, SongsState> {
                         );
                     })}
                 </Grid>
-           </Fade>
+            </Fade>
         );
     }
 }

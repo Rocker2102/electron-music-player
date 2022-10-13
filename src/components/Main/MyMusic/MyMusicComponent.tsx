@@ -26,27 +26,30 @@ import Artists from './ArtistsComponent';
 
 import type { MyMusicProps, MyMusicState } from '../../../types/MyMusicType';
 
-
 interface SelectFolderAlertProps {
-    open: boolean,
-    handleClose: () => void
-    handleSelect: () => void,
+    open: boolean;
+    handleClose: () => void;
+    handleSelect: () => void;
 }
 
 interface RenderTabProps {
-    tab: MyMusicState['tab']
+    tab: MyMusicState['tab'];
 }
 
 const RenderTab: React.FC<RenderTabProps> = ({ tab }) => {
     switch (tab) {
-        case 'songs': return <Songs />;
-        case 'albums': return <Albums />;
-        case 'artists': return <Artists />;
-        default: return null;
+        case 'songs':
+            return <Songs />;
+        case 'albums':
+            return <Albums />;
+        case 'artists':
+            return <Artists />;
+        default:
+            return null;
     }
 };
 
-const SelectFolderAlert: React.FC<SelectFolderAlertProps> = (props) => {
+const SelectFolderAlert: React.FC<SelectFolderAlertProps> = props => {
     return (
         <Stack sx={{ width: '100%' }} spacing={2} mb={2}>
             <Collapse in={props.open}>
@@ -63,9 +66,7 @@ const SelectFolderAlert: React.FC<SelectFolderAlertProps> = (props) => {
                         </IconButton>
                     }
                 >
-                    <AlertTitle>
-                        Don&#39;t see all your music?
-                    </AlertTitle>
+                    <AlertTitle>Don&#39;t see all your music?</AlertTitle>
 
                     <span onClick={props.handleSelect} style={{ cursor: 'pointer' }}>
                         Select folders in which to look &nbsp;
@@ -81,13 +82,13 @@ const SelectFolderAlert: React.FC<SelectFolderAlertProps> = (props) => {
 };
 
 interface ComponentHeaderProps {
-    genre: MyMusicState['selectedGenre'],
-    sortBy: MyMusicState['sortBy'],
-    onSortChange: (e: SelectChangeEvent) => void
-    onGenreChange: (e: SelectChangeEvent) => void
+    genre: MyMusicState['selectedGenre'];
+    sortBy: MyMusicState['sortBy'];
+    onSortChange: (e: SelectChangeEvent) => void;
+    onGenreChange: (e: SelectChangeEvent) => void;
 }
 
-const ComponentHeader: React.FC<ComponentHeaderProps> = (props) => {
+const ComponentHeader: React.FC<ComponentHeaderProps> = props => {
     const formControlSx = { mr: 1 };
 
     return (
@@ -119,7 +120,9 @@ const ComponentHeader: React.FC<ComponentHeaderProps> = (props) => {
                     labelId="genre-mymusic-label"
                     onChange={props.onSortChange}
                 >
-                    <MenuItem value="all" selected>All Genres</MenuItem>
+                    <MenuItem value="all" selected>
+                        All Genres
+                    </MenuItem>
                 </Select>
             </FormControl>
 
@@ -132,9 +135,7 @@ const ComponentHeader: React.FC<ComponentHeaderProps> = (props) => {
     );
 };
 
-export default class MusicMain extends React.Component
-    <MyMusicProps, MyMusicState> {
-
+export default class MusicMain extends React.Component<MyMusicProps, MyMusicState> {
     state: MyMusicState = {
         tab: 'songs',
         sortBy: 'name',
@@ -146,31 +147,31 @@ export default class MusicMain extends React.Component
         this.setState({
             tab: value as MyMusicState['tab']
         });
-    }
+    };
 
     handleSelectFolder = (): void => {
         console.log('Selecting folders..');
-    }
+    };
 
     closeSelectFolderAlert = (): void => {
         this.setState({
             selectFolderAlert: false
         });
-    }
+    };
 
     handleSortChange = (e: SelectChangeEvent): void => {
         this.setState({
             sortBy: e.target.value as MyMusicState['sortBy']
         });
-    }
+    };
 
     handleGenreChange = (e: SelectChangeEvent): void => {
         this.setState({
             selectedGenre: e.target.value as MyMusicState['selectedGenre']
         });
-    }
+    };
 
-    render (): React.ReactNode {
+    render(): React.ReactNode {
         return (
             <Box mt={1} mx={1}>
                 <SelectFolderAlert

@@ -13,22 +13,22 @@ import Library from './services/LibraryService';
 import './App.css';
 
 import {
-    appDefaults, getBackground,
-    getTheme, getCoverImage, restoreStateFromLocal
+    appDefaults,
+    getBackground,
+    getTheme,
+    getCoverImage,
+    restoreStateFromLocal
 } from './utils/Utils';
 import type { Song } from './types/LibraryType';
 import type { AppProps, AppState } from './types/AppType';
 import type { PlaybackOptionsAttr } from './types/PlaybackOptionsType';
-
 
 /**
  * Base App class. All primary states are managed here.
  * Any custom themes which are to be shared globally should be applied here.
  * Sequential event based app init.: Load library -> Load song -> Normal Functions...
  */
-export default class App extends React.Component
-    <AppProps, AppState> {
-
+export default class App extends React.Component<AppProps, AppState> {
     /* Howler player, manages sound output */
     static player: Player;
 
@@ -48,9 +48,14 @@ export default class App extends React.Component
     constructor(props: AppProps) {
         super(props);
 
-        App.player = new Player('any-incorrect-location-to-init-howler', {});
+        /* Init player */
+        App.player = new Player('any-incorrect-location-to-init-howler', {
+            src: 'any-incorrect-location-to-init-howler'
+        });
 
-        this.library = new Library(this.lsLibrary, this.libraryLoaded);
+        this.library = new Library(this.lsLibrary);
+        this.library.on('load', this.libraryLoaded);
+
         /* --disable-debug
         this.library.setList([
             {
@@ -73,19 +78,6 @@ export default class App extends React.Component
             }
         ]);
         */
-
-        /* Set & register howler player event handlers */
-        App.player.setHandlers({
-            load: this.songLoaded,
-            loadError: this.songLoadError,
-
-            play: this.songPlayed,
-            playError: this.songPlayError,
-
-            end: this.songEnded,
-            stop: this.songStopped,
-            pause: this.songPaused,
-        }, true);
 
         /* App init/default state */
         const defaultState: AppState = {
@@ -113,17 +105,16 @@ export default class App extends React.Component
         };
 
         this.state = restoreStateFromLocal(defaultState, this.lsKey);
-        this.library.restoreFromLs(this.lsLibrary);
     }
 
     libraryLoaded = (): void => {
         console.log('Loaded library');
 
         App.player.start(this.library.getCurrent().src, false);
-    }
+    };
 
     toggleMuteBtn = (): void => {
-        const newStatus = ! this.state.volumeOptions.isMute;
+        const newStatus = !this.state.volumeOptions.isMute;
 
         if (App.player.state() === 'loaded') {
             App.player.mute(newStatus);
@@ -135,7 +126,7 @@ export default class App extends React.Component
                 isMute: newStatus
             }
         });
-    }
+    };
 
     handleVolumeUpdate = (volume: number): void => {
         if (App.player.state() === 'loaded') {
@@ -148,15 +139,13 @@ export default class App extends React.Component
                 volume: volume
             }
         });
-    }
+    };
 
     toggleSongRepeat = (): void => {
-        const repeatTypes: PlaybackOptionsAttr['repeatType'][]
-            = [ 'off', 'single', 'on' ];
+        const repeatTypes: PlaybackOptionsAttr['repeatType'][] = ['off', 'single', 'on'];
 
         const current = this.state.playbackOptions.repeatType;
-        const newStatus = repeatTypes[
-            (repeatTypes.indexOf(current) + 1) % repeatTypes.length];
+        const newStatus = repeatTypes[(repeatTypes.indexOf(current) + 1) % repeatTypes.length];
 
         if (App.player.state() === 'loaded') {
             App.player.setLoop(newStatus === 'single');
@@ -168,10 +157,10 @@ export default class App extends React.Component
                 repeatType: newStatus
             }
         });
-    }
+    };
 
     toggleSongShuffle = (): void => {
-        const newStatus = ! this.state.playbackOptions.shuffle;
+        const newStatus = !this.state.playbackOptions.shuffle;
 
         this.setState({
             playbackOptions: {
@@ -179,10 +168,10 @@ export default class App extends React.Component
                 shuffle: newStatus
             }
         });
-    }
+    };
 
     toggleSongPlayback = (): void => {
-        const newStatus = ! this.state.playbackOptions.isPlaying;
+        const newStatus = !this.state.playbackOptions.isPlaying;
 
         if (App.player.state() === 'loaded') {
             newStatus ? App.player.play() : App.player.pause();
@@ -194,7 +183,7 @@ export default class App extends React.Component
                 isPlaying: newStatus
             }
         });
-    }
+    };
 
     handleSongSeek = (seconds: number): void => {
         if (App.player.state() === 'loaded') {
@@ -207,7 +196,7 @@ export default class App extends React.Component
                 current: seconds
             }
         });
-    }
+    };
 
     setSongSeekToCurrent = (): void => {
         this.setState({
@@ -216,7 +205,7 @@ export default class App extends React.Component
                 current: App.player.getSeek()
             }
         });
-    }
+    };
 
     songLoaded = (): void => {
         const currentSong = this.library.getCurrent();
@@ -238,39 +227,43 @@ export default class App extends React.Component
 
         if (this.appInit) {
             App.player.setSeek(this.state.playbackOptions.current);
+            this.appInit = false;
         }
 
         /* Set player specific values from state (which cannot be set dynamically) */
         App.player.mute(this.state.volumeOptions.isMute);
         App.player.setLoop(this.state.playbackOptions.repeatType === 'single');
         App.player.setVolume(this.state.volumeOptions.volume);
-        this.appInit = false;
 
         console.log('Loaded song! Duration', App.player.getDuration());
 
         /* Load album art after song has been loaded */
-        getCoverImage(currentSong.src).then(picData => {
-            if (picData === null) { throw new Error('Empty picture!') }
-
-            this.setState({
-                songInfo: {
-                    ...this.state.songInfo,
-                    picture: picData
+        getCoverImage(currentSong.src)
+            .then(picData => {
+                if (picData === null) {
+                    throw Error('Empty picture!');
                 }
-            });
 
-            this.updateBackground(picData);
-        }).catch(() => {
-            this.setState({
-                songInfo: {
-                    ...this.state.songInfo,
-                    picture: appDefaults.picture
-                }
-            });
+                this.setState({
+                    songInfo: {
+                        ...this.state.songInfo,
+                        picture: picData
+                    }
+                });
 
-            this.updateBackground(appDefaults.picture);
-        });
-    }
+                this.updateBackground(picData);
+            })
+            .catch(() => {
+                this.setState({
+                    songInfo: {
+                        ...this.state.songInfo,
+                        picture: appDefaults.picture
+                    }
+                });
+
+                this.updateBackground(appDefaults.picture);
+            });
+    };
 
     /**
      * Set background color to the most dominant color found in image provided
@@ -299,11 +292,11 @@ export default class App extends React.Component
                 });
             });
         }
-    }
+    };
 
     songLoadError = (): void => {
         console.log('Failed to load song!');
-    }
+    };
 
     songPlayed = (): void => {
         console.log('Playing song...');
@@ -322,32 +315,30 @@ export default class App extends React.Component
         /* immediatley change the seekvalue as well as setInterval to modify it */
         this.setSongSeekToCurrent();
 
-        this.seekSliderInterval = window.setInterval(this.setSongSeekToCurrent,
-            1000 / refreshRate);
-    }
+        this.seekSliderInterval = window.setInterval(this.setSongSeekToCurrent, 1000 / refreshRate);
+    };
 
     songPlayError = (): void => {
         this.songEnded();
         console.log('Failed to play song!');
-    }
+    };
 
     songEnded = (): void => {
         console.log('Song ended');
 
-        if (this.state.playbackOptions.repeatType === 'on'
-            || this.state.playbackOptions.shuffle) {
-
+        if (this.state.playbackOptions.repeatType === 'on' || this.state.playbackOptions.shuffle) {
             this.playNextSong();
         }
 
         this.setState({
             playbackOptions: {
                 ...this.state.playbackOptions,
-                isPlaying: [ 'on', 'single' ].includes(this.state.playbackOptions.repeatType)
-                    || this.state.playbackOptions.shuffle
+                isPlaying:
+                    ['on', 'single'].includes(this.state.playbackOptions.repeatType) ||
+                    this.state.playbackOptions.shuffle
             }
         });
-    }
+    };
 
     songStopped = (): void => {
         console.log('Stopped');
@@ -355,7 +346,7 @@ export default class App extends React.Component
         if (typeof this.seekSliderInterval !== 'undefined') {
             clearInterval(this.seekSliderInterval);
         }
-    }
+    };
 
     songPaused = (): void => {
         console.log('Song paused');
@@ -370,7 +361,7 @@ export default class App extends React.Component
                 isPlaying: false
             }
         });
-    }
+    };
 
     playPrevSong = (): void => {
         /**
@@ -384,17 +375,19 @@ export default class App extends React.Component
         this.setState({ isLoading: true });
 
         const song: Song = this.state.playbackOptions.shuffle
-            ? this.library.getRandom() : this.library.previous();
+            ? this.library.getRandom()
+            : this.library.previous();
         App.player.start(song.src, this.state.playbackOptions.isPlaying);
-    }
+    };
 
     playNextSong = (): void => {
         this.setState({ isLoading: true });
 
         const song: Song = this.state.playbackOptions.shuffle
-            ? this.library.getRandom() : this.library.next();
+            ? this.library.getRandom()
+            : this.library.next();
         App.player.start(song.src, this.state.playbackOptions.isPlaying);
-    }
+    };
 
     toggleTheme = (): void => {
         const theme = this.state.common.themeMode === 'dark' ? 'light' : 'dark';
@@ -405,52 +398,65 @@ export default class App extends React.Component
                 themeMode: theme
             }
         });
-    }
+    };
 
-    componentDidMount (): void {
+    componentDidMount(): void {
         console.log('App ready');
+
+        /*
+         * Set event handlers on player instance.
+         * Binded with driver (howler) instance internally (through '.start()') or
+         * explicitly through '.registerHandlers()'
+         */
+        App.player.on('load', this.songLoaded);
+        App.player.on('loadError', this.songLoadError);
+        App.player.on('play', this.songPlayed);
+        App.player.on('playError', this.songPlayError);
+        App.player.on('end', this.songEnded);
+        App.player.on('stop', this.songStopped);
+        App.player.on('pause', this.songPaused);
+
+        this.library.restoreFromLs();
     }
 
     /**
      * Auto-store data locally whenever root component is updated
      */
-    componentDidUpdate (): void {
+    componentDidUpdate(): void {
         window.localStorage.setItem(this.lsKey, JSON.stringify(this.state));
     }
 
-    render (): ReactNode {
-        return <React.StrictMode>
-            <ThemeProvider theme={getTheme(this.state.common.themeMode)}>
-                <CssBaseline />
+    render(): ReactNode {
+        return (
+            <React.StrictMode>
+                <ThemeProvider theme={getTheme(this.state.common.themeMode)}>
+                    <CssBaseline />
 
-                <Main
-                    themeMode={this.state.common.themeMode}
-                    toggleTheme={this.toggleTheme}
-                />
+                    <Main themeMode={this.state.common.themeMode} toggleTheme={this.toggleTheme} />
 
-                <AppFooter
-                    isLoading={this.state.isLoading}
-                    background={this.state.common.background}
+                    <AppFooter
+                        isLoading={this.state.isLoading}
+                        background={this.state.common.background}
+                        songInfo={this.state.songInfo}
+                        volumeOptions={{
+                            ...this.state.volumeOptions,
 
-                    songInfo={this.state.songInfo}
-                    volumeOptions={{
-                        ...this.state.volumeOptions,
+                            toggleMute: this.toggleMuteBtn,
+                            handleVolumeUpdate: this.handleVolumeUpdate
+                        }}
+                        playbackOptions={{
+                            ...this.state.playbackOptions,
 
-                        toggleMute: this.toggleMuteBtn,
-                        handleVolumeUpdate: this.handleVolumeUpdate
-                    }}
-                    playbackOptions={{
-                        ...this.state.playbackOptions,
-
-                        handlePrev: this.playPrevSong,
-                        handleNext: this.playNextSong,
-                        handleSeek: this.handleSongSeek,
-                        toggleRepeat: this.toggleSongRepeat,
-                        toggleShuffle: this.toggleSongShuffle,
-                        togglePlayback: this.toggleSongPlayback
-                    }}
-                />
-            </ThemeProvider>
-        </React.StrictMode>;
+                            handlePrev: this.playPrevSong,
+                            handleNext: this.playNextSong,
+                            handleSeek: this.handleSongSeek,
+                            toggleRepeat: this.toggleSongRepeat,
+                            toggleShuffle: this.toggleSongShuffle,
+                            togglePlayback: this.toggleSongPlayback
+                        }}
+                    />
+                </ThemeProvider>
+            </React.StrictMode>
+        );
     }
 }

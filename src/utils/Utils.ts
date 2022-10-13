@@ -14,7 +14,7 @@ export const appDefaults = {
  * @param rgb RGB value of color as array
  * @returns rgba(r, g, b, alpha) string, can be used directly in CSS
  */
-export const getBackground = (rgb: [ number, number, number ]): string => {
+export const getBackground = (rgb: [number, number, number]): string => {
     const opacity = 0.4;
     return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${opacity})`;
 };
@@ -33,24 +33,29 @@ export const formatTime = (seconds: number): string => {
         str += (hours < 10 ? '0' + hours : hours) + ':';
     }
     str += (minutes < 10 ? '0' + minutes : minutes) + ':';
-    str += (_seconds < 10 ? '0' + _seconds : _seconds);
+    str += _seconds < 10 ? '0' + _seconds : _seconds;
 
     return str;
 };
 
 export const getPercent = (value: number, total: number, precision = 2): number => {
-    if (total === 0) { return 0 }
+    if (total === 0) {
+        return 0;
+    }
     return Number(((value / total) * 100).toFixed(precision));
 };
 
 export const getCoverImage = async (fileLocation: string): Promise<string | null> => {
-    if (typeof window.electronBridge === 'undefined'
-        || window.electronBridge.config.APP_ENV === 'development') {
-
+    if (
+        typeof window.electronBridge === 'undefined' ||
+        window.electronBridge.config.APP_ENV === 'development'
+    ) {
         const metadata = await mmb.fetchFromUrl(fileLocation);
         const picture = mmb.selectCover(metadata?.common?.picture) ?? null;
 
-        if (picture === null) { return null }
+        if (picture === null) {
+            return null;
+        }
 
         return `data:${picture.format};base64,${picture.data.toString('base64')}`;
     }
@@ -64,7 +69,7 @@ export const restoreStateFromLocal = (defaultState: AppState, lsKey: string): Ap
     try {
         const tmp = window.localStorage.getItem(lsKey);
         if (tmp === null || tmp === '') {
-            throw new Error('Failed to load state via localStorage');
+            throw Error('Failed to load state via localStorage');
         }
 
         localState = JSON.parse(tmp);
@@ -86,8 +91,11 @@ export const restoreStateFromLocal = (defaultState: AppState, lsKey: string): Ap
         isLoading: true,
         songInfo: { ...defaultState.songInfo, ...localState?.songInfo },
         volumeOptions: { ...defaultState.volumeOptions, ...localState?.volumeOptions },
-        playbackOptions: { ...defaultState.playbackOptions, ...localState?.playbackOptions,
-            ...{ isPlaying: false } }
+        playbackOptions: {
+            ...defaultState.playbackOptions,
+            ...localState?.playbackOptions,
+            ...{ isPlaying: false }
+        }
     };
 
     return tmp;
