@@ -49,7 +49,9 @@ export default class App extends React.Component<AppProps, AppState> {
         super(props);
 
         /* Init player */
-        App.player = new Player('any-incorrect-location-to-init-howler', {});
+        App.player = new Player('any-incorrect-location-to-init-howler', {
+            src: 'any-incorrect-location-to-init-howler'
+        });
 
         this.library = new Library(this.lsLibrary);
         this.library.on('load', this.libraryLoaded);
