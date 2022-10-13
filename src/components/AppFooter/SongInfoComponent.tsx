@@ -12,7 +12,7 @@ import type { SongInfoProps, SongInfoState } from '../../types/SongInfoType';
 export default class SongInfo extends React.PureComponent
     <SongInfoProps, SongInfoState> {
 
-    render(): ReactNode {
+    render (): ReactNode {
         return <Grid item xs={4} zeroMinWidth>
             <Box sx={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
 

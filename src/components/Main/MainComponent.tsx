@@ -2,8 +2,7 @@ import React, { ReactNode } from 'react';
 
 import MiniDrawer from '../Drawer/MiniDrawerComponent';
 
-import './MainComponent.css';
-import MyMusic from './MyMusicComponent';
+import MyMusic from './MyMusic/MyMusicComponent';
 import NowPlaying from './NowPlayingComponent';
 import RecentMusic from './RecentMusicComponent';
 import AllPlaylists from './AllPlaylistsComponent';

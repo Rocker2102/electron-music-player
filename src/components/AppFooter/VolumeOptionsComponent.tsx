@@ -32,7 +32,7 @@ export default class VolumeOptions extends React.PureComponent
         this.props.handleVolumeUpdate(value);
     }
 
-    render(): ReactNode {
+    render (): ReactNode {
         return <Grid item xs={3} lg={2} mr={2} ml="auto" >
             <Stack direction="row" alignItems="center"
                 spacing={{ xs: 0, lg: 0.5 }} justifyContent='flex-end'

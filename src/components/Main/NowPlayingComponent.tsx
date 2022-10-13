@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default class NowPlaying extends React.Component {
-    render () {
+    render (): React.ReactNode {
         return (
             <div className="App">
                 <header className="App-header">

@@ -212,7 +212,9 @@ export default class MiniDrawer extends React.PureComponent
                 </Toolbar>
             </AppBar>
 
-            <Drawer variant="permanent" open={this.state.open}>
+            <Drawer
+                variant="permanent"
+                open={this.state.open} ModalProps={{ keepMounted: true }}>
                 <DrawerHeader>
                     <List>
                         <ListItem button>
@@ -237,7 +239,8 @@ export default class MiniDrawer extends React.PureComponent
                             <form onSubmit={this.handleSearchSubmit}>
                                 <TextField
                                     value={this.state.searchText}
-                                    label="Search" variant="outlined"
+                                    label="Search for songs & playlists"
+                                    variant="outlined"
                                     size="small" fullWidth
                                     color="warning"
                                     onChange={this.handleSearchTextChange}
@@ -269,7 +272,10 @@ export default class MiniDrawer extends React.PureComponent
                     <ListItem button secondaryAction={
                         <IconButton edge="end" aria-label="delete"
                             sx={{ display: this.state.open ? 'inline-flex' : 'none' }}
-                            onClick={this.openCreatePlaylistModal}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                this.openCreatePlaylistModal();
+                            }}
                             disableRipple
                         >
                             <AddIcon />
@@ -296,6 +302,7 @@ export default class MiniDrawer extends React.PureComponent
             </Drawer>
 
             <Box component="main" sx={{ flexGrow: 1 }}>
+                <Toolbar />
                {this.props.children}
             </Box>
         </Box>;

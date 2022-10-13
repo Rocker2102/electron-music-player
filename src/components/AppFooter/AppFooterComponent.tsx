@@ -20,7 +20,7 @@ export default class AppFooter extends React.PureComponent
         height: undefined
     };
 
-    componentDidMount(): void {
+    componentDidMount (): void {
         const e = document.getElementById(this.baseContainerId);
 
         this.setState({
@@ -28,7 +28,7 @@ export default class AppFooter extends React.PureComponent
         });
     }
 
-    render(): ReactNode {
+    render (): ReactNode {
         return <Container className="AppFooter" id={this.baseContainerId}
             sx={{ boxShadow: 5, position: 'fixed', bottom: 0, minWidth: '100%',
                 zIndex: 1250 }}

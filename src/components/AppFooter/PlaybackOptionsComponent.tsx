@@ -84,7 +84,7 @@ export default class PlaybackOptions extends React.PureComponent
         this.props.handleSeek((value / 100) * this.props.length);
     }
 
-    render(): ReactNode {
+    render (): ReactNode {
         return <Grid item xs={5} sm={4} pt={1} pb={0.5} >
             <Grid container >
                 <Grid item xs={12} sx={{ textAlign: 'center' }}>
