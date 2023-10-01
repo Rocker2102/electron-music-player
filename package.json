@@ -86,6 +86,6 @@
     "electron": "^19.0.1",
     "electron-builder": "^23.0.3",
     "music-metadata-browser": "^2.5.6",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^3.5.0"
   }
 }
