@@ -10,7 +10,7 @@
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.0.0-rc.1",
     "@mui/material": "^5.0.0-rc.1",
-    "colorthief": "^2.3.2",
+    "colorthief": "^2.6.0",
     "howler": "^2.2.3",
     "music-metadata": "^7.12.3",
     "nedb": "^1.8.0",
